@@ -6,7 +6,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import Layout from '../views/layout/Layout'
+import Layout from '@/views/layout/Layout'
 
 export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
@@ -23,14 +23,37 @@ export const constantRouterMap = [
     }]
   },
   {
-    path: '',
+    path: '/homeAdmin',
     component: Layout,
-    redirect: 'home',
+    redirect: '/homeAdmin/home',
+    name: '网站管理',
+    meta: {
+      title: '网站管理',
+      icon: 'guide'
+    },
     children: [{
       path: 'home',
-      component: () => import('@/views/homeAdmin/index'),
-      name: 'home',
-      meta: { title: '网站管理', icon: 'guide', noCache: true }
+      name: '酒店介绍管理',
+      component: () => import('@/views/homeAdmin/home'),
+      meta: { title: '酒店介绍管理', noCache: true }
+    },
+    {
+      path: 'banner',
+      name: 'banner管理',
+      component: () => import('@/views/homeAdmin/banner'),
+      meta: { title: 'banner管理', noCache: true }
+    },
+    {
+      path: 'stage',
+      name: '一期一会管理',
+      component: () => import('@/views/homeAdmin/stage'),
+      meta: { title: '一期一会管理', noCache: true }
+    },
+    {
+      path: 'food',
+      name: '一隅一食管理',
+      component: () => import('@/views/homeAdmin/food'),
+      meta: { title: '一隅一食管理', noCache: true }
     }]
   },
   {
@@ -91,12 +114,23 @@ export const constantRouterMap = [
   {
     path: '',
     component: Layout,
-    redirect: 'service',
+    redirect: '/service',
+    name: '服务管理',
+    meta: {
+      title: '服务管理',
+      icon: 'email'
+    },
     children: [{
       path: 'service',
-      component: () => import('@/views/service/index'),
+      component: () => import('@/views/service/reserve'),
       name: 'service',
-      meta: { title: '服务管理', icon: 'email', noCache: true }
+      meta: { title: '预约管理' }
+    },
+    {
+      path: 'problem',
+      component: () => import('@/views/service/problem'),
+      name: 'service',
+      meta: { title: '问题管理' }
     }]
   },
   {

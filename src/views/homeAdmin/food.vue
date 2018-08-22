@@ -1,5 +1,5 @@
 <template>
-  <div>首页管理</div>
+  <div>一隅一食管理</div>
 </template>
 <script>
 export default {
