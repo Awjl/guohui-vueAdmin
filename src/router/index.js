@@ -31,30 +31,31 @@ export const constantRouterMap = [
       title: '网站管理',
       icon: 'guide'
     },
-    children: [{
-      path: 'home',
-      name: '酒店介绍管理',
-      component: () => import('@/views/homeAdmin/home'),
-      meta: { title: '酒店介绍管理', noCache: true }
-    },
-    {
-      path: 'banner',
-      name: 'banner管理',
-      component: () => import('@/views/homeAdmin/banner'),
-      meta: { title: 'banner管理', noCache: true }
-    },
-    {
-      path: 'stage',
-      name: '一期一会管理',
-      component: () => import('@/views/homeAdmin/stage'),
-      meta: { title: '一期一会管理', noCache: true }
-    },
-    {
-      path: 'food',
-      name: '一隅一食管理',
-      component: () => import('@/views/homeAdmin/food'),
-      meta: { title: '一隅一食管理', noCache: true }
-    }]
+    children: [
+      {
+        path: 'banner',
+        name: 'banner管理',
+        component: () => import('@/views/homeAdmin/banner'),
+        meta: { title: 'banner管理', noCache: true }
+      },
+      {
+        path: 'home',
+        name: '酒店介绍管理',
+        component: () => import('@/views/homeAdmin/home'),
+        meta: { title: '酒店介绍管理', noCache: true }
+      },
+      {
+        path: 'stage',
+        name: '一期一会管理',
+        component: () => import('@/views/homeAdmin/stage'),
+        meta: { title: '一期一会管理', noCache: true }
+      },
+      {
+        path: 'food',
+        name: '一隅一食管理',
+        component: () => import('@/views/homeAdmin/food'),
+        meta: { title: '一隅一食管理', noCache: true }
+      }]
   },
   {
     path: '',
@@ -90,14 +91,25 @@ export const constantRouterMap = [
     }]
   },
   {
-    path: '',
+    path: '/order',
     component: Layout,
-    redirect: 'order',
+    redirect: '/order/order',
+    name: '订单管理',
+    meta: {
+      title: '订单管理',
+      icon: 'form'
+    },
     children: [{
-      path: 'order',
-      component: () => import('@/views/order/index'),
-      name: 'order',
-      meta: { title: '订单管理', icon: 'form', noCache: true }
+      path: 'shopingorder',
+      component: () => import('@/views/order/order'),
+      name: 'shopingorder',
+      meta: { title: '商城订单管理' }
+    },
+    {
+      path: 'integralsorder',
+      component: () => import('@/views/order/integralsorder'),
+      name: 'integralsorder',
+      meta: { title: '积分订单管理' }
     }]
   },
   {
@@ -129,7 +141,7 @@ export const constantRouterMap = [
     {
       path: 'problem',
       component: () => import('@/views/service/problem'),
-      name: 'service',
+      name: 'problem',
       meta: { title: '问题管理' }
     }]
   },
