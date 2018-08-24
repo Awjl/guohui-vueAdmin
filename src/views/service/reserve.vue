@@ -3,30 +3,24 @@
     <div class="filter-container">
       <el-input style="width: 200px;" class="filter-item" placeholder="搜索">
       </el-input>
-      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" :placeholder="place">
-        <el-option v-for="item in importanceOptions" :key="item.key" :label="item.key" :value="item.key">
-        </el-option>
-      </el-select>
       <el-button class="filter-item" type="primary" icon="el-icon-search">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" icon="el-icon-download">下载</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-        <el-table-column prop="date" label="日期">
+        <el-table-column prop="date" label="时间">
         </el-table-column>
         <el-table-column prop="name" label="姓名">
         </el-table-column>
-        <el-table-column prop="province" label="省份">
+        <el-table-column prop="province" label="电话">
         </el-table-column>
-        <el-table-column prop="city" label="市区">
+        <el-table-column prop="city" label="预约内容">
         </el-table-column>
-        <el-table-column prop="address" label="地址">
-        </el-table-column>
-        <el-table-column prop="zip" label="邮编">
+        <el-table-column prop="date" label="预定时间">
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="primary" size="small">联系</el-button>
             <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
+
           </template>
         </el-table-column>
       </el-table>
@@ -56,71 +50,71 @@ export default {
       tableData: [{
         date: '2016-05-03',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
         date: '2016-05-02',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
         date: '2016-05-04',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
         date: '2016-05-01',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
         date: '2016-05-01',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
         date: '2016-05-01',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
         date: '2016-05-01',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
         date: '2016-05-01',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
         date: '2016-05-01',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
         date: '2016-05-01',
         name: '王小虎',
-        province: '上海',
-        city: '普陀区',
+        province: '13500000000',
+        city: '预定大厅一层楼',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }]

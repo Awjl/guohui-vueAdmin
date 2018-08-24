@@ -3,30 +3,25 @@
     <div class="filter-container">
       <el-input style="width: 200px;" class="filter-item" placeholder="搜索">
       </el-input>
-      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" :placeholder="place">
+      <el-select clearable style="width: 150px" class="filter-item" v-model="listQuery.importance" placeholder="优惠券类型">
         <el-option v-for="item in importanceOptions" :key="item.key" :label="item.key" :value="item.key">
         </el-option>
       </el-select>
       <el-button class="filter-item" type="primary" icon="el-icon-search">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" icon="el-icon-download">下载</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加优惠券</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-        <el-table-column prop="date" label="日期">
+        <el-table-column prop="name" label="优惠券名称">
         </el-table-column>
-        <el-table-column prop="name" label="姓名">
+        <el-table-column prop="province" label="优惠方式">
         </el-table-column>
-        <el-table-column prop="province" label="省份">
-        </el-table-column>
-        <el-table-column prop="city" label="市区">
-        </el-table-column>
-        <el-table-column prop="address" label="地址">
-        </el-table-column>
-        <el-table-column prop="zip" label="邮编">
+        <el-table-column prop="city" label="类型">
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
+            <el-button @click="handleClick(scope.row)" type="primary" size="small">修改</el-button>
+            <el-button @click="handleClick(scope.row)" type="warning" size="small">冻结</el-button>
+            <el-button @click="handleClick(scope.row)" type="danger" size="small">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,77 +47,47 @@ export default {
         type: undefined,
         sort: '+id'
       },
-      importanceOptions: [{ key: 1 }, { key: 2 }, { key: 3 }, { key: 4 }],
+      importanceOptions: [{ key: '停车优惠券' }, { key: '内部优惠券' }],
       tableData: [{
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '停车优惠券',
+        province: '优惠50',
+        city: '停车优惠'
       }, {
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '停车优惠券',
+        province: '优惠50',
+        city: '停车优惠'
       }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '停车优惠券',
+        province: '满200优惠50',
+        city: '停车优惠'
       }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '停车优惠券',
+        province: '满300优惠150',
+        city: '停车优惠'
       }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '房券购买优惠券',
+        province: '满200优惠50',
+        city: '内部购买优惠券'
       }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '房券购买优惠券',
+        province: '优惠50',
+        city: '内部购买优惠券'
       }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '房券购买优惠券',
+        province: '满200优惠50',
+        city: '内部购买优惠券'
       }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '餐券购买优惠券',
+        province: '优惠50',
+        city: '内部购买优惠券'
       }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '餐券购买优惠券',
+        province: '优惠50',
+        city: '内部购买优惠券'
       }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
+        name: '餐券购买优惠券',
+        province: '满200优惠50',
+        city: '内部购买优惠券'
       }]
     }
   },
