@@ -1,37 +1,55 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input style="width: 200px;" class="filter-item" placeholder="搜索">
+      <el-input style="width: 200px;" class="filter-item" placeholder="输入订单号搜索" v-model="data.code">
       </el-input>
-      <el-select clearable style="width: 150px" class="filter-item" v-model="listQuery.importance" placeholder="会员级别">
-        <el-option v-for="item in importanceOptions" :key="item.key" :label="item.key" :value="item.key">
+      <el-input style="width: 200px;" class="filter-item" placeholder="输入手机号" v-model="data.mobile">
+      </el-input>
+      <el-select clearable style="width: 150px" class="filter-item" v-model="data.state" placeholder="是否发货">
+        <el-option  label="已发货" :value="4">
+          已发货
+        </el-option>
+        <el-option  label="未发货" :value="3">
+          未发货
         </el-option>
       </el-select>
-      <el-button class="filter-item" type="primary" icon="el-icon-search">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加商品</el-button>
+      <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
+      </el-date-picker>
+      <el-button class="filter-item" type="primary" icon="el-icon-search"  @click="suchbox">搜索</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-        <el-table-column prop="name1" label="商品名称">
+        <el-table-column prop="code" label="订单号" align="center">
         </el-table-column>
-        <el-table-column prop="name2" label="商品订单">
+        <el-table-column prop="name" label="商品名称" align="center">
         </el-table-column>
-        <el-table-column prop="date" label="购买日期">
+        <el-table-column prop="kind" label="规格" align="center">
         </el-table-column>
-        <el-table-column prop="name" label="姓名">
-        </el-table-column>
-        <el-table-column prop="province" label="消费积分">
-        </el-table-column>
-        <el-table-column prop="city" label="会员级别">
-        </el-table-column>
-        <el-table-column prop="address" label="地址">
-        </el-table-column>
-        <el-table-column prop="zip" label="邮编">
-        </el-table-column>
-        <el-table-column label="操作" width="300">
+        <el-table-column prop="createDate" label="购买日期" align="center">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
-            <el-button @click="handleClick(scope.row)" type="success" size="small">已发货</el-button>
-            <el-button @click="handleClick(scope.row)" type="danger" size="small">删除</el-button>
+            <span>{{new Date(scope.row.createDate).getFullYear()+ '-' + (((new Date(scope.row.createDate).getMonth() + 1) < 10) ? '0'+ (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) +'-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="addressee" label="姓名" align="center">
+        </el-table-column>
+        <el-table-column prop="mobile" label="手机号" align="center">
+        </el-table-column>
+        <el-table-column prop="total" label="消费积分" align="center">
+        </el-table-column>
+        <el-table-column prop="courierNumber" label="快递单号" align="center">
+           <template slot-scope="scope">
+            <span v-if="scope.row.courierNumber === null">无</span>
+            <span v-else>{{scope.row.courierNumber}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column  label="地址" align="center">
+          <template slot-scope="scope">
+            {{scope.row.city}}{{scope.row.address}}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row.id)" type="primary" size="small" v-if='scope.row.state === 3'>发货</el-button>
+            <el-button @click="handleClick(scope.row.id)" type="success" size="small" v-else>修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -40,15 +58,29 @@
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
+    <el-dialog :visible.sync="dialogFormVisible" title="填写订单号">
+      <el-form ref="dataForm" label-position="left" label-width="100px" style='width: 700px; margin-left:50px;'>
+        <el-form-item label="订单号">
+           <el-input placeholder="请输入订单号" v-model="item.orderid"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="quxiao">取消</el-button>
+        <el-button type="primary" @click="trueover">保存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
+import { getAllPointGoodsOrders, insertCourierNumber } from '@/api/shoping'
+import { ERR_OK } from '@/api/config'
 export default {
   data() {
     return {
       place: '测试',
       loading: false,
       total: 100,
+      dialogFormVisible: false,
       listQuery: {
         page: 1,
         limit: 10,
@@ -57,99 +89,78 @@ export default {
         type: undefined,
         sort: '+id'
       },
-      importanceOptions: [{ key: 'V1会员' }, { key: 'V2会员' }],
-      tableData: [{
-        name1: '蓝牙耳机',
-        name2: '12348596846516351',
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '12456',
-        city: 'V1会员',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        name1: '蓝牙耳机',
-        name2: '12348596846516351',
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '12456',
-        city: 'V1会员',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        name1: '蓝牙耳机',
-        name2: '12348596846516351',
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '12456',
-        city: 'V1会员',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        name1: '蓝牙耳机',
-        name2: '12348596846516351',
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '12456',
-        city: 'V1会员',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        name1: '蓝牙耳机',
-        name2: '12348596846516351',
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '12456',
-        city: 'V1会员',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        name1: '蓝牙耳机',
-        name2: '12348596846516351',
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '12456',
-        city: 'V1会员',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        name1: '蓝牙耳机',
-        name2: '12348596846516351',
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '12456',
-        city: 'V1会员',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        name1: '蓝牙耳机',
-        name2: '12348596846516351',
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '12456',
-        city: 'V1会员',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        name1: '蓝牙耳机',
-        name2: '12348596846516351',
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '12456',
-        city: 'V1会员',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }]
+      tableData: [],
+      dataArr: [],
+      data: {
+        code: null,
+        courierNumber: null,
+        endTime: null,
+        mobile: null,
+        name: null,
+        pageNum: null,
+        pageSize: null,
+        startTime: null,
+        state: null
+      },
+      item: {
+        id: '',
+        orderid: ''
+      }
     }
   },
+  created() {
+    this._getAllPointGoodsOrders()
+  },
   methods: {
+    _getAllPointGoodsOrders() {
+      this.data.pageNum = this.listQuery.page
+      this.data.pageSize = this.listQuery.limit
+      getAllPointGoodsOrders(this.data).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('获取商品订单============')
+          console.log(res.data)
+          this.total = res.data.total
+          this.tableData = res.data.list
+        }
+      })
+    },
     handleSizeChange(val) {
       this.listQuery.limit = val
-      this.getList()
+      this._getAllPointGoodsOrders()
     },
     handleCurrentChange(val) {
       this.listQuery.page = val
-      this.getList()
+      this._getAllPointGoodsOrders()
+    },
+    suchbox() {
+      this.listQuery.limit = 10
+      this.listQuery.page = 1
+      if (this.dataArr !== [] && this.dataArr !== null) {
+        console.log(this.dataArr)
+        this.data.startTime = this.dataArr[0]
+        this.data.endTime = this.dataArr[1]
+      }
+      this._getAllPointGoodsOrders()
+    },
+    handleClick(id) {
+      this.item.id = id
+      this.dialogFormVisible = true
+    },
+    quxiao() {
+      this.dialogFormVisible = false
+    },
+    trueover() {
+      insertCourierNumber(this.item.orderid, this.item.id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('填写成功')
+          this.dialogFormVisible = false
+          this.$message({
+            message: '已发货',
+            type: 'success'
+          })
+          this._getAllPointGoodsOrders()
+        }
+      })
     }
   }
 }

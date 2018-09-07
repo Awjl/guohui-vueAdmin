@@ -1,27 +1,12 @@
-import request from '@/utils/request'
+import { api } from './config'
+import axios from 'axios'
 
-export function login(username, password) {
-  return request({
-    url: '/user/login',
-    method: 'post',
-    data: {
-      username,
-      password
-    }
-  })
-}
-
-export function getInfo(token) {
-  return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
-  })
-}
-
-export function logout() {
-  return request({
-    url: '/user/logout',
-    method: 'post'
+export function login(data) {
+  const url = `${api}/sicc_back/admin/login`
+  return axios.post(url, {
+    name: data.name,
+    password: data.password
+  }).then((res) => {
+    return Promise.resolve(res.data)
   })
 }

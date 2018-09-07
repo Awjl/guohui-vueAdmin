@@ -1,31 +1,33 @@
 <template>
-  <!-- <el-upload class="upload-demo" action="" :auto-upload="false" :show-file-list="true" list-type="picture" :on-change="onUploadChange" :on-remove="handleRemove" :file-list="arr">
-    <el-button slot="trigger" size="small" type="primary">选取</el-button>
-    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-  </el-upload> -->
   <div class="banner">
     <div class="banneradd">
       <el-button type="primary" size="mini" @click="handleUpdate()" icon="el-icon-plus">新增Banner</el-button>
+      <el-button type="primary" size="mini" @click="topBanner" >首页顶部Banner</el-button>
+      <el-button type="primary" size="mini" @click="bottomBanner" >首页大厅Banner</el-button>
     </div>
     <div class="bannerlist-box">
       <div class="filter-container">
         <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-          <el-table-column prop="ID" label="ID">
+          <el-table-column prop="id" label="ID"  align="center" >
           </el-table-column>
-          <el-table-column prop="name" label="图片名称">
+          <el-table-column prop="title" label="图片名称" align="center" >
           </el-table-column>
-          <el-table-column prop="img" label="图片展示">
-          </el-table-column>
-          <el-table-column prop="state" label="是否上架">
+          <el-table-column prop="url" label="图片展示" align="center" >
             <template slot-scope="scope">
-              <el-switch v-model="scope.row.state" active-text="是" inactive-text="否">
-              </el-switch>
+              <div class="box-img">
+                <img :src="scope.row.url" alt="" align="center" >
+              </div>
             </template>
           </el-table-column>
-          <el-table-column prop="url" label="图片链接">
+          <el-table-column prop="isUpper" label="是否上架" align="center" >
+            <template slot-scope="scope">
+              <el-button  type="success" size="small" v-if="scope.row.isUpper === 1">已上架</el-button>
+              <el-button  type="info" size="small" v-else>已下架</el-button>
+            </template>
           </el-table-column>
-          <el-table-column label="操作">
+          <!-- <el-table-column prop="url" label="图片链接">
+          </el-table-column> -->
+          <el-table-column label="操作" align="center" >
             <template slot-scope="scope">
               <el-button @click="handleClick(scope.row)" type="danger" size="small">删除</el-button>
             </template>
@@ -56,6 +58,9 @@
 </template>
 
 <script>
+import { getAllTopBanner, getAllBottomBanner } from '@/api/home'
+import { ERR_OK } from '@/api/config'
+
 export default {
   data() {
     return {
@@ -64,7 +69,7 @@ export default {
       arr2: [],
       dialogFormVisible: false,
       title: '添加图片',
-      tableData: [{ ID: '1', name: 'name1', img: 'i123', state: true, url: '1231' }, { ID: '1', name: 'name1', img: 'i123', state: false, url: '1231' }, { ID: '1', name: 'name1', img: 'i123', state: true, url: '1231' }, { ID: '1', name: 'name1', img: 'i123', state: false, url: '1231' }, { ID: '1', name: 'name1', img: 'i123', state: false, url: '1231' }, { ID: '1', name: 'name1', img: 'i123', state: false, url: '1231' }, { ID: '1', name: 'name1', img: 'i123', state: false, url: '1231' }, { ID: '1', name: 'name1', img: 'i123', state: false, url: '1231' }, { ID: '1', name: 'name1', img: 'i123', state: false, url: '1231' }, { ID: '1', name: 'name1', img: 'i123', state: false, url: '1231' }],
+      tableData: [],
       value3: true,
       total: 100,
       listQuery: {
@@ -77,7 +82,34 @@ export default {
       }
     }
   },
+  created() {
+    this._getAllTopBanner()
+  },
   methods: {
+    _getAllTopBanner() {
+      getAllTopBanner(this.listQuery.page, this.listQuery.limit).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('banner数据==================')
+          console.log(res.data)
+          this.total = res.data.total
+          this.tableData = res.data.list
+        }
+      })
+    },
+    bottomBanner() {
+      console.log('测试')
+      getAllBottomBanner(this.listQuery.page, this.listQuery.limit).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('banner数据==================')
+          console.log(res.data)
+          this.total = res.data.total
+          this.tableData = res.data.list
+        }
+      })
+    },
+    topBanner() {
+      this._getAllTopBanner()
+    },
     handleUpdate() {
       this.dialogFormVisible = true
     },
@@ -128,6 +160,9 @@ export default {
 }
 </script>
 <style>
+img {
+  width: 100%;
+}
 .banneradd {
   margin: 30px;
 }
