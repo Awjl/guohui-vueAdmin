@@ -74,11 +74,7 @@ export default {
       total: 100,
       listQuery: {
         page: 1,
-        limit: 10,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
+        limit: 10
       }
     }
   },

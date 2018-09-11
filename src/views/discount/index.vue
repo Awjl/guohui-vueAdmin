@@ -41,11 +41,7 @@ export default {
       total: 100,
       listQuery: {
         page: 1,
-        limit: 10,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
+        limit: 10
       },
       importanceOptions: [{ key: '停车优惠券' }, { key: '内部优惠券' }],
       tableData: [{

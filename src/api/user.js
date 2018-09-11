@@ -17,3 +17,147 @@ export function getAllUser(data) {
     return Promise.resolve(res.data)
   })
 }
+
+// 会议预定管理
+
+export function getAllBook(data) {
+  const url = `${api}/sicc_back/book/getAllBook`
+  return axios.post(url, {
+    endTime: data.endTime,
+    mobile: data.mobile,
+    pageNum: data.pageNum,
+    pageSize: data.pageSize,
+    startTime: data.startTime,
+    name: data.name,
+    isConnected: data.isConnected
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 联系接口
+export function isConnected(id) {
+  const url = `${api}/sicc_back/book/isConnected`
+  return axios.get(url, {
+    params: {
+      id: id
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 添加反馈
+export function addFeedback(data) {
+  const url = `${api}/sicc_back/book/addFeedback`
+  return axios.post(url, {
+    feedBack: data.feedBack,
+    id: data.id
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 问题查询
+export function getAllHotQuestion(data) {
+  const url = `${api}/sicc_back/service/getAllHotQuestion`
+  return axios.get(url, {
+    params: {
+      pageNum: data.pageNum,
+      pageSize: data.pageSize
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 上架下架问题
+export function isUpperHotQuestion(questionId, isUpper) {
+  const url = `${api}/sicc_back/service/isUpperHotQuestion`
+  return axios.get(url, {
+    params: {
+      questionId: questionId,
+      isUpper: isUpper
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 新增
+export function addHotQuestion(data) {
+  const url = `${api}/sicc_back/service/addHotQuestion`
+  return axios.post(url, {
+    answer: data.answer,
+    question: data.question
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+//  修改
+export function getHotQuestionById(questionId) {
+  const url = `${api}/sicc_back/service/getHotQuestionById`
+  return axios.get(url, {
+    params: {
+      questionId: questionId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+//  修改问题
+export function editHotQuestionById(data) {
+  const url = `${api}/sicc_back/service/editHotQuestionById`
+  return axios.post(url, {
+    answer: data.answer,
+    question: data.question,
+    id: data.id
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 删除问题
+export function deleteHotQuestionById(questionId) {
+  const url = `${api}/sicc_back/service/deleteHotQuestionById`
+  return axios.get(url, {
+    params: {
+      questionId: questionId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 获取热线
+export function getPhone() {
+  const url = `${api}/sicc/service/getPhone`
+  return axios.get(url).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 修改
+export function updatePhone(phone) {
+  const url = `${api}/sicc_back/service/updatePhone`
+  return axios.get(url, {
+    params: {
+      phone: phone
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 查询全部管理员
+export function getAdmins(data) {
+  const url = `${api}/sicc_back/admin/getAdmins`
+  return axios.post(url, {
+    endTime: data.endTime,
+    name: data.name,
+    pageNum: data.pageNum,
+    pageSize: data.pageSize,
+    roleName: data.roleName,
+    startTime: data.startTime
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

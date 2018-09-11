@@ -27,7 +27,12 @@
         </el-table-column>
         <el-table-column prop="num" label="数量" align="center">
         </el-table-column>
-        <el-table-column prop="total" label="价格" align="center">
+        <el-table-column label="总价" align="center">
+          <template slot-scope="scope">
+            {{Number(scope.row.total)+Number(scope.row.price)}}
+          </template>
+        </el-table-column>
+        <el-table-column prop="total" label="实付金额" align="center">
         </el-table-column>
         <el-table-column prop="price" label="优惠金额" align="center">
         </el-table-column>
@@ -62,13 +67,10 @@ export default {
   data() {
     return {
       loading: false,
-      total: 100,
+      total: 1,
       listQuery: {
         page: 1,
-        limit: 10,
-        importance: undefined,
-        title: undefined,
-        type: undefined
+        limit: 10
       },
       tableData: [],
       dataArr: [],
@@ -115,6 +117,9 @@ export default {
       if (this.dataArr !== [] && this.dataArr !== null) {
         this.data.startTime = this.dataArr[0]
         this.data.endTime = this.dataArr[1]
+      } else {
+        this.data.startTime = null
+        this.data.endTime = null
       }
       this._getAllGoodsOrders()
     }

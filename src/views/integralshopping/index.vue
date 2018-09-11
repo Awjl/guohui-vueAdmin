@@ -54,6 +54,8 @@
             <p v-if='scope.row.level === 3'>全部会员</p>
           </template>
         </el-table-column>
+        <el-table-column prop="stock" label="库存数" align="center">
+        </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="primary" size="small">修改</el-button>
@@ -81,11 +83,7 @@ export default {
       total: 1,
       listQuery: {
         page: 1,
-        limit: 10,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
+        limit: 10
       },
       tableData: [],
       dataArr: [],

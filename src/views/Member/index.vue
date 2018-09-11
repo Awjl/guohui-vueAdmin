@@ -13,7 +13,7 @@
           V2会员
         </el-option>
       </el-select>
-      <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
+      <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加</el-button>
@@ -58,23 +58,19 @@ export default {
       total: 1,
       listQuery: {
         page: 1,
-        limit: 10,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
+        limit: 10
       },
       dataArr: [],
       data: {
-        endTime: '',
-        level: '',
-        mobile: '',
-        pageNum: '',
-        pageSize: '',
-        sex: '',
-        startTime: '',
-        userId: '',
-        nickname: ''
+        endTime: null,
+        level: null,
+        mobile: null,
+        pageNum: null,
+        pageSize: null,
+        sex: null,
+        startTime: null,
+        userId: null,
+        nickname: null
       },
       tableData: []
     }
@@ -90,6 +86,7 @@ export default {
         if (res.code === ERR_OK) {
           this.total = res.data.total
           this.tableData = res.data.list
+          console.log(res.data)
         }
       })
     },
@@ -104,8 +101,14 @@ export default {
     suchbox() {
       this.listQuery.limit = 10
       this.listQuery.page = 1
-      this.data.startTime = this.dataArr[0]
-      this.data.endTime = this.dataArr[1]
+      if (this.dataArr !== [] && this.dataArr !== null) {
+        console.log(this.dataArr)
+        this.data.startTime = this.dataArr[0]
+        this.data.endTime = this.dataArr[1]
+      } else {
+        this.data.startTime = null
+        this.data.endTime = null
+      }
       this._getAllUser()
     }
   }

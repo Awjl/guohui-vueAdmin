@@ -77,17 +77,12 @@ import { ERR_OK } from '@/api/config'
 export default {
   data() {
     return {
-      place: '测试',
       loading: false,
-      total: 100,
+      total: 1,
       dialogFormVisible: false,
       listQuery: {
         page: 1,
-        limit: 10,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
+        limit: 10
       },
       tableData: [],
       dataArr: [],
@@ -139,6 +134,9 @@ export default {
         console.log(this.dataArr)
         this.data.startTime = this.dataArr[0]
         this.data.endTime = this.dataArr[1]
+      } else {
+        this.data.startTime = null
+        this.data.endTime = null
       }
       this._getAllPointGoodsOrders()
     },
