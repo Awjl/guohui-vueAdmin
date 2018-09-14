@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
-// detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
-
 Vue.use(Router)
 
 import Layout from '@/views/layout/Layout'
@@ -69,15 +66,33 @@ export const constantRouterMap = [
     }]
   },
   {
-    path: '',
+    path: '/shoppingAdmin',
     component: Layout,
-    redirect: 'shopping',
+    redirect: 'shoppingAdmin',
+    meta: {
+      title: '商城管理',
+      icon: 'shoppingCard'
+    },
     children: [{
+      path: 'footshopping',
+      component: () => import('@/views/shopping/footshopping'),
+      name: 'footshopping',
+      meta: { title: '食品管理' }
+    },
+    {
       path: 'shopping',
-      component: () => import('@/views/shopping/index'),
+      component: () => import('@/views/shopping/shopping'),
       name: 'shopping',
-      meta: { title: '商城管理', icon: 'shoppingCard', noCache: true }
-    }]
+      meta: { title: '券类管理' }
+    },
+    {
+      path: 'addshopping/:id',
+      component: () => import('@/views/shopping/addshopping'),
+      name: 'addshopping',
+      meta: { title: '商品管理' },
+      hidden: true
+    }
+    ]
   },
   {
     path: '',

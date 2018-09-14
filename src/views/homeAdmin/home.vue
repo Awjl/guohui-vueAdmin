@@ -1,26 +1,28 @@
 <template>
   <div class="home">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="标题" prop="name">
-        <el-input v-model="ruleForm.name"></el-input>
-      </el-form-item>
-      <el-form-item label="介绍" prop="desc">
-        <el-input type="textarea"  :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.desc"></el-input>
+      <el-form-item label="文字介绍" prop="desc">
+        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.contentFirst"></el-input>
       </el-form-item>
       <el-form-item label="上传图片">
-        <el-upload class="avatar-uploader" action="" :show-file-list="false" :on-change="onUploadChange" :auto-upload="false">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        <div class="upbtn">
+          <label for="up">预览图片</label>
+          <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
+        </div>
+        <img :src="oneavatar" alt="" v-if="oneavatar">
       </el-form-item>
-      <el-form-item label="介绍" prop="desc">
-        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.desc"></el-input>
+      <el-form-item label="文字介绍" prop="desc">
+        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.contentSecond"></el-input>
       </el-form-item>
       <el-form-item label="上传图片">
-        <el-upload class="avatar-uploader" action="" :show-file-list="false" :on-change="onUploadChange" :auto-upload="false">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        <div class="upbtn">
+          <label for="uptwo">预览图片</label>
+          <input @change="upavatartwoimg" type="file" id="uptwo" value="图片上传预览" />
+        </div>
+        <img :src="twoavatar" alt="" v-if="twoavatar">
+      </el-form-item>
+      <el-form-item label="文字介绍" prop="desc">
+        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.contentThird"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
@@ -33,51 +35,55 @@
 
 
 <script>
+import { getIntroduces, editIntroduce } from '@/api/home'
+import { ERR_OK } from '@/api/config'
+
+const formData = new FormData()
+
 export default {
   data() {
     return {
       imageUrl: '',
-      ruleForm: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
+      ruleForm: {},
       rules: {
-        name: [
-          { required: true, message: '请输入标题', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ],
-        region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
-        ],
-        date1: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-        ],
-        date2: [
-          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-        ],
-        type: [
-          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-        ],
-        resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
-        ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
-        ]
+      },
+      oneavatar: '',
+      twoavatar: '',
+      imgType: {
+        type: 'image/jpeg, image/png, image/jpg'
       }
     }
   },
+  created() {
+    this._getIntroduces()
+  },
   methods: {
+    _getIntroduces() {
+      getIntroduces().then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('获取详情==========')
+          console.log(res.data)
+          this.ruleForm = res.data[0]
+          this.oneavatar = res.data[0].urlFirst
+          this.twoavatar = res.data[0].urlSecond
+        }
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          formData.set('id', this.ruleForm.id)
+          formData.set('contentFirst', this.ruleForm.contentFirst)
+          formData.set('contentSecond', this.ruleForm.contentSecond)
+          formData.set('contentThird', this.ruleForm.contentThird)
+          editIntroduce(formData).then((res) => {
+            if (res.data.code === ERR_OK) {
+              this.$message({
+                type: 'success',
+                message: '修改成功'
+              })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -87,18 +93,49 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    onUploadChange(file, arr) {
-      const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png')
-      const isLt1M = file.size / 1024 / 1024 < 1
-      if (!isIMAGE) {
-        this.$message.error('只能上传jpg/png图片!')
-        return
+    upavatarimg(e) {
+      var avatarImg = e.target.files[0]
+      var avatarImgsize = avatarImg.size
+      var avatarImgtype = avatarImg.type
+      // 验证图片格式
+      if (this.imgType.type.indexOf(avatarImgtype) === -1) {
+        this.$message.error('格式不正确')
+        return false
+      } else if (avatarImgsize > 5242880) {
+        this.$message.error('图片太大了')
+        return false
+      } else {
+        const _this = this
+        if (!e || !window.FileReader) return
+        const reader = new FileReader()
+        reader.readAsDataURL(avatarImg)
+        reader.onload = function(e) {
+          _this.oneavatar = e.target.result
+        }
+        formData.set('urlFirst', e.target.files[0])
       }
-      if (!isLt1M) {
-        this.$message.error('上传文件大小不能超过 1MB!')
-        return
+    },
+    upavatartwoimg(e) {
+      var avatartwoImg = e.target.files[0]
+      var avatarImgsize = avatartwoImg.size
+      var avatarImgtype = avatartwoImg.type
+      // 验证图片格式
+      if (this.imgType.type.indexOf(avatarImgtype) === -1) {
+        this.$message.error('格式不正确')
+        return false
+      } else if (avatarImgsize > 5242880) {
+        this.$message.error('图片太大了')
+        return false
+      } else {
+        const _this = this
+        if (!e || !window.FileReader) return
+        const reader = new FileReader()
+        reader.readAsDataURL(avatartwoImg)
+        reader.onload = function(e) {
+          _this.twoavatar = e.target.result
+        }
+        formData.set('urlSecond', e.target.files[0])
       }
-      this.imageUrl = URL.createObjectURL(file.raw)
     }
   }
 }
@@ -131,5 +168,28 @@ export default {
   width: 178px;
   height: 178px;
   display: block;
+}
+.upbtn {
+  width: 100px;
+  height: 30px;
+  background: #66b1ff;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  margin-bottom: 50px;
+}
+.upbtn label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100px;
+  height: 30px;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+}
+.upbtn input {
+  opacity: 0;
 }
 </style>
