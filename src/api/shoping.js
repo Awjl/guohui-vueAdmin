@@ -318,7 +318,7 @@ export function setCornerMealListBanner(data) {
   })
 }
 
-// 新增商品/goods/addGoods
+// 新增商品
 export function addGoods(data) {
   return axios({
     url: `${api}/sicc_back/goods/addGoods`,
@@ -378,3 +378,47 @@ export function editGoods(data) {
   })
 }
 
+// 添加积分商品
+export function addPointGoods(data) {
+  return axios({
+    url: `${api}/sicc_back/pointGoods/addPointGoods`,
+    method: 'post',
+    data: data,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+// 删除积分商城
+export function deletePointGoods(pointGoodsId) {
+  const url = `${api}/sicc_back/pointGoods/deletePointGoods`
+  return axios.get(url, {
+    params: {
+      pointGoodsId: pointGoodsId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 查询积分商品
+export function getPointGoodsById(pointGoodsId) {
+  const url = `${api}/sicc_back/pointGoods/getPointGoodsById`
+  return axios.get(url, {
+    params: {
+      pointGoodsId: pointGoodsId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 修改积分商品
+export function editPointGoods(data) {
+  return axios({
+    url: `${api}/sicc_back/pointGoods/editPointGoods`,
+    method: 'post',
+    data: data,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}

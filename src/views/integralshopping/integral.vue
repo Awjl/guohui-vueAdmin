@@ -7,43 +7,37 @@
             <el-input placeholder="请输入商品名称" v-model="shoplist.name"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
-          <el-form-item label="产品类型">
-            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.type" placeholder="选择分类">
-              <el-option label="房券" :value="1">
-                房券
+        <el-col :span="24">
+          <el-form-item label="简介">
+            <el-input placeholder="请输入简介" v-model="shoplist.summary"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="类型">
+            <el-input placeholder="请输入类型" v-model="shoplist.kind"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="参数">
+            <el-input placeholder="请输入参数" v-model="shoplist.param"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="对应级别">
+            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.level" placeholder="选择对应级别">
+              <el-option label="全部" :value="3">
+                全部
               </el-option>
-              <el-option label="餐券" :value="2">
-                餐券
+              <el-option label="V1会员" :value="1">
+                V1会员
+              </el-option>
+              <el-option label="V2会员" :value="2">
+                V2会员
               </el-option>
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
-          <el-form-item label="是否推荐">
-            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.isCommend" placeholder="选择分类">
-              <el-option label="房券" :value="1">
-                热推
-              </el-option>
-              <el-option label="餐券" :value="2">
-                非热推
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="是否预约">
-            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.isBespeak" placeholder="选择分类">
-              <el-option label="需要预约" :value="1">
-                需要预约
-              </el-option>
-              <el-option label="不需要预约" :value="2">
-                不需要预约
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
           <el-form-item label="是否上架">
             <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.isUpper" placeholder="选择分类">
               <el-option label="上架" :value="1">
@@ -55,39 +49,29 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="原价">
-            <el-input placeholder="请输入价格" v-model="shoplist.oldPrice"></el-input>
+        <el-col :span="8">
+          <el-form-item label="库存">
+            <el-input placeholder="请输入库存" v-model="shoplist.stock"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="折扣价">
-            <el-input placeholder="请输入折扣价" v-model="shoplist.newPrice"></el-input>
+        <el-col :span="8">
+          <el-form-item label="原积分">
+            <el-input placeholder="请输入价格" v-model="shoplist.oldPoint"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="24">
-          <el-form-item label="简介">
-            <el-input placeholder="请输入简介" v-model="shoplist.summary"></el-input>
+        <el-col :span="8">
+          <el-form-item label="v1积分">
+            <el-input placeholder="v1对应的积分" v-model="shoplist.v1NewPoint"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="v2积分">
+            <el-input placeholder=" v2对应的积分" v-model="shoplist.v2NewPoint"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="介绍">
             <el-input placeholder="请输入介绍" v-model="shoplist.introduce"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="有效期">
-            <el-input placeholder="请输入有效期" v-model="shoplist.termOfValidity"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="使用时间">
-            <el-input placeholder="请输入使用时间" v-model="shoplist.useTime"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="24">
-          <el-form-item label="使用规则">
-            <el-input placeholder="请输入使用规则" v-model="shoplist.useRule"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
@@ -128,15 +112,10 @@
               <div>
                 <el-col :span="8" v-if="bottomDataList" v-for="(item, index) in bottomDataList" :key="index" class="delbox">
                   <img :src="item.url" alt="">
-                  <div class="btndel"  @click="delUpimg(item.id)">删除</div>
+                  <div class="btndel" @click="delUpimg(item.id)" >删除</div>
                 </el-col>
               </div>
             </el-row>
-          </el-form-item>
-        </el-col>
-        <el-col :span="24">
-          <el-form-item label="缩略图标题">
-            <el-input placeholder="请输入缩略图标题" v-model="shoplist.title"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
@@ -146,7 +125,7 @@
               <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
             </div>
             <el-row :gutter="20">
-              <el-col :span="8"  v-if="shoplist.showFile">
+              <el-col :span="8" v-if="shoplist.showFile">
                 <img :src="shoplist.showFile" alt="">
               </el-col>
             </el-row>
@@ -161,7 +140,7 @@
   </div>
 </template>
 <script>
-import { addGoods, getGoodsById, deleteGoodPic, editGoods } from '@/api/shoping'
+import { addPointGoods, getPointGoodsById, deleteGoodPic, editPointGoods } from '@/api/shoping'
 import { ERR_OK } from '@/api/config'
 
 const formData = new FormData()
@@ -171,21 +150,19 @@ export default {
     return {
       shoplist: {
         name: '',
-        type: '',
-        oldPrice: '',
-        newPrice: '',
         summary: '',
+        kind: '',
+        oldPoint: '',
+        v1NewPoint: '',
+        v2NewPoint: '',
+        param: '',
         introduce: '',
-        isCommend: '',
-        isBespeak: '',
-        termOfValidity: '',
-        useTime: '',
-        useRule: '',
+        stock: '',
+        isUpper: '',
+        level: '',
         showFile: '',
         bannerFiles: '',
-        introduceFiles: '',
-        title: '',
-        isUpper: ''
+        introduceFiles: ''
       },
       imgType: {
         type: 'image/jpeg, image/png, image/jpg'
@@ -198,15 +175,13 @@ export default {
   },
   created() {
     if (this.$route.params.id !== 'null') {
-      this._getGoodsById(this.$route.params.id)
+      this._getPointGoodsById(this.$route.params.id)
     }
   },
   methods: {
-    _addGoods() {
-      console.log(formData.getAll('bannerFiles'))
-      addGoods(formData).then((res) => {
+    _addPointGoods() {
+      addPointGoods(formData).then((res) => {
         if (res.data.code === ERR_OK) {
-          console.log('-----------------------')
           this.$message({
             type: 'success',
             message: '保存成功'
@@ -214,8 +189,8 @@ export default {
         }
       })
     },
-    _editGoods() {
-      editGoods(formData).then((res) => {
+    _editPointGoods() {
+      editPointGoods(formData).then((res) => {
         if (res.data.code === ERR_OK) {
           console.log('-----------修改------------')
           this.$message({
@@ -225,27 +200,24 @@ export default {
         }
       })
     },
-    _getGoodsById(id) {
-      getGoodsById(id).then((res) => {
+    _getPointGoodsById(id) {
+      getPointGoodsById(id).then((res) => {
         if (res.code === ERR_OK) {
-          this.shoplist.name = res.data.goods.name
-          this.shoplist.type = res.data.goods.type
-          this.shoplist.oldPrice = res.data.goods.oldPrice
-          this.shoplist.newPrice = res.data.goods.newPrice
-          this.shoplist.summary = res.data.goods.summary
-          this.shoplist.introduce = res.data.goods.introduce
-          this.shoplist.isCommend = res.data.goods.isCommend
-          this.shoplist.isBespeak = res.data.goods.isBespeak
-          this.shoplist.termOfValidity = res.data.goods.termOfValidity
-          this.shoplist.useTime = res.data.goods.useTime
-          this.shoplist.useRule = res.data.goods.useRule
-          this.shoplist.isUpper = res.data.goods.isUpper
+          console.log(res.data)
+          this.shoplist.name = res.data.pointGoods.name
+          this.shoplist.oldPoint = res.data.pointGoods.oldPoint
+          this.shoplist.v1NewPoint = res.data.pointGoods.v1NewPoint
+          this.shoplist.v2NewPoint = res.data.pointGoods.v2NewPoint
+          this.shoplist.param = res.data.pointGoods.param
+          this.shoplist.stock = res.data.pointGoods.stock
+          this.shoplist.level = res.data.pointGoods.level
+          this.shoplist.summary = res.data.pointGoods.summary
+          this.shoplist.introduce = res.data.pointGoods.introduce
+          this.shoplist.isUpper = res.data.pointGoods.isUpper
           this.shoplist.showFile = res.data.showPic.url
-          this.shoplist.title = res.data.showPic.title
-
+          this.shoplist.kind = res.data.pointGoods.kind
           this.topDataList = res.data.bannerPics
           this.bottomDataList = res.data.introducePics
-
           console.log(this.shoplist)
         }
       })
@@ -337,23 +309,23 @@ export default {
     },
     trueover() {
       formData.append('name', this.shoplist.name)
-      formData.append('type', this.shoplist.type)
-      formData.append('oldPrice', this.shoplist.oldPrice)
-      formData.append('newPrice', this.shoplist.newPrice)
       formData.append('summary', this.shoplist.summary)
+      formData.append('kind', this.shoplist.kind)
+      formData.append('oldPoint', this.shoplist.oldPoint)
+      formData.append('v1NewPoint', this.shoplist.v1NewPoint)
+      formData.append('v2NewPoint', this.shoplist.v2NewPoint)
+      formData.append('param', this.shoplist.param)
       formData.append('introduce', this.shoplist.introduce)
-      formData.append('isCommend', this.shoplist.isCommend)
-      formData.append('isBespeak', this.shoplist.isBespeak)
-      formData.append('termOfValidity', this.shoplist.termOfValidity)
-      formData.append('useTime', this.shoplist.useTime)
-      formData.append('useRule', this.shoplist.useRule)
-      formData.append('title', this.shoplist.title)
+      formData.append('stock', this.shoplist.stock)
       formData.append('isUpper', this.shoplist.isUpper)
+      formData.append('level', this.shoplist.level)
       if (this.$route.params.id !== 'null') {
+        console.log(this.$route.params.id)
         formData.append('id', this.$route.params.id)
-        this._editGoods()
+        this._editPointGoods()
       } else {
-        this._addGoods()
+        console.log('保存')
+        this._addPointGoods()
       }
     }
   }

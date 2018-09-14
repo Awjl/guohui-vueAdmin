@@ -95,7 +95,7 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '',
+    path: '/integralshopping',
     component: Layout,
     redirect: 'integralshopping',
     children: [{
@@ -103,6 +103,13 @@ export const constantRouterMap = [
       component: () => import('@/views/integralshopping/index'),
       name: 'integralshopping',
       meta: { title: '积分商城管理', icon: 'nested', noCache: true }
+    },
+    {
+      path: 'addintegralshopping/:id',
+      component: () => import('@/views/integralshopping/integral'),
+      name: 'addintegralshopping',
+      meta: { title: '积分商品管理' },
+      hidden: true
     }]
   },
   {

@@ -25,7 +25,9 @@
       <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加商品</el-button>
+      <router-link :to="'/integralshopping/addintegralshopping/'+null">
+        <el-button type="primary" icon="el-icon-edit">添加商品</el-button>
+      </router-link>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="id" label="商品ID" align="center">
@@ -58,10 +60,12 @@
         </el-table-column>
         <el-table-column label="操作" align="center" width="300">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="primary" size="small">修改</el-button>
+            <router-link :to="'/integralshopping/addintegralshopping/'+scope.row.id">
+              <el-button type="primary" size="small">修改</el-button>
+            </router-link>
             <el-button @click="Lower(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1">下架</el-button>
             <el-button @click="Lower(scope.row.isUpper, scope.row.id)" type="success" size="small" v-else>上架</el-button>
-            <el-button @click="handleClick(scope.row)" type="danger" size="small">删除</el-button>
+            <el-button @click="del(scope.row.id)" type="danger" size="small">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -73,7 +77,7 @@
   </div>
 </template>
 <script>
-import { getAllPointGoods, isUpperPointGoods } from '@/api/shoping'
+import { getAllPointGoods, isUpperPointGoods, deletePointGoods } from '@/api/shoping'
 import { ERR_OK } from '@/api/config'
 
 export default {
@@ -133,6 +137,28 @@ export default {
             this._getAllPointGoods()
           }
         }
+      })
+    },
+    del(id) {
+      this.$confirm('是否删除该商品?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deletePointGoods(id).then((res) => {
+          if (res.code === ERR_OK) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this._getAllPointGoods()
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     },
     Lower(id, goodsId) {
