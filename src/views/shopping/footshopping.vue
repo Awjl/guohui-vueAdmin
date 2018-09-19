@@ -96,11 +96,10 @@
 import { getAllBars, getAllBarsGoods, isUpperBarGoods, addBarGoods, getBarGoodsById, editBarGoods, deleteBarGoods } from '@/api/shoping'
 import { ERR_OK } from '@/api/config'
 
-const formData = new FormData()
-
 export default {
   data() {
     return {
+      formData: new FormData(),
       loading: false,
       dialogFormVisible: false,
       total: 1,
@@ -168,7 +167,7 @@ export default {
       })
     },
     _addBarGoods() {
-      addBarGoods(formData).then((res) => {
+      addBarGoods(this.formData).then((res) => {
         if (res.data.code === ERR_OK) {
           this.$message({
             message: '新增商品成功',
@@ -262,21 +261,21 @@ export default {
         // shopingisUpper: '',
         // shoppingsummary: ''
 
-        formData.set('name', this.shopingTitle)
-        formData.set('title', this.shopingTitle)
-        formData.set('barId', this.shopingBar)
-        formData.set('summary', this.shoppingsummary)
-        formData.set('isUpper', this.shopingisUpper)
+        this.formData.set('name', this.shopingTitle)
+        this.formData.set('title', this.shopingTitle)
+        this.formData.set('barId', this.shopingBar)
+        this.formData.set('summary', this.shoppingsummary)
+        this.formData.set('isUpper', this.shopingisUpper)
         this._addBarGoods()
       } else {
-        formData.set('name', this.shopingTitle)
-        formData.set('title', this.shopingTitle)
-        formData.set('barId', this.shopingBar)
-        formData.set('summary', this.shoppingsummary)
-        formData.set('isUpper', this.shopingisUpper)
-        formData.set('id', this.goodID)
-        formData.set('picId', this.picId)
-        editBarGoods(formData).then((res) => {
+        this.formData.set('name', this.shopingTitle)
+        this.formData.set('title', this.shopingTitle)
+        this.formData.set('barId', this.shopingBar)
+        this.formData.set('summary', this.shoppingsummary)
+        this.formData.set('isUpper', this.shopingisUpper)
+        this.formData.set('id', this.goodID)
+        this.formData.set('picId', this.picId)
+        editBarGoods(this.formData).then((res) => {
           if (res.data.code === ERR_OK) {
             this.$message({
               message: '修改商品成功',
@@ -321,7 +320,7 @@ export default {
         reader.onload = function(e) {
           _this.avatar = e.target.result
         }
-        formData.set('file', e.target.files[0])
+        this.formData.set('file', e.target.files[0])
       }
     },
     suchbox() {

@@ -153,10 +153,69 @@ export function getAdmins(data) {
   return axios.post(url, {
     endTime: data.endTime,
     name: data.name,
-    pageNum: data.pageNum,
-    pageSize: data.pageSize,
     roleName: data.roleName,
-    startTime: data.startTime
+    startTime: data.startTime,
+    pageNum: data.pageNum,
+    pageSize: data.pageSize
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 查询全部角色
+export function getRoles() {
+  const url = `${api}/sicc_back/role/getRoles`
+  return axios.get(url, {
+    params: {
+      pageNum: 1,
+      pageSize: 100
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 新增管理员
+export function addAdmin(data) {
+  const url = `${api}/sicc_back/admin/addAdmin`
+  return axios.post(url, {
+    name: data.name,
+    password: data.password,
+    roleId: data.roleId
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 查询管理员
+export function getAdminById(adminId) {
+  const url = `${api}/sicc_back/admin/getAdminById`
+  return axios.get(url, {
+    params: {
+      adminId: adminId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 修改管理员
+export function editAdmin(data) {
+  const url = `${api}/sicc_back/admin/editAdmin`
+  return axios.post(url, {
+    id: data.id,
+    name: data.name,
+    roleId: data.roleId
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 删除管理员
+export function deleteAdminById(adminId) {
+  const url = `${api}/sicc_back/admin/deleteAdminById`
+  return axios.get(url, {
+    params: {
+      adminId: adminId
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })

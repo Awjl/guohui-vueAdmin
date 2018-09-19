@@ -51,10 +51,10 @@
         </el-table-column>
         <el-table-column prop="oldPrice" label="原价" align="center">
         </el-table-column>
-        <el-table-column prop="isCommend" label="绑定首页图片" align="center">
+        <el-table-column prop="isCommend" label="推荐至首页" align="center">
           <template slot-scope="scope">
-            <el-button type="success" size="small" v-if="scope.row.hasIndexPic === 1" disabled>已绑定</el-button>
-            <el-button type="primary" size="small" v-else @click="setHome(scope.row.goodsId, scope.row.type)">去绑定</el-button>
+            <el-button type="success" size="small" v-if="scope.row.hasIndexPic === 1" disabled>已推荐</el-button>
+            <el-button type="primary" size="small" v-else @click="setHome(scope.row.goodsId, scope.row.type)">去推荐</el-button>
           </template>
         </el-table-column>
         <el-table-column prop="isCommend" label="是否为热推" align="center">
@@ -110,8 +110,10 @@
           </div>
           <img :src="oneavatar" alt="" v-if="oneavatar">
         </el-form-item>
-        <el-button @click="quxiao">取消</el-button>
-        <el-button type="primary" @click="trueoneover">保存</el-button>
+        <div style="margin-left:30px;margin-bottom:50px;">
+          <el-button @click="quxiao">取消</el-button>
+          <el-button type="primary" @click="trueoneover">保存</el-button>
+        </div>
       </el-form>
       <el-form ref="dataForm" label-position="left" label-width="70px" style='width: 700px; margin-left:50px;'>
         <el-form-item label="一食热推">
@@ -124,8 +126,10 @@
           </div>
           <img :src="twoavatar" alt="" v-if="twoavatar">
         </el-form-item>
-        <el-button @click="quxiao">取消</el-button>
-        <el-button type="primary" @click="truetwoover">保存</el-button>
+        <div style="margin-left:30px;margin-bottom:20px;">
+          <el-button @click="quxiao">取消</el-button>
+          <el-button type="primary" @click="truetwoover">保存</el-button>
+        </div>
       </el-form>
     </el-dialog>
   </div>

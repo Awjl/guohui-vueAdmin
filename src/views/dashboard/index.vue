@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name:{{name}}</div>
-    <div class="dashboard-text">roles:<span v-for='role in roles' :key='role'>{{role}}</span></div>
+    <div class="dashboard-text">管理员:admin</div>
+    <!-- <div class="dashboard-text">职责:<span v-for='role in roles' :key='role'>{{role}}</span></div> -->
     <admin-dashboard></admin-dashboard>
   </div>
 </template>

@@ -6,8 +6,8 @@
           <svg-icon icon-class="peoples" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">新增会员</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="1000000000000" :duration="2600"></count-to>
+          <div class="card-panel-text">每月新增</div>
+          <count-to class="card-panel-num" :startVal="0" :endVal="1000" :duration="2600"></count-to>
         </div>
       </div>
     </el-col>
@@ -17,7 +17,7 @@
           <svg-icon icon-class="message" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">预约通知</div>
+          <div class="card-panel-text">预定通知</div>
           <count-to class="card-panel-num" :startVal="0" :endVal="81212" :duration="3000"></count-to>
         </div>
       </div>
@@ -28,7 +28,7 @@
           <svg-icon icon-class="money" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">今日总额</div>
+          <div class="card-panel-text">今日收入</div>
           <count-to class="card-panel-num" :startVal="0" :endVal="9280" :duration="3200"></count-to>
         </div>
       </div>
@@ -39,7 +39,7 @@
           <svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">今日卖出</div>
+          <div class="card-panel-text">近日下架商品</div>
           <count-to class="card-panel-num" :startVal="0" :endVal="13600" :duration="3600"></count-to>
         </div>
       </div>

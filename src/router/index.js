@@ -43,15 +43,15 @@ export const constantRouterMap = [
       },
       {
         path: 'stage',
-        name: '一期一会管理',
+        name: '首页一期一会管理',
         component: () => import('@/views/homeAdmin/stage'),
-        meta: { title: '一期一会管理', noCache: true }
+        meta: { title: '首页一期一会管理', noCache: true }
       },
       {
         path: 'food',
-        name: '一隅一食管理',
+        name: '首页一隅一食管理',
         component: () => import('@/views/homeAdmin/food'),
-        meta: { title: '一隅一食管理', noCache: true }
+        meta: { title: '首页一隅一食管理', noCache: true }
       }]
   },
   {
@@ -77,19 +77,19 @@ export const constantRouterMap = [
       path: 'footshopping',
       component: () => import('@/views/shopping/footshopping'),
       name: 'footshopping',
-      meta: { title: '食品管理' }
+      meta: { title: '食品列表' }
     },
     {
       path: 'shopping',
       component: () => import('@/views/shopping/shopping'),
       name: 'shopping',
-      meta: { title: '券类管理' }
+      meta: { title: '商品列表' }
     },
     {
       path: 'addshopping/:id',
       component: () => import('@/views/shopping/addshopping'),
       name: 'addshopping',
-      meta: { title: '商品管理' },
+      meta: { title: '商品管理', noCache: true },
       hidden: true
     }
     ]

@@ -1,6 +1,7 @@
 <template>
-  <div class="app-container">
-    <el-form ref="dataForm" label-position="center" label-width="100px" style='width: 1000px; margin-left:50px;'>
+  <div class="app-container" style='width: 80%'>
+    <el-button @click="quxiaoover" style="float:right">关闭</el-button>
+    <el-form ref="dataForm" label-position="center" label-width="100px" style='width: 80%; margin-left:50px;'>
       <el-row>
         <el-col :span="24">
           <el-form-item label="名称">
@@ -14,12 +15,12 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="类型">
-            <el-input placeholder="请输入类型" v-model="shoplist.kind"></el-input>
+            <el-input placeholder="格式如：黄色，绿色，白色，蓝色" v-model="shoplist.kind"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="参数">
-            <el-input placeholder="请输入参数" v-model="shoplist.param"></el-input>
+            <el-input placeholder="格式如：产地：中国/规格：12MM" v-model="shoplist.param"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -84,7 +85,7 @@
               <div>
                 <el-col :span="8" v-if="topImg" v-for="(item, index) in topImg" :key="index" class="delbox">
                   <img :src="item" alt="">
-                  <div class="btndel">删除</div>
+                  <div class="btndel" @click="dellocalhostimg(index)">删除</div>
                 </el-col>
               </div>
               <div>
@@ -106,13 +107,13 @@
               <div>
                 <el-col :span="8" v-if="bottomImg" v-for="(item, index) in bottomImg" :key="index" class="delbox">
                   <img :src="item" alt="">
-                  <div class="btndel">删除</div>
+                  <div class="btndel" @click="delbottomlocalhostimg(index)">删除</div>
                 </el-col>
               </div>
               <div>
                 <el-col :span="8" v-if="bottomDataList" v-for="(item, index) in bottomDataList" :key="index" class="delbox">
                   <img :src="item.url" alt="">
-                  <div class="btndel" @click="delUpimg(item.id)" >删除</div>
+                  <div class="btndel" @click="delUpimg(item.id)">删除</div>
                 </el-col>
               </div>
             </el-row>
@@ -134,7 +135,7 @@
       </el-row>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <!-- <el-button @click="quxiao">重置</el-button> -->
+      <el-button @click="quxiaoover">取消</el-button>
       <el-button type="primary" @click="trueover">保存</el-button>
     </div>
   </div>
@@ -143,11 +144,10 @@
 import { addPointGoods, getPointGoodsById, deleteGoodPic, editPointGoods } from '@/api/shoping'
 import { ERR_OK } from '@/api/config'
 
-const formData = new FormData()
-
 export default {
   data() {
     return {
+      formData: new FormData(),
       shoplist: {
         name: '',
         summary: '',
@@ -170,7 +170,9 @@ export default {
       topImg: [],
       bottomImg: [],
       topDataList: [],
-      bottomDataList: []
+      bottomDataList: [],
+      topListImg: [],
+      bottomListImg: []
     }
   },
   created() {
@@ -180,22 +182,28 @@ export default {
   },
   methods: {
     _addPointGoods() {
-      addPointGoods(formData).then((res) => {
+      addPointGoods(this.formData).then((res) => {
         if (res.data.code === ERR_OK) {
           this.$message({
             type: 'success',
             message: '保存成功'
           })
+          this.$router.push({
+            path: '/integralshopping/integralshopping'
+          })
         }
       })
     },
     _editPointGoods() {
-      editPointGoods(formData).then((res) => {
+      editPointGoods(this.formData).then((res) => {
         if (res.data.code === ERR_OK) {
           console.log('-----------修改------------')
           this.$message({
             type: 'success',
             message: '修改成功'
+          })
+          this.$router.push({
+            path: '/integralshopping/integralshopping'
           })
         }
       })
@@ -233,6 +241,14 @@ export default {
         }
       })
     },
+    dellocalhostimg(item) {
+      this.topImg.splice(item, 1)
+      this.topListImg.splice(item, 1)
+    },
+    delbottomlocalhostimg(item) {
+      this.topImg.splice(item, 1)
+      this.bottomListImg.splice(item, 1)
+    },
     upavatarimg(e) {
       var avatarImg = e.target.files[0]
       var avatarImgsize = avatarImg.size
@@ -252,7 +268,7 @@ export default {
         reader.onload = function(e) {
           _this.shoplist.showFile = e.target.result
         }
-        formData.set('showFile', e.target.files[0])
+        this.formData.set('showFile', e.target.files[0])
       }
     },
     upTopImg(e) {
@@ -277,7 +293,8 @@ export default {
             _this.topImg.push(e.target.result)
           }
           console.log(this.topImg)
-          formData.append('bannerFiles', Img)
+          // this.formData.append('bannerFiles', Img)
+          this.topListImg.push(Img)
         }
       }
     },
@@ -303,30 +320,42 @@ export default {
             _this.bottomImg.push(e.target.result)
           }
           console.log(this.topImg)
-          formData.append('introduceFiles', Img)
+          // this.formData.append('introduceFiles', Img)
+          this.bottomListImg.push(Img)
         }
       }
     },
     trueover() {
-      formData.append('name', this.shoplist.name)
-      formData.append('summary', this.shoplist.summary)
-      formData.append('kind', this.shoplist.kind)
-      formData.append('oldPoint', this.shoplist.oldPoint)
-      formData.append('v1NewPoint', this.shoplist.v1NewPoint)
-      formData.append('v2NewPoint', this.shoplist.v2NewPoint)
-      formData.append('param', this.shoplist.param)
-      formData.append('introduce', this.shoplist.introduce)
-      formData.append('stock', this.shoplist.stock)
-      formData.append('isUpper', this.shoplist.isUpper)
-      formData.append('level', this.shoplist.level)
+      this.formData.append('name', this.shoplist.name)
+      this.formData.append('summary', this.shoplist.summary)
+      this.formData.append('kind', this.shoplist.kind)
+      this.formData.append('oldPoint', this.shoplist.oldPoint)
+      this.formData.append('v1NewPoint', this.shoplist.v1NewPoint)
+      this.formData.append('v2NewPoint', this.shoplist.v2NewPoint)
+      this.formData.append('param', this.shoplist.param)
+      this.formData.append('introduce', this.shoplist.introduce)
+      this.formData.append('stock', this.shoplist.stock)
+      this.formData.append('isUpper', this.shoplist.isUpper)
+      this.formData.append('level', this.shoplist.level)
+      for (let i = 0; i <= this.topListImg.length; i++) {
+        this.formData.append('bannerFiles', this.topListImg[i])
+      }
+      for (let i = 0; i <= this.bottomListImg.length; i++) {
+        this.formData.append('introduceFiles', this.bottomListImg[i])
+      }
       if (this.$route.params.id !== 'null') {
         console.log(this.$route.params.id)
-        formData.append('id', this.$route.params.id)
+        this.formData.append('id', this.$route.params.id)
         this._editPointGoods()
       } else {
-        console.log('保存')
         this._addPointGoods()
       }
+    },
+    quxiaoover() {
+      console.log('123')
+      this.$router.push({
+        path: '/integralshopping/integralshopping'
+      })
     }
   }
 }
@@ -383,5 +412,8 @@ img {
   color: #fff;
   border-radius: 10px;
   cursor: pointer;
+}
+.dialog-footer {
+  padding: 0 90px;
 }
 </style>
