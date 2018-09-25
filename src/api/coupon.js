@@ -107,3 +107,39 @@ export function sendCoupon(data) {
     return Promise.resolve(res.data)
   })
 }
+
+// 核销优惠券
+export function useCoupon(couponCode) {
+  const url = `${api}/sicc_back/coupon/useCoupon`
+  return axios.get(url, {
+    params: {
+      couponCode: couponCode
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 查找优惠券
+export function getQRCode(couponId) {
+  const url = `${api}/sicc_back/coupon/getQRCode`
+  return axios.get(url, {
+    params: {
+      couponId: couponId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 添加库存
+export function sendCouponQRCode(data) {
+  const url = `${api}/sicc_back/coupon/sendCouponQRCode`
+  return axios.get(url, {
+    params: {
+      couponId: data.couponId,
+      total: data.total
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

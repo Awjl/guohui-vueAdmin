@@ -10,3 +10,11 @@ export function login(data) {
     return Promise.resolve(res.data)
   })
 }
+
+// 查看首页数据/index/getIndexInfo
+export function getIndexInfo() {
+  const url = `${api}/sicc_back/index/getIndexInfo`
+  return axios.get(url).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

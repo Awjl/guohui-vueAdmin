@@ -23,10 +23,10 @@
         <el-col :span="6">
           <el-form-item label="是否推荐">
             <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.isCommend" placeholder="选择分类">
-              <el-option label="房券" :value="1">
+              <el-option label="热推" :value="1">
                 热推
               </el-option>
-              <el-option label="餐券" :value="2">
+              <el-option label="非热推" :value="2">
                 非热推
               </el-option>
             </el-select>
@@ -89,13 +89,13 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="使用规则">
-            <el-input placeholder="格式如：周一至周五使用/早上到晚上/需要预约" v-model="shoplist.useRule"></el-input>
+            <el-input placeholder="格式如：周一至周五使用，早上到晚上，需要预约" v-model="shoplist.useRule"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="顶部图片">
             <div class="upbtn">
-              <label for="up">多张上传</label>
+              <label for="upTop">多张上传</label>
               <input @change="upTopImg" type="file" id="upTop" value="图片上传预览" multiple/>
             </div>
             <el-row :gutter="20">
@@ -117,7 +117,7 @@
         <el-col :span="24">
           <el-form-item label="详情图片">
             <div class="upbtn">
-              <label for="up">多张上传</label>
+              <label for="upBottom">多张上传</label>
               <input @change="upaBottomimg" type="file" id="upBottom" value="图片上传预览" multiple/>
             </div>
             <el-row :gutter="20">
@@ -197,7 +197,9 @@ export default {
       bottomDataList: [],
       topListImg: [],
       bottomListImg: [],
-      dataArr: []
+      dataArr: [],
+      stateTime: '',
+      endTime: ''
     }
   },
   created() {
@@ -236,6 +238,7 @@ export default {
       })
     },
     _getGoodsById(id) {
+      this.dataArr = []
       getGoodsById(id).then((res) => {
         if (res.code === ERR_OK) {
           console.log(res.data)
@@ -354,6 +357,8 @@ export default {
       }
     },
     trueover() {
+      this.stateTime = `${new Date(this.dataArr[0]).getFullYear()}-${(new Date(this.dataArr[0]).getMonth() + 1 < 10 ? '0' + (new Date(this.dataArr[0]).getMonth() + 1) : new Date(this.dataArr[0]).getMonth() + 1)}-${new Date(this.dataArr[0]).getDate() < 10 ? '0' + new Date(this.dataArr[0]).getDate() : new Date(this.dataArr[0]).getDate()}`
+      this.endTime = `${new Date(this.dataArr[1]).getFullYear()}-${(new Date(this.dataArr[1]).getMonth() + 1 < 10 ? '0' + (new Date(this.dataArr[1]).getMonth() + 1) : new Date(this.dataArr[1]).getMonth() + 1)}-${new Date(this.dataArr[1]).getDate() < 10 ? '0' + new Date(this.dataArr[1]).getDate() : new Date(this.dataArr[1]).getDate()}`
       this.formData.append('name', this.shoplist.name)
       this.formData.append('type', this.shoplist.type)
       this.formData.append('oldPrice', this.shoplist.oldPrice)
@@ -362,7 +367,7 @@ export default {
       this.formData.append('introduce', this.shoplist.introduce)
       this.formData.append('isCommend', this.shoplist.isCommend)
       this.formData.append('isBespeak', this.shoplist.isBespeak)
-      this.formData.append('termOfValidity', `${this.dataArr[0]}至${this.dataArr[1]}`)
+      this.formData.append('termOfValidity', `${this.stateTime}至${this.endTime}`)
       this.formData.append('useTime', this.shoplist.useTime)
       this.formData.append('useRule', this.shoplist.useRule)
       this.formData.append('title', this.shoplist.title)
@@ -373,7 +378,7 @@ export default {
       for (let i = 0; i <= this.bottomListImg.length; i++) {
         this.formData.append('introduceFiles', this.bottomListImg[i])
       }
-      console.log(this.formData.get('bannerFiles'))
+      console.log(this.formData.get('termOfValidity'))
       if (this.$route.params.id !== 'null') {
         this.formData.append('id', this.$route.params.id)
         this._editGoods()

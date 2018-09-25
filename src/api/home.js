@@ -83,7 +83,7 @@ export function editIntroduce(data) {
 
 // 获取一隅一食列表
 export function getCornerMealBanner(data) {
-  const url = `${api}sicc_back/index/getCornerMealBanner`
+  const url = `${api}/sicc_back/index/getCornerMealBanner`
   return axios.post(url, {
     title: data.title,
     type: data.type,

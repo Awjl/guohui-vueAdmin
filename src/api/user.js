@@ -220,3 +220,21 @@ export function deleteAdminById(adminId) {
     return Promise.resolve(res.data)
   })
 }
+
+// 导出用户
+export function exportUserExcel(data) {
+  const url = `${api}/sicc_back/user/exportUserExcel`
+  return axios.post(url, {
+    userId: data.userId,
+    nickname: data.nickname,
+    sex: data.sex,
+    mobile: data.mobile,
+    level: data.level,
+    startTime: data.startTime,
+    endTime: data.endTime,
+    pageNum: data.pageNum,
+    pageSize: data.pageSize
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

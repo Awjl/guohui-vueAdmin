@@ -36,9 +36,9 @@
         </el-table-column>
         <el-table-column prop="price" label="优惠金额" align="center">
         </el-table-column>
-        <el-table-column prop="nickname" label="购买人姓名" align="center">
+        <el-table-column prop="nickname" label="姓名" align="center">
         </el-table-column>
-        <el-table-column prop="mobile" label="购买人电话" align="center">
+        <el-table-column prop="mobile" label="电话" align="center">
         </el-table-column>
         <el-table-column prop="state" label="是否付款" align="center">
           <template slot-scope="scope">

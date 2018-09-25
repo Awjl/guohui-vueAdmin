@@ -23,7 +23,6 @@
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handbox()">添加优惠券</el-button>
-      <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="name" label="优惠券名称" align="center">
         </el-table-column>
@@ -68,9 +67,14 @@
             <el-button type="success" size="small" v-else @click='upclick(scope.row.id, scope.row.isUpper)'>上架</el-button>
           </template>
         </el-table-column>
+        <el-table-column label="二维码" align="center">
+          <template slot-scope="scope">
+            <el-button size="small" @click='upSee(scope.row.id)'>查看二维码</el-button>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
-            <el-button @click="handbox(scope.row.id)" type="primary" size="small">修改</el-button>
+            <!-- <el-button @click="handbox(scope.row.id)" type="primary" size="small">修改</el-button> -->
             <el-button @click="del(scope.row.id)" type="danger" size="small">删除</el-button>
             <el-button @click="clicknum(scope.row.id)" type="info" size="small">发放优惠券</el-button>
           </template>
@@ -92,7 +96,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="是否上架">
-              <el-select clearable style="width: 150px" class="filter-item" placeholder="选择是否上架" v-model="item.isUpper">
+              <el-select clearable style="width: 150px" class="filter-item" placeholder="选择是否上架" v-model="item.isUpper" disabled>
                 <el-option label="上架" :value="1">
                   上架
                 </el-option>
@@ -201,10 +205,41 @@
         <el-button type="primary" @click="trueoverTwo">保存</el-button>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="code" title="优惠券二维码">
+      <el-form ref="dataForm" label-position="center" label-width="100px" style='width: 90%; margin-left:50px;'>
+        <el-form-item label="优惠券名称">
+          <el-input :value="codeData.name" :disabled="true"></el-input>
+        </el-form-item>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="总库存">
+              <el-input :value="codeData.total" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="已领取">
+              <el-input :value="codeData.total-codeData.stock" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="增加库存">
+              <el-input v-model="codeList.total"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="优惠券二维码">
+          <img :src="codeData.codeUrl" alt="" width="50%">
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="quxiao">取消</el-button>
+        <el-button type="primary" @click="trueoverThere">保存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { getAllCoupon, isUpperCoupon, addCoupon, deleteCouponById, getCouponById, editCouponById, sendCoupon } from '@/api/coupon'
+import { getAllCoupon, isUpperCoupon, addCoupon, deleteCouponById, getCouponById, editCouponById, sendCoupon, getQRCode, sendCouponQRCode } from '@/api/coupon'
 import { ERR_OK } from '@/api/config'
 
 export default {
@@ -214,6 +249,7 @@ export default {
       loading: true,
       dialogFormVisible: false,
       numfa: false,
+      code: false,
       total: 1,
       listQuery: {
         page: 1,
@@ -236,7 +272,7 @@ export default {
       item: {
         endTime: '',
         isNewbee: '',
-        isUpper: '',
+        isUpper: 2,
         limitPrice: '',
         name: '',
         price: '',
@@ -250,6 +286,16 @@ export default {
         id: '',
         mobile: '',
         number: ''
+      },
+      codeData: {
+        name: '',
+        total: '',
+        stock: '',
+        codeUrl: ''
+      },
+      codeList: {
+        couponId: '',
+        total: 0
       }
     }
   },
@@ -292,6 +338,21 @@ export default {
       this.numfa = true
       this.userData.id = id
     },
+    upSee(id) {
+      console.log('查看二维码')
+      console.log(id)
+      this.code = true
+      this.codeList.couponId = id
+      this.codeList.total = 0
+      getQRCode(id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('查看二维码==========================')
+          console.log(res.data)
+          this.codeData = res.data
+          console.log(this.codeData)
+        }
+      })
+    },
     del(id) {
       console.log(id)
       this.$confirm('是否删除该优惠券?', '提示', {
@@ -333,6 +394,7 @@ export default {
     quxiao() {
       this.dialogFormVisible = false
       this.numfa = false
+      this.code = false
     },
     trueoverTwo() {
       sendCoupon(this.userData).then((res) => {
@@ -347,6 +409,19 @@ export default {
             })
             this.numfa = false
           }
+        }
+      })
+    },
+    trueoverThere() {
+      console.log('测试')
+      console.log(this.codeList)
+      sendCouponQRCode(this.codeList).then((res) => {
+        if (res.code === ERR_OK) {
+          this.$message({
+            message: '新增成功',
+            type: 'success'
+          })
+          this.code = false
         }
       })
     },

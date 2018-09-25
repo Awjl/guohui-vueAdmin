@@ -17,21 +17,34 @@
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加</el-button>
+      <el-button type="primary" icon="document" @click="downloadexcel">导出 excel</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-        <el-table-column prop="userId" label="id" align="center">
+        <el-table-column prop="userId" label="ID" align="center">
         </el-table-column>
         <el-table-column prop="nickname" label="姓名" align="center">
         </el-table-column>
+        <el-table-column label="性别" align="center">
+          <template slot-scope="scope">
+            <span v-if="scope.row.sex === 1">男</span>
+            <span v-if="scope.row.sex === 2">女</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="mobile" label="手机号" align="center">
         </el-table-column>
-        <el-table-column prop="level" label="级别" align="center">
+        <el-table-column label="级别" align="center">
           <template slot-scope="scope">
             <span v-if="scope.row.level === 1">V1会员</span>
             <span v-else>V2会员</span>
           </template>
         </el-table-column>
         <el-table-column prop="points" label="积分" align="center">
+        </el-table-column>
+        <el-table-column label="注册时间" align="center">
+          <template slot-scope="scope">
+            <span>{{new Date(scope.row.createDate).getFullYear()+ '-' + (((new Date(scope.row.createDate).getMonth() + 1)
+              < 10) ? '0'+ (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) + '-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}</span>
+          </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
@@ -47,7 +60,7 @@
   </div>
 </template>
 <script>
-import { getAllUser } from '@/api/user'
+import { getAllUser, exportUserExcel } from '@/api/user'
 import { ERR_OK } from '@/api/config'
 export default {
   data() {
@@ -87,6 +100,20 @@ export default {
           console.log(res.data)
         }
       })
+    },
+    _exportUserExcel() {
+      exportUserExcel(this.data).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(res.data)
+          console.log('成功')
+          // console.log(`http://www.shanghaiconventioncenter.com:8081${res.data}`)
+          window.location.href = `http://47.96.165.248:8081${res.data}`
+          // window.open(`http://47.96.165.248:8080/${res.data}`)
+        }
+      })
+    },
+    downloadexcel() {
+      this._exportUserExcel()
     },
     handleSizeChange(val) {
       this.listQuery.limit = val
