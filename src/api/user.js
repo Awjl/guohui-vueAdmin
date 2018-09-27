@@ -163,12 +163,12 @@ export function getAdmins(data) {
 }
 
 // 查询全部角色
-export function getRoles() {
+export function getRoles(num, size) {
   const url = `${api}/sicc_back/role/getRoles`
   return axios.get(url, {
     params: {
-      pageNum: 1,
-      pageSize: 100
+      pageNum: num,
+      pageSize: size
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -234,6 +234,83 @@ export function exportUserExcel(data) {
     endTime: data.endTime,
     pageNum: data.pageNum,
     pageSize: data.pageSize
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 删除/user/deleteExcel
+export function deleteExcel(path) {
+  const url = `${api}/sicc_back/user/deleteExcel`
+  return axios.get(url, {
+    params: {
+      path: path
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 新增角色/role/addRole
+export function addRole(data) {
+  const url = `${api}/sicc_back/role/addRole`
+  return axios.post(url, {
+    name: data.name,
+    homeData: data.homeData,
+    userData: data.userData,
+    shoppingData: data.shoppingData,
+    integralData: data.integralData,
+    orderData: data.orderData,
+    discountData: data.discountData,
+    serverData: data.serverData,
+    adminData: data.adminData,
+    systemData: data.systemData,
+    parkData: data.parkData,
+    note: data.note
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 查询角色信息
+export function getRoleById(roleId) {
+  const url = `${api}/sicc_back/role/getRoleById`
+  return axios.get(url, {
+    params: {
+      roleId: roleId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 删除角色信息
+export function deleteRole(roleId) {
+  const url = `${api}/sicc_back/role/deleteRole`
+  return axios.get(url, {
+    params: {
+      roleId: roleId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 修改角色信息 /role/editRole
+export function editRole(data) {
+  const url = `${api}/sicc_back/role/editRole`
+  return axios.post(url, {
+    name: data.name,
+    homeData: data.homeData,
+    userData: data.userData,
+    shoppingData: data.shoppingData,
+    integralData: data.integralData,
+    orderData: data.orderData,
+    discountData: data.discountData,
+    serverData: data.serverData,
+    adminData: data.adminData,
+    systemData: data.systemData,
+    parkData: data.parkData,
+    note: data.note,
+    id: data.id
   }).then((res) => {
     return Promise.resolve(res.data)
   })

@@ -43,13 +43,10 @@
         <el-table-column label="注册时间" align="center">
           <template slot-scope="scope">
             <span>{{new Date(scope.row.createDate).getFullYear()+ '-' + (((new Date(scope.row.createDate).getMonth() + 1)
-              < 10) ? '0'+ (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) + '-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
-          </template>
+              < 10) ? '0' + (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) + '-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}</span> </template> </el-table-column> <el-table-column label="操作" align="center">
+                <template slot-scope="scope">
+                  <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
+                </template>
         </el-table-column>
       </el-table>
     </div>
@@ -60,7 +57,7 @@
   </div>
 </template>
 <script>
-import { getAllUser, exportUserExcel } from '@/api/user'
+import { getAllUser, exportUserExcel, deleteExcel } from '@/api/user'
 import { ERR_OK } from '@/api/config'
 export default {
   data() {
@@ -83,7 +80,8 @@ export default {
         userId: null,
         nickname: null
       },
-      tableData: []
+      tableData: [],
+      xslsUrl: ''
     }
   },
   created() {
@@ -106,14 +104,25 @@ export default {
         if (res.code === ERR_OK) {
           console.log(res.data)
           console.log('成功')
+          this.xslsUrl = res.data
           // console.log(`http://www.shanghaiconventioncenter.com:8081${res.data}`)
-          window.location.href = `http://47.96.165.248:8081${res.data}`
+          window.location.href = `http://47.96.165.248:8080${res.data}`
           // window.open(`http://47.96.165.248:8080/${res.data}`)
         }
       })
     },
+    _deleteExcel() {
+      deleteExcel(this.xslsUrl).then((res) => {
+        console.log('删除')
+      })
+    },
     downloadexcel() {
-      this._exportUserExcel()
+      if (!this.xslsUrl) {
+        this._exportUserExcel()
+      } else {
+        this._deleteExcel()
+        this._exportUserExcel()
+      }
     },
     handleSizeChange(val) {
       this.listQuery.limit = val
@@ -136,6 +145,9 @@ export default {
       }
       this._getAllUser()
     }
+  },
+  destroyed: function() {
+    this._deleteExcel()
   }
 }
 </script>

@@ -51,7 +51,7 @@
       </el-pagination>
     </div>
     <el-dialog :visible.sync="dialogFormVisible" title="填写反馈">
-      <el-form ref="dataForm" label-position="left" label-width="100px" style='width: 700px; margin-left:50px;'>
+      <el-form ref="dataForm" label-position="right" label-width="15%" style='width:90%; '>
         <el-form-item label="反馈">
            <el-input placeholder="请输入反馈内容" v-model="item.feedBack"></el-input>
         </el-form-item>

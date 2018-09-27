@@ -8,17 +8,17 @@
       <el-input style="width: 150px;" class="filter-item" placeholder="请输入手机号" v-model="data.mobile">
       </el-input>
       <el-select clearable style="width: 150px" class="filter-item" placeholder="订单状态" v-model="data.state">
-        <el-option  label="已付款" :value="2">
+        <el-option label="已付款" :value="2">
           已付款
         </el-option>
-        <el-option  label="未付款" :value="1">
+        <el-option label="未付款" :value="1">
           未付款
         </el-option>
       </el-select>
       <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
       </el-date-picker>
-      <el-button class="filter-item" type="primary" icon="el-icon-search"  @click="suchbox">搜索</el-button>
-  
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
+      <el-button type="primary" icon="document" @click="downloadexcel">导出 excel</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="code" label="订单号" align="center">
@@ -60,7 +60,8 @@
   </div>
 </template>
 <script>
-import { getAllGoodsOrders } from '@/api/shoping'
+import { getAllGoodsOrders, exportGoodsOrderExcel } from '@/api/shoping'
+import { deleteExcel } from '@/api/user'
 import { ERR_OK } from '@/api/config'
 
 export default {
@@ -84,7 +85,8 @@ export default {
         pageSize: null,
         startTime: null,
         state: null
-      }
+      },
+      xslsUrl: ''
     }
   },
   created() {
@@ -102,6 +104,31 @@ export default {
           this.tableData = res.data.list
         }
       })
+    },
+    _exportUserExcel() {
+      exportGoodsOrderExcel(this.data).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(res.data)
+          console.log('成功')
+          this.xslsUrl = res.data
+          // console.log(`http://www.shanghaiconventioncenter.com:8081${res.data}`)
+          window.location.href = `http://47.96.165.248:8080${res.data}`
+          // window.open(`http://47.96.165.248:8080/${res.data}`)
+        }
+      })
+    },
+    _deleteExcel() {
+      deleteExcel(this.xslsUrl).then((res) => {
+        console.log('删除')
+      })
+    },
+    downloadexcel() {
+      if (!this.xslsUrl) {
+        this._exportUserExcel()
+      } else {
+        this._deleteExcel()
+        this._exportUserExcel()
+      }
     },
     handleSizeChange(val) {
       this.listQuery.limit = val
@@ -123,6 +150,9 @@ export default {
       }
       this._getAllGoodsOrders()
     }
+  },
+  destroyed: function() {
+    this._deleteExcel()
   }
 }
 </script>

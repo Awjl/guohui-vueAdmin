@@ -34,7 +34,7 @@
       </el-pagination>
     </div>
     <el-dialog :visible.sync="dialogFormVisible" :title="title">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style='width: 700px; margin-left:50px;'>
+      <el-form ref="dataForm" label-position="right" label-width="15%" style='width:90%; '>
         <el-form-item label="账号">
           <el-input placeholder="请输入账号" v-model="user.name"></el-input>
         </el-form-item>
@@ -107,7 +107,7 @@ export default {
       })
     },
     _getRoles() {
-      getRoles().then((res) => {
+      getRoles(1, 100).then((res) => {
         if (res.code === ERR_OK) {
           console.log(res.data)
           this.barList = res.data.list

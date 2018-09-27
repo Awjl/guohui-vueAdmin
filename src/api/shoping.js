@@ -332,7 +332,7 @@ export function addGoods(data) {
 
 // 删除接口
 export function deleteGood(goodsId) {
-  const url = `${api}/sicc_back/goods/deleteGood`
+  const url = `${api}/sicc_back/goods/deleteGoods`
   return axios.get(url, {
     params: {
       goodsId: goodsId
@@ -356,7 +356,7 @@ export function getGoodsById(goodsId) {
 
 // 删除图片接口
 export function deleteGoodPic(picId) {
-  const url = `${api}/sicc_back/goods/deleteGoodPic`
+  const url = `${api}/sicc_back/goods/deleteGoodsPic`
   return axios.get(url, {
     params: {
       picId: picId
@@ -420,5 +420,41 @@ export function editPointGoods(data) {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
+  })
+}
+
+// 导出商品订单
+export function exportGoodsOrderExcel(data) {
+  const url = `${api}/sicc_back/order/exportGoodsOrderExcel`
+  return axios.post(url, {
+    userId: data.userId,
+    nickname: data.nickname,
+    sex: data.sex,
+    mobile: data.mobile,
+    level: data.level,
+    startTime: data.startTime,
+    endTime: data.endTime,
+    pageNum: data.pageNum,
+    pageSize: data.pageSize
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 导出积分商品订单
+export function exportPointGoodsOrderExcel(data) {
+  const url = `${api}/sicc_back/order/exportPointGoodsOrderExcel`
+  return axios.post(url, {
+    userId: data.userId,
+    nickname: data.nickname,
+    sex: data.sex,
+    mobile: data.mobile,
+    level: data.level,
+    startTime: data.startTime,
+    endTime: data.endTime,
+    pageNum: data.pageNum,
+    pageSize: data.pageSize
+  }).then((res) => {
+    return Promise.resolve(res.data)
   })
 }
