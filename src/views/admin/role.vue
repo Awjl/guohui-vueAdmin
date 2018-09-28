@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="addRoles()">新增权限</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="addRoles()" :disabled="!(adminData.indexOf('4') !== -1)" :title="(adminData.indexOf('4') !== -1) ? '' : '暂无权限'">新增权限</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="id" label="ID" align="center">
@@ -24,8 +24,8 @@
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <p v-if="scope.row.id != 1">
-              <el-button @click="addRoles(scope.row.id)" type="primary" size="small">修改</el-button>
-              <el-button @click="del(scope.row.id)" type="danger" size="small">删除</el-button>
+              <el-button @click="addRoles(scope.row.id)" type="primary" size="small" :disabled="!(adminData.indexOf('5') !== -1)" :title="(adminData.indexOf('5') !== -1) ? '' : '暂无权限'">修改</el-button>
+              <el-button @click="del(scope.row.id)" type="danger" size="small" :disabled="!(adminData.indexOf('6') !== -1)" :title="(adminData.indexOf('6') !== -1) ? '' : '暂无权限'">删除</el-button>
             </p>
             <p v-else>
               不可操作
@@ -77,7 +77,7 @@
             <el-checkbox v-for="(item, index) in  serverList" :label="item.key" :key="index" style='margin-left:0; margin-right:15px;'>{{item.name}}</el-checkbox>
           </el-checkbox-group>
           <div>管理员管理</div>
-          <el-checkbox-group v-model="adminData">
+          <el-checkbox-group v-model="adminDataItem">
             <el-checkbox v-for="(item, index) in adminList" :label="item.key" :key="index" style='margin-left:0; margin-right:15px;'>{{item.name}}</el-checkbox>
           </el-checkbox-group>
           <div>系统日志管理</div>
@@ -96,27 +96,28 @@
 <script>
 import { getRoles, addRole, getRoleById, editRole, deleteRole } from '@/api/user'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
-      homeList: [{ key: 1, name: '查询Bnnner' }, { key: 2, name: '查询会议厅' }, { key: 3, name: '新增Banner' }, { key: 4, name: '上下架Banner' }, { key: 7, name: '删除Banner' }, { key: 5, name: '获取首页文章内容' }, { key: 6, name: '更改首页文章内容' }, { key: 16, name: '查询所有大厅' }, { key: 17, name: '新增大厅' }, { key: 18, name: '查询大厅信息' }, { key: 19, name: '修改大厅信息' }, { key: 20, name: '删除大厅' }, { key: 73, name: '上架大厅' }, { key: 8, name: '获取一隅一食推荐图片' }, { key: 10, name: '查询一隅一食推荐图片详情' }, { key: 11, name: '修改一隅一食推荐图片详情' }],
+      homeList: [{ key: 1, name: '新增Banner' }, { key: 2, name: '上下架Banner' }, { key: 3, name: '删除Banner' }, { key: 4, name: '更改首页文章内容' }, { key: 5, name: '新增大厅' }, { key: 6, name: '上下架大厅' }, { key: 7, name: '修改大厅' }, { key: 8, name: '删除大厅' }, { key: 9, name: '上下架首页推荐' }, { key: 10, name: '修改首页推荐' }, { key: 11, name: '删除首页推荐' }],
       homeData: [],
-      userList: [{ key: 14, name: '查询用户' }, { key: 15, name: '导出用户' }],
+      userList: [{ key: 1, name: '导出用户' }],
       userData: [],
-      shoppingList: [{ key: 21, name: '查询所有一期一会商品' }, { key: 22, name: '新增一期一会商品' }, { key: 23, name: '查询一期一会商品详情' }, { key: 24, name: '修改一期一会商品' }, { key: 25, name: '删除一期一会商品' }, { key: 74, name: '上架一期一会商品' }, { key: 26, name: '查询所有商品' }, { key: 27, name: '新增商品 ' }, { key: 28, name: '查询商品详情' }, { key: 29, name: '修改商品详情' }, { key: 30, name: '设置为热推商品' }, { key: 31, name: '上架商品' }, { key: 32, name: '删除商品' }, { key: 13, name: '查看顶部热推图片' }, { key: 12, name: '修改顶部热推图片' }, { key: 9, name: '设置一隅一食推荐图片' }, { key: 51, name: '核销优惠券' }],
+      shoppingList: [{ key: 1, name: '新增大厅商品' }, { key: 2, name: '修改大厅商品' }, { key: 3, name: '上下架大厅商品' }, { key: 4, name: '删除大厅商品' }, { key: 5, name: '新增餐券商品' }, { key: 6, name: '修改顶部热推' }, { key: 7, name: '核销代金券' }, { key: 8, name: '推荐至首页' }, { key: 9, name: '设置热推商品' }, { key: 10, name: '修改商品' }, { key: 11, name: '上下架商品' }, { key: 12, name: '删除商品' }],
       shoppingData: [],
-      integralList: [{ key: 33, name: '查询所有积分商品' }, { key: 34, name: '新增积分商品' }, { key: 35, name: '查询积分商品详情' }, { key: 36, name: '修改积分商品详情' }, { key: 37, name: '上架积分商品' }, { key: 38, name: '删除积分商品' }],
+      integralList: [{ key: 1, name: '新增积分商品' }, { key: 2, name: '修改积分商品' }, { key: 3, name: '上下架积分商品' }, { key: 4, name: '删除' }],
       integralData: [],
-      orderList: [{ key: 39, name: '查询所有商品订单' }, { key: 42, name: '导出商品订单Excel' }, { key: 40, name: '查询所有积分商品订单' }, { key: 41, name: '输入快递单号' }, { key: 43, name: '导出积分商品订单Excel' }],
+      orderList: [{ key: 1, name: '导出商品订单' }, { key: 2, name: '导出积分商品订单' }, { key: 3, name: '发货' }],
       orderData: [],
-      discountList: [{ key: 44, name: '查询所有优惠券' }, { key: 45, name: '新增优惠券' }, { key: 46, name: '查看优惠券信息' }, { key: 47, name: '修改优惠券信息' }, { key: 48, name: '删除优惠券' }, { key: 49, name: '上架优惠券' }, { key: 50, name: '发放优惠券' }, { key: 52, name: '查看优惠券二维码 ' }, { key: 53, name: '扫码发放优惠券' }],
+      discountList: [{ key: 1, name: '新增优惠券' }, { key: 2, name: '上下架优惠券' }, { key: 3, name: '管理优惠券' }, { key: 4, name: '删除优惠券' }, { key: 5, name: '发放优惠券' }],
       discountData: [],
-      serverList: [{ key: 75, name: '查看会议预定' }, { key: 76, name: '设置已联系' }, { key: 77, name: '添加反馈' }, { key: 54, name: '查询所有热门问题' }, { key: 55, name: '新增热门问题' }, { key: 56, name: '查看热门问题详情' }, { key: 57, name: '修改热门问题详情' }, { key: 58, name: '删除热门问题详情 ' }, { key: 59, name: '上架热门问题详情' }, { key: 60, name: '修改电话号码' }],
+      serverList: [{ key: 1, name: '添加反馈' }, { key: 2, name: '联系客户' }, { key: 3, name: '添加问题' }, { key: 4, name: '修改热线' }, { key: 5, name: '修改问题' }, { key: 6, name: '上下架问题' }, { key: 7, name: '删除问题' }],
       serverData: [],
-      adminList: [{ key: 61, name: '添加管理员' }, { key: 63, name: '查询所有管理员' }, { key: 64, name: '查看管理员信息' }, { key: 62, name: '修改管理员权限' }, { key: 65, name: '删除管理员' }, { key: 66, name: '添加角色' }, { key: 68, name: '查询所有角色' }, { key: 69, name: '查看角色信息 ' }, { key: 67, name: '修改角色信息' }, { key: 70, name: '删除角色' }],
-      adminData: [],
-      systemList: [{ key: 71, name: '查询所有日志' }, { key: 72, name: '删除日志' }],
+      adminList: [{ key: 1, name: '添加管理员' }, { key: 2, name: '修改管理员' }, { key: 3, name: '删除管理员' }, { key: 4, name: '新增权限' }, { key: 5, name: '修改权限' }, { key: 6, name: '删除权限' }],
+      adminDataItem: [],
+      systemList: [{ key: 1, name: '删除日志' }],
       systemData: [],
       loading: false,
       total: 1,
@@ -149,6 +150,11 @@ export default {
       checkAll: false,
       isIndeterminate: true
     }
+  },
+  computed: {
+    ...mapGetters([
+      'adminData'
+    ])
   },
   created() {
     this._getRoles()
@@ -223,7 +229,7 @@ export default {
           }
           if (res.data.adminData !== '') {
             res.data.adminData.split(',').forEach(function(value, index, array) {
-              vm.adminData.push(Number(value))
+              vm.adminDataItem.push(Number(value))
             })
           }
           if (res.data.systemData !== '') {
@@ -278,7 +284,7 @@ export default {
       this.orderData = []
       this.discountData = []
       this.serverData = []
-      this.adminData = []
+      this.adminDataItem = []
       this.systemData = []
       this.parkData = []
       this.dataAll.note = ''
@@ -301,7 +307,7 @@ export default {
       this.dataAll.orderData = this.orderData.join()
       this.dataAll.discountData = this.discountData.join()
       this.dataAll.serverData = this.serverData.join()
-      this.dataAll.adminData = this.adminData.join()
+      this.dataAll.adminData = this.adminDataItem.join()
       this.dataAll.systemData = this.systemData.join()
       console.log(this.dataAll)
       if (this.title === '新增权限管理') {
@@ -320,7 +326,7 @@ export default {
         this.orderData = [39, 42, 40, 41, 43]
         this.discountData = [44, 45, 46, 47, 48, 49, 50, 52, 53]
         this.serverData = [75, 76, 77, 54, 55, 56, 57, 58, 59, 60]
-        this.adminData = [61, 63, 64, 62, 65, 66, 68, 69, 67, 70]
+        this.adminDataItem = [61, 63, 64, 62, 65, 66, 68, 69, 67, 70]
         this.systemData = [71, 72]
         this.parkData = []
       } else {
@@ -331,7 +337,7 @@ export default {
         this.orderData = []
         this.discountData = []
         this.serverData = []
-        this.adminData = []
+        this.adminDataItem = []
         this.systemData = []
         this.parkData = []
       }

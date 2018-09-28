@@ -26,7 +26,7 @@
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
       <router-link :to="'/integralshopping/addintegralshopping/'+null">
-        <el-button type="primary" icon="el-icon-edit">添加商品</el-button>
+        <el-button type="primary" icon="el-icon-edit" :disabled="!(integralData.indexOf('1') !== -1)" :title="(integralData.indexOf('1') !== -1) ? '' : '暂无权限'">添加商品</el-button>
       </router-link>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
@@ -61,11 +61,11 @@
         <el-table-column label="操作" align="center" width="300">
           <template slot-scope="scope">
             <router-link :to="'/integralshopping/addintegralshopping/'+scope.row.id">
-              <el-button type="primary" size="small">修改</el-button>
+              <el-button type="primary" size="small" :disabled="!(integralData.indexOf('2') !== -1)" :title="(integralData.indexOf('2') !== -1) ? '' : '暂无权限'">修改</el-button>
             </router-link>
-            <el-button @click="Lower(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1">下架</el-button>
-            <el-button @click="Lower(scope.row.isUpper, scope.row.id)" type="success" size="small" v-else>上架</el-button>
-            <el-button @click="del(scope.row.id)" type="danger" size="small">删除</el-button>
+            <el-button @click="Lower(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1" :disabled="!(integralData.indexOf('3') !== -1)" :title="(integralData.indexOf('3') !== -1) ? '' : '暂无权限'">下架</el-button>
+            <el-button @click="Lower(scope.row.isUpper, scope.row.id)" type="success" size="small" v-else :disabled="!(integralData.indexOf('3') !== -1)" :title="(integralData.indexOf('3') !== -1) ? '' : '暂无权限'">上架</el-button>
+            <el-button @click="del(scope.row.id)" type="danger" size="small" :disabled="!(integralData.indexOf('4') !== -1)" :title="(integralData.indexOf('4') !== -1) ? '' : '暂无权限'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -79,6 +79,7 @@
 <script>
 import { getAllPointGoods, isUpperPointGoods, deletePointGoods } from '@/api/shoping'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -106,6 +107,11 @@ export default {
   },
   created() {
     this._getAllPointGoods()
+  },
+  computed: {
+    ...mapGetters([
+      'integralData'
+    ])
   },
   methods: {
     _getAllPointGoods() {

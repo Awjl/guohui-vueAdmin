@@ -31,13 +31,13 @@
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
       <router-link :to="'/shoppingAdmin/addshopping/null'">
-        <el-button type="primary" icon="el-icon-edit">添加商品</el-button>
+        <el-button type="primary" icon="el-icon-edit" :disabled="!(shoppingData.indexOf('5') !== -1)" :title="(shoppingData.indexOf('5') !== -1) ? '' : '暂无权限'">添加商品</el-button>
       </router-link>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="setTopHot">查看顶部热推</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="setTopHot" :disabled="!(shoppingData.indexOf('6') !== -1)" :title="(shoppingData.indexOf('6') !== -1) ? '' : '暂无权限'">查看顶部热推</el-button>
       <div class="he20"></div>
       <el-input style="width: 200px;" class="filter-item" placeholder="请输入优惠券编码" v-model="destroyCode">
       </el-input>
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="destroy">核销代金券</el-button>
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="destroy" :disabled="!(shoppingData.indexOf('7') !== -1)" :title="(shoppingData.indexOf('7') !== -1) ? '' : '暂无权限'">核销代金券</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="goodsId" label="商品ID" align="center">
@@ -58,23 +58,23 @@
         <el-table-column prop="isCommend" label="推荐至首页" align="center">
           <template slot-scope="scope">
             <el-button type="success" size="small" v-if="scope.row.hasIndexPic === 1" disabled>已推荐</el-button>
-            <el-button type="primary" size="small" v-else @click="setHome(scope.row.goodsId, scope.row.type)">去推荐</el-button>
+            <el-button type="primary" size="small" v-else  @click="setHome(scope.row.goodsId, scope.row.type)" :disabled="!(shoppingData.indexOf('8') !== -1)" :title="(shoppingData.indexOf('8') !== -1) ? '' : '暂无权限'">去推荐</el-button>
           </template>
         </el-table-column>
         <el-table-column prop="isCommend" label="是否为热推" align="center">
           <template slot-scope="scope">
-            <el-button type="success" size="small" v-if="scope.row.isCommend === 1" @click="setHot(scope.row.isCommend, scope.row.goodsId)">热推产品</el-button>
-            <el-button type="info" size="small" v-else @click="setHot(scope.row.isCommend, scope.row.goodsId)">非热推产品</el-button>
+            <el-button type="success" size="small" v-if="scope.row.isCommend === 1" @click="setHot(scope.row.isCommend, scope.row.goodsId)" :disabled="!(shoppingData.indexOf('9') !== -1)" :title="(shoppingData.indexOf('9') !== -1) ? '' : '暂无权限'">热推产品</el-button>
+            <el-button type="info" size="small" v-else @click="setHot(scope.row.isCommend, scope.row.goodsId)" :disabled="!(shoppingData.indexOf('9') !== -1)" :title="(shoppingData.indexOf('9') !== -1) ? '' : '暂无权限'">非热推产品</el-button>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" width="300">
           <template slot-scope="scope">
             <router-link :to="'/shoppingAdmin/addshopping/'+scope.row.goodsId">
-              <el-button type="primary" size="small">修改</el-button>
+              <el-button type="primary" size="small" :disabled="!(shoppingData.indexOf('10') !== -1)" :title="(shoppingData.indexOf('10') !== -1) ? '' : '暂无权限'">修改</el-button>
             </router-link>
-            <el-button @click="Lower(scope.row.goodsId)" type="warning" size="small" v-if="scope.row.isUpper == 1">下架</el-button>
-            <el-button @click="shelf(scope.row.goodsId)" type="success" size="small" v-else>上架</el-button>
-            <el-button @click="del(scope.row.goodsId)" type="danger" size="small">删除</el-button>
+            <el-button @click="Lower(scope.row.goodsId)" type="warning" size="small" v-if="scope.row.isUpper == 1" :disabled="!(shoppingData.indexOf('11') !== -1)" :title="(shoppingData.indexOf('11') !== -1) ? '' : '暂无权限'">下架</el-button>
+            <el-button @click="shelf(scope.row.goodsId)" type="success" size="small" v-else :disabled="!(shoppingData.indexOf('11') !== -1)" :title="(shoppingData.indexOf('11') !== -1) ? '' : '暂无权限'">上架</el-button>
+            <el-button @click="del(scope.row.goodsId)" type="danger" size="small" :disabled="!(shoppingData.indexOf('12') !== -1)" :title="(shoppingData.indexOf('12') !== -1) ? '' : '暂无权限'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -142,6 +142,7 @@
 import { getAllGoods, isUpperGoods, setHotGoods, deleteGood, setCornerMealBanner, getCornerMealListBanner, setCornerMealListBanner } from '@/api/shoping'
 import { useCoupon } from '@/api/coupon'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
 
 const formData = new FormData()
 const formOneData = new FormData()
@@ -186,6 +187,11 @@ export default {
   },
   created() {
     this._getAllGoods()
+  },
+  computed: {
+    ...mapGetters([
+      'shoppingData'
+    ])
   },
   methods: {
     _getAllGoods() {

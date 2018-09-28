@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="addAdminlist()">添加管理员</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="addAdminlist()" :disabled="!(adminData.indexOf('1') !== -1)" :title="(adminData.indexOf('1') !== -1) ? '' : '暂无权限'">添加管理员</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="id" label="管理员ID" align="center">
@@ -19,8 +19,8 @@
         <el-table-column prop="lve" label="操作" align="center">
           <template slot-scope="scope">
             <p v-if="scope.row.id != 1">
-              <el-button @click="addAdminlist(scope.row.id)" type="primary" size="small">修改</el-button>
-              <el-button @click="del(scope.row.id)" type="danger" size="small">删除</el-button>
+              <el-button @click="addAdminlist(scope.row.id)" type="primary" size="small" :disabled="!(adminData.indexOf('2') !== -1)" :title="(adminData.indexOf('2') !== -1) ? '' : '暂无权限'">修改</el-button>
+              <el-button @click="del(scope.row.id)" type="danger" size="small" :disabled="!(adminData.indexOf('3') !== -1)" :title="(adminData.indexOf('3') !== -1) ? '' : '暂无权限'">删除</el-button>
             </p>
             <p v-else>
               不可操作
@@ -58,6 +58,7 @@
 <script>
 import { getAdmins, getRoles, addAdmin, getAdminById, editAdmin, deleteAdminById } from '@/api/user'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -88,6 +89,11 @@ export default {
         id: ''
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'adminData'
+    ])
   },
   created() {
     this._getAdmins()

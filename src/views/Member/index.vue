@@ -17,7 +17,7 @@
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加</el-button>
-      <el-button type="primary" icon="document" @click="downloadexcel">导出 excel</el-button>
+      <el-button type="primary" icon="document" @click="downloadexcel"  :disabled="!(userData.indexOf('1') !== -1)" :title="(userData.indexOf('1') !== -1) ? '' : '暂无权限'">导出 excel</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="userId" label="ID" align="center">
@@ -59,6 +59,8 @@
 <script>
 import { getAllUser, exportUserExcel, deleteExcel } from '@/api/user'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -86,6 +88,11 @@ export default {
   },
   created() {
     this._getAllUser()
+  },
+  computed: {
+    ...mapGetters([
+      'userData'
+    ])
   },
   methods: {
     _getAllUser() {

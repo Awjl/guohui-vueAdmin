@@ -39,8 +39,8 @@
         </el-table-column>
         <el-table-column label="操作"  align="center">
           <template slot-scope="scope">
-            <el-button type="warning" size="small"  @click="handleClick(scope.row.id)">添加反馈</el-button>
-            <el-button @click="contact(scope.row.id)" type="primary" size="small" v-if="scope.row.isConnected === 1">未联系</el-button>
+            <el-button type="warning" size="small"  @click="handleClick(scope.row.id)" :disabled="!(serverData.indexOf('1') !== -1)" :title="(serverData.indexOf('1') !== -1) ? '' : '暂无权限'">添加反馈</el-button>
+            <el-button @click="contact(scope.row.id)" type="primary" size="small" v-if="scope.row.isConnected === 1" :disabled="!(serverData.indexOf('2') !== -1)" :title="(serverData.indexOf('2') !== -1) ? '' : '暂无权限'">未联系</el-button>
             <el-button type="success" size="small" v-else>已联系</el-button>
           </template>
         </el-table-column>
@@ -66,6 +66,8 @@
 <script>
 import { getAllBook, isConnected, addFeedback } from '@/api/user'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -95,6 +97,11 @@ export default {
   },
   created() {
     this._getAllBook()
+  },
+  computed: {
+    ...mapGetters([
+      'serverData'
+    ])
   },
   methods: {
     _getAllBook() {

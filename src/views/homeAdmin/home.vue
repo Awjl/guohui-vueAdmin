@@ -25,7 +25,7 @@
         <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.contentThird"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" :disabled="!(homeData.indexOf('4') !== -1)" :title="(homeData.indexOf('4') !== -1) ? '' : '暂无权限'">保存</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -37,6 +37,7 @@
 <script>
 import { getIntroduces, editIntroduce } from '@/api/home'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
 
 const formData = new FormData()
 
@@ -56,6 +57,11 @@ export default {
   },
   created() {
     this._getIntroduces()
+  },
+  computed: {
+    ...mapGetters([
+      'homeData'
+    ])
   },
   methods: {
     _getIntroduces() {

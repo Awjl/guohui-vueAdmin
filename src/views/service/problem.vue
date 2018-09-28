@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleClick()">添加问题</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="hotphone()">修改服务电话</el-button>
-      <span style="margin-left: 10px;">服务热线：</span>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleClick()" :disabled="!(serverData.indexOf('3') !== -1)" :title="(serverData.indexOf('3') !== -1) ? '' : '暂无权限'">添加问题</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="hotphone()" :disabled="!(serverData.indexOf('4') !== -1)" :title="(serverData.indexOf('4') !== -1) ? '' : '暂无权限'">修改服务电话</el-button>
+      <span style="margin-left: 10px;" >服务热线：</span>
       <span>{{phone}}</span>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
@@ -13,10 +13,10 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row.id)" type="primary" size="small">修改</el-button>
-            <el-button @click="Lower(scope.row.id, scope.row.isUpper)" type="warning" size="small" v-if="scope.row.isUpper == 1">下架</el-button>
-            <el-button @click="Lower(scope.row.id, scope.row.isUpper)" type="success" size="small" v-else>上架</el-button>
-            <el-button @click="del(scope.row.id)" type="danger" size="small">删除</el-button>
+            <el-button @click="handleClick(scope.row.id)" type="primary" size="small" :disabled="!(serverData.indexOf('5') !== -1)" :title="(serverData.indexOf('5') !== -1) ? '' : '暂无权限'">修改</el-button>
+            <el-button @click="Lower(scope.row.id, scope.row.isUpper)" type="warning" size="small" v-if="scope.row.isUpper == 1" :disabled="!(serverData.indexOf('6') !== -1)" :title="(serverData.indexOf('6') !== -1) ? '' : '暂无权限'">下架</el-button>
+            <el-button @click="Lower(scope.row.id, scope.row.isUpper)" type="success" size="small" v-else :disabled="!(serverData.indexOf('6') !== -1)" :title="(serverData.indexOf('6') !== -1) ? '' : '暂无权限'">上架</el-button>
+            <el-button @click="del(scope.row.id)" type="danger" size="small":disabled="!(serverData.indexOf('7') !== -1)" :title="(serverData.indexOf('7') !== -1) ? '' : '暂无权限'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -44,6 +44,8 @@
 <script>
 import { getAllHotQuestion, isUpperHotQuestion, addHotQuestion, getHotQuestionById, editHotQuestionById, deleteHotQuestionById, getPhone, updatePhone } from '@/api/user'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -70,6 +72,11 @@ export default {
   created() {
     this._getAllHotQuestion()
     this._getPhone()
+  },
+  computed: {
+    ...mapGetters([
+      'serverData'
+    ])
   },
   methods: {
     _getAllHotQuestion() {

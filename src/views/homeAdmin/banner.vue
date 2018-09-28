@@ -1,9 +1,9 @@
 <template>
   <div class="banner">
     <div class="banneradd">
-      <el-button type="primary" size="mini" @click="handleUpdate()" icon="el-icon-plus">新增Banner</el-button>
-      <el-button type="primary" size="mini" @click="topBanner">首页顶部Banner</el-button>
-      <el-button type="primary" size="mini" @click="bottomBanner">首页大厅Banner</el-button>
+      <el-button type="primary" @click="handleUpdate()" icon="el-icon-plus" :disabled="!(homeData.indexOf('1') !== -1)" :title="(homeData.indexOf('3') !== -1) ? '' : '暂无权限'">新增Banner</el-button>
+      <el-button type="primary" @click="topBanner">首页顶部Banner</el-button>
+      <el-button type="primary" @click="bottomBanner">首页大厅Banner</el-button>
     </div>
     <div class="bannerlist-box">
       <div class="filter-container">
@@ -21,15 +21,15 @@
           </el-table-column>
           <el-table-column prop="isUpper" label="是否上架" align="center">
             <template slot-scope="scope">
-              <el-button type="warning" size="small" v-if="scope.row.isUpper === 1" @click="isUpper(scope.row.isUpper, scope.row.id)">下架</el-button>
-              <el-button type="primary" size="small" v-else @click="isUpper(scope.row.isUpper, scope.row.id)">上架</el-button>
+              <el-button type="warning" size="small" v-if="scope.row.isUpper === 1" @click="isUpper(scope.row.isUpper, scope.row.id)" :disabled="!(homeData.indexOf('2') !== -1)" :title="(homeData.indexOf('2') !== -1) ? '' : '暂无权限'">下架</el-button>
+              <el-button type="primary" size="small" v-else @click="isUpper(scope.row.isUpper, scope.row.id)" :disabled="!(homeData.indexOf('2') !== -1)" :title="(homeData.indexOf('2') !== -1) ? '' : '暂无权限'">上架</el-button>
             </template>
           </el-table-column>
           <!-- <el-table-column prop="url" label="图片链接">
           </el-table-column> -->
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
-              <el-button @click="handleClick(scope.row.id)" type="danger" size="small">删除</el-button>
+              <el-button @click="handleClick(scope.row.id)" type="danger" size="small" :disabled="!(homeData.indexOf('3') !== -1)" :title="(homeData.indexOf('3') !== -1) ? '' : '暂无权限'">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -59,12 +59,12 @@
             <label for="up">预览图片</label>
             <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
           </div>
-          <img :src="avatar" alt="" v-if="avatar">
+            <img :src="avatar" alt="" v-if="avatar">
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="quxiao">取消</el-button>
-        <el-button type="primary" @click="trueover">保存</el-button>
+        <el-button type="primary" @click="trueover" :title="(homeData.indexOf('3') !== -1) ? '' : '暂无权限'">保存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -73,6 +73,7 @@
 <script>
 import { getAllTopBanner, getAllBottomBanner, uploadIndexPicture, deleteBanner, isUpperBanner } from '@/api/home'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
 
 const formData = new FormData()
 
@@ -99,6 +100,11 @@ export default {
       },
       bannershow: true
     }
+  },
+  computed: {
+    ...mapGetters([
+      'homeData'
+    ])
   },
   created() {
     this._getAllTopBanner()

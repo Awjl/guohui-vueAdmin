@@ -148,6 +148,17 @@ export const constantRouterMap = [
   {
     path: '',
     component: Layout,
+    redirect: 'park',
+    children: [{
+      path: 'park',
+      component: () => import('@/views/park/park'),
+      name: 'park',
+      meta: { title: '停车管理', icon: 'example', noCache: true }
+    }]
+  },
+  {
+    path: '',
+    component: Layout,
     redirect: '/service',
     name: '服务管理',
     meta: {

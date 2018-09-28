@@ -14,7 +14,7 @@
       <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox" >搜索</el-button>
-      <el-button type="primary"  @click="handleUpdate()" icon="el-icon-plus">新增大厅</el-button>
+      <el-button type="primary"  @click="handleUpdate()" icon="el-icon-plus" :disabled="!(homeData.indexOf('5') !== -1)" :title="(homeData.indexOf('5') !== -1) ? '' : '暂无权限'">新增大厅</el-button>
     </div>
     <div class="bannerlist-box">
       <div class="filter-container" style="width: 100%">
@@ -32,14 +32,14 @@
           </el-table-column>
           <el-table-column prop="state" label="是否上架" align="center">
             <template slot-scope="scope">
-              <el-button@click="isUpper(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1">下架</el-button>
-                <el-button @click="isUpper(scope.row.isUpper, scope.row.id)" type="success" size="small" v-else>上架</el-button>
+              <el-button@click="isUpper(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1" :disabled="!(homeData.indexOf('6') !== -1)" :title="(homeData.indexOf('6') !== -1) ? '' : '暂无权限'">下架</el-button>
+                <el-button @click="isUpper(scope.row.isUpper, scope.row.id)" type="success" size="small" v-else :disabled="!(homeData.indexOf('6') !== -1)" :title="(homeData.indexOf('6') !== -1) ? '' : '暂无权限'">上架</el-button>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="500px" align="center">
             <template slot-scope="scope">
-              <el-button @click="handleUpdate(scope.row.id)" type="warning" size="small">修改</el-button>
-              <el-button @click="delClick(scope.row.id)" type="danger" size="small">删除</el-button>
+              <el-button @click="handleUpdate(scope.row.id)" type="warning" size="small" :disabled="!(homeData.indexOf('7') !== -1)" :title="(homeData.indexOf('7') !== -1) ? '' : '暂无权限'">修改</el-button>
+              <el-button @click="delClick(scope.row.id)" type="danger" size="small" :disabled="!(homeData.indexOf('8') !== -1)" :title="(homeData.indexOf('8') !== -1) ? '' : '暂无权限'">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -64,7 +64,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="quxiao">取消</el-button>
-        <el-button type="primary" @click="trueover">保存</el-button>
+        <el-button type="primary" @click="trueover" :disabled="!(homeData.indexOf('19') !== -1) || !(homeData.indexOf('17') !== -1)" :title="(homeData.indexOf('19') !== -1) || (homeData.indexOf('17') !== -1) ? '' : '暂无权限'">保存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -73,6 +73,8 @@
 <script>
 import { getAllBars, isUpperBar, addBar, editBar, getBarById, deleteBar } from '@/api/shoping'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
+
 const formData = new FormData()
 
 export default {
@@ -108,6 +110,12 @@ export default {
   },
   created() {
     this._getAllBars()
+    console.log(this.homeData)
+  },
+  computed: {
+    ...mapGetters([
+      'homeData'
+    ])
   },
   methods: {
     _getAllBars() {

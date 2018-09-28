@@ -18,7 +18,7 @@
       <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handbox()">添加商品</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handbox()" :disabled="!(shoppingData.indexOf('1') !== -1)" :title="(shoppingData.indexOf('1') !== -1) ? '' : '暂无权限'">添加商品</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="id" label="商品ID" align="center">
@@ -41,10 +41,10 @@
         </el-table-column>
         <el-table-column label="操作" align="center" width="300">
           <template slot-scope="scope">
-            <el-button @click="handbox(scope.row.id)" type="primary" size="small">修改</el-button>
-            <el-button @click="Lower(scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1">下架</el-button>
-            <el-button @click="shelf(scope.row.id)" type="success" size="small" v-else>上架</el-button>
-            <el-button @click="del(scope.row.id)" type="danger" size="small">删除</el-button>
+            <el-button @click="handbox(scope.row.id)" type="primary" size="small" :disabled="!(shoppingData.indexOf('2') !== -1)" :title="(shoppingData.indexOf('2') !== -1) ? '' : '暂无权限'">修改</el-button>
+            <el-button @click="Lower(scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1" :disabled="!(shoppingData.indexOf('3') !== -1)" :title="(shoppingData.indexOf('3') !== -1) ? '' : '暂无权限'">下架</el-button>
+            <el-button @click="shelf(scope.row.id)" type="success" size="small" v-else :disabled="!(shoppingData.indexOf('3') !== -1)" :title="(shoppingData.indexOf('3') !== -1) ? '' : '暂无权限'">上架</el-button>
+            <el-button @click="del(scope.row.id)" type="danger" size="small" :disabled="!(shoppingData.indexOf('4') !== -1)" :title="(shoppingData.indexOf('4') !== -1) ? '' : '暂无权限'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -95,6 +95,7 @@
 <script>
 import { getAllBars, getAllBarsGoods, isUpperBarGoods, addBarGoods, getBarGoodsById, editBarGoods, deleteBarGoods } from '@/api/shoping'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -143,6 +144,11 @@ export default {
   created() {
     this._getAllBarsGoods()
     this._getAllBars()
+  },
+  computed: {
+    ...mapGetters([
+      'shoppingData'
+    ])
   },
   methods: {
     _getAllBars() {

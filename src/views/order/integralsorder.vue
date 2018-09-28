@@ -16,7 +16,7 @@
       <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search"  @click="suchbox">搜索</el-button>
-      <el-button type="primary" icon="document" @click="downloadexcel">导出 excel</el-button>
+      <el-button type="primary" icon="document" @click="downloadexcel" :disabled="!(orderData.indexOf('2') !== -1)" :title="(orderData.indexOf('2') !== -1) ? '' : '暂无权限'">导出 excel</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="code" label="订单号" align="center">
@@ -49,8 +49,8 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row.id)" type="primary" size="small" v-if='scope.row.state === 3'>发货</el-button>
-            <el-button @click="handleClick(scope.row.id)" type="success" size="small" v-else>修改</el-button>
+            <el-button @click="handleClick(scope.row.id)" type="primary" size="small" v-if='scope.row.state === 3' :disabled="!(orderData.indexOf('3') !== -1)" :title="(orderData.indexOf('3') !== -1) ? '' : '暂无权限'">发货</el-button>
+            <el-button @click="handleClick(scope.row.id)" type="success" size="small" v-else :disabled="!(orderData.indexOf('3') !== -1)" :title="(orderData.indexOf('3') !== -1) ? '' : '暂无权限'">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -76,6 +76,8 @@
 import { getAllPointGoodsOrders, insertCourierNumber, exportPointGoodsOrderExcel } from '@/api/shoping'
 import { deleteExcel } from '@/api/user'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -108,6 +110,11 @@ export default {
   },
   created() {
     this._getAllPointGoodsOrders()
+  },
+  computed: {
+    ...mapGetters([
+      'orderData'
+    ])
   },
   methods: {
     _getAllPointGoodsOrders() {

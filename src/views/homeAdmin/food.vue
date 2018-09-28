@@ -37,14 +37,14 @@
           </el-table-column>
           <el-table-column prop="state" label="是否上架在首页" align="center">
             <template slot-scope="scope">
-              <el-button@click="isUpper(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1">下架</el-button>
-                <el-button @click="isUpper(scope.row.isUpper, scope.row.id)" type="success" size="small" v-else>上架</el-button>
+              <el-button@click="isUpper(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1"  :disabled="!(homeData.indexOf('9') !== -1)" :title="(homeData.indexOf('9') !== -1) ? '' : '暂无权限'">下架</el-button>
+                <el-button @click="isUpper(scope.row.isUpper, scope.row.id)" type="success" size="small" v-else  :disabled="!(homeData.indexOf('9') !== -1)" :title="(homeData.indexOf('9') !== -1) ? '' : '暂无权限'">上架</el-button>
             </template>
           </el-table-column>
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
-              <el-button @click="handleUpdate(scope.row.id)" type="primary" size="small">修改</el-button>
-              <el-button @click="delClick(scope.row.id)" type="danger" size="small">删除</el-button>
+              <el-button @click="handleUpdate(scope.row.id)" type="primary" size="small"  :disabled="!(homeData.indexOf('10') !== -1)" :title="(homeData.indexOf('10') !== -1) ? '' : '暂无权限'">修改</el-button>
+              <el-button @click="delClick(scope.row.id)" type="danger" size="small"  :disabled="!(homeData.indexOf('11') !== -1)" :title="(homeData.indexOf('11') !== -1) ? '' : '暂无权限'">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -69,7 +69,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="quxiao">取消</el-button>
-        <el-button type="primary" @click="trueover">保存</el-button>
+        <el-button type="primary" @click="trueover"  :disabled="!(homeData.indexOf('11') !== -1) || !(homeData.indexOf('17') !== -1)" :title="(homeData.indexOf('11') !== -1) || (homeData.indexOf('17') !== -1) ? '' : '暂无权限'">保存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -78,6 +78,8 @@
 <script>
 import { getCornerMealBanner, isUpperBanner, getCornerMealBannerById, editCornerMealBannerById, deleteBanner } from '@/api/home'
 import { ERR_OK } from '@/api/config'
+import { mapGetters } from 'vuex'
+
 const formData = new FormData()
 
 export default {
@@ -111,6 +113,11 @@ export default {
   },
   created() {
     this._getCornerMealBanner()
+  },
+  computed: {
+    ...mapGetters([
+      'homeData'
+    ])
   },
   methods: {
     _getCornerMealBanner() {

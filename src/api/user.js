@@ -294,7 +294,7 @@ export function deleteRole(roleId) {
     return Promise.resolve(res.data)
   })
 }
-// 修改角色信息 /role/editRole
+// 修改角色信息
 export function editRole(data) {
   const url = `${api}/sicc_back/role/editRole`
   return axios.post(url, {
@@ -315,3 +315,36 @@ export function editRole(data) {
     return Promise.resolve(res.data)
   })
 }
+// 查询停车列表
+export function getParkInfo(data) {
+  const url = `${api}/sicc_back/park/getParkInfo`
+  return axios.post(url, {
+    vplNumber: data.vplNumber,
+    billId: data.billId,
+    mobile: data.mobile,
+    state: data.state,
+    startTime: data.startTime,
+    endTime: data.endTime,
+    pageNum: data.pageNum,
+    pageSize: data.pageSize
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 生成exle
+export function exportParkInfoExcel(data) {
+  const url = `${api}/sicc_back/park/exportParkInfoExcel`
+  return axios.post(url, {
+    vplNumber: data.vplNumber,
+    billId: data.billId,
+    mobile: data.mobile,
+    state: data.state,
+    startTime: data.startTime,
+    endTime: data.endTime,
+    pageNum: data.pageNum,
+    pageSize: data.pageSize
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
