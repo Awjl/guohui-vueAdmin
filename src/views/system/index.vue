@@ -1,10 +1,6 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input style="width: 200px;" class="filter-item" placeholder="请输入姓名" >
-      </el-input>
-      <el-button class="filter-item" type="primary" icon="el-icon-search">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加管理员</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="date" label="管理员级别" width="250" align="center">

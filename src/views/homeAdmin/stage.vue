@@ -50,7 +50,7 @@
       </el-pagination>
     </div>
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style='width: 700px; margin-left:50px;'>
+      <el-form ref="dataForm" label-position="right" label-width="20%" style='width: 80%;'>
         <el-form-item label="图片名称">
           <el-input placeholder="请输入图片名称" v-model="dataTitle"></el-input>
         </el-form-item>

@@ -228,7 +228,7 @@
           </el-col>
         </el-row>
         <el-form-item label="优惠券二维码">
-          <img :src="codeData.codeUrl" alt="" width="50%">
+          <img :src="codeData.codeUrl" alt="" width="200px;">
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -501,5 +501,8 @@ export default {
 .filter-container {
   width: 100%;
   min-height: 700px;
+}
+.el-dialog{
+  width: 900px;
 }
 </style>

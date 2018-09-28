@@ -84,7 +84,7 @@
       </el-pagination>
     </div>
     <el-dialog :visible.sync="dialogFormVisible" title="绑定首页图片">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style='width: 700px; margin-left:50px;'>
+      <el-form ref="dataForm" label-position="right" label-width="20%" style='width: 80%px;'>
         <el-form-item label="图片名称">
           <el-input placeholder="请输入图片名称" v-model="bannerTitle"></el-input>
         </el-form-item>
@@ -103,7 +103,7 @@
     </el-dialog>
 
     <el-dialog :visible.sync="dialogTopHot" title="顶部热推">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style='width: 700px; margin-left:50px;'>
+      <el-form ref="dataForm" label-position="right" label-width="20%" style='width: 80%;'>
         <el-form-item label="一隅热推">
           <el-input placeholder="请输入图片名称" v-model="bannerOneTitle"></el-input>
         </el-form-item>
@@ -119,7 +119,7 @@
           <el-button type="primary" @click="trueoneover">保存</el-button>
         </div>
       </el-form>
-      <el-form ref="dataForm" label-position="left" label-width="70px" style='width: 700px; margin-left:50px;'>
+      <el-form ref="dataForm" label-position="right" label-width="20%" style='width: 80%;'>
         <el-form-item label="一食热推">
           <el-input placeholder="请输入图片名称" v-model="bannerTwoTitle"></el-input>
         </el-form-item>
