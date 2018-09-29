@@ -47,7 +47,7 @@
           <el-input placeholder="请输入备注" v-model="dataAll.note"></el-input>
         </el-form-item>
         <el-form-item label="权限">
-          <el-checkbox v-model="checkAll"  @change="handleCheckAllChange">全选</el-checkbox>
+          <el-checkbox v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
           <div>网站管理</div>
           <el-checkbox-group v-model="homeData">
             <el-checkbox v-for="(item, index) in homeList" :label="item.key" :key="index" style='margin-left:0; margin-right:15px;'>{{item.name}}</el-checkbox>
@@ -71,6 +71,10 @@
           <div>优惠券管理</div>
           <el-checkbox-group v-model="discountData">
             <el-checkbox v-for="(item, index) in discountList" :label="item.key" :key="index" style='margin-left:0; margin-right:15px;'>{{item.name}}</el-checkbox>
+          </el-checkbox-group>
+          <div>停车管理</div>
+          <el-checkbox-group v-model="parkData">
+            <el-checkbox v-for="(item, index) in parkList" :label="item.key" :key="index" style='margin-left:0; margin-right:15px;'>{{item.name}}</el-checkbox>
           </el-checkbox-group>
           <div>服务管理</div>
           <el-checkbox-group v-model="serverData">
@@ -113,6 +117,8 @@ export default {
       orderData: [],
       discountList: [{ key: 1, name: '新增优惠券' }, { key: 2, name: '上下架优惠券' }, { key: 3, name: '管理优惠券' }, { key: 4, name: '删除优惠券' }, { key: 5, name: '发放优惠券' }],
       discountData: [],
+      parkList: [{ key: 1, name: '导出停车列表' }],
+      parkData: [],
       serverList: [{ key: 1, name: '添加反馈' }, { key: 2, name: '联系客户' }, { key: 3, name: '添加问题' }, { key: 4, name: '修改热线' }, { key: 5, name: '修改问题' }, { key: 6, name: '上下架问题' }, { key: 7, name: '删除问题' }],
       serverData: [],
       adminList: [{ key: 1, name: '添加管理员' }, { key: 2, name: '修改管理员' }, { key: 3, name: '删除管理员' }, { key: 4, name: '新增权限' }, { key: 5, name: '修改权限' }, { key: 6, name: '删除权限' }],
@@ -237,6 +243,11 @@ export default {
               vm.systemData.push(Number(value))
             })
           }
+          if (res.data.prrkData !== '') {
+            res.data.prrkData.split(',').forEach(function(value, index, array) {
+              vm.prrkData.push(Number(value))
+            })
+          }
         }
       })
     },
@@ -319,16 +330,16 @@ export default {
     handleCheckAllChange(value) {
       console.log(value)
       if (value) {
-        this.homeData = [1, 2, 3, 4, 7, 5, 6, 16, 17, 18, 19, 20, 73, 8, 10, 11]
-        this.userData = [14, 15]
-        this.shoppingData = [21, 22, 23, 24, 25, 74, 26, 27, 28, 29, 30, 31, 32, 13, 12, 9, 51]
-        this.integralData = [33, 34, 35, 36, 37, 38]
-        this.orderData = [39, 42, 40, 41, 43]
-        this.discountData = [44, 45, 46, 47, 48, 49, 50, 52, 53]
-        this.serverData = [75, 76, 77, 54, 55, 56, 57, 58, 59, 60]
-        this.adminDataItem = [61, 63, 64, 62, 65, 66, 68, 69, 67, 70]
-        this.systemData = [71, 72]
-        this.parkData = []
+        this.homeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        this.userData = [1]
+        this.shoppingData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        this.integralData = [1, 2, 3, 4]
+        this.orderData = [1, 2, 3]
+        this.discountData = [1, 2, 3, 4, 5]
+        this.serverData = [1, 2, 3, 4, 5, 6, 7]
+        this.adminDataItem = [1, 2, 3, 4, 5, 6]
+        this.systemData = [1]
+        this.parkData = [1]
       } else {
         this.homeData = []
         this.userData = []

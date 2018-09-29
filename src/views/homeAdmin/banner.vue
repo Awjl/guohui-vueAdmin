@@ -25,8 +25,6 @@
               <el-button type="primary" size="small" v-else @click="isUpper(scope.row.isUpper, scope.row.id)" :disabled="!(homeData.indexOf('2') !== -1)" :title="(homeData.indexOf('2') !== -1) ? '' : '暂无权限'">上架</el-button>
             </template>
           </el-table-column>
-          <!-- <el-table-column prop="url" label="图片链接">
-          </el-table-column> -->
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <el-button @click="handleClick(scope.row.id)" type="danger" size="small" :disabled="!(homeData.indexOf('3') !== -1)" :title="(homeData.indexOf('3') !== -1) ? '' : '暂无权限'">删除</el-button>
@@ -41,8 +39,9 @@
     </div>
     <el-dialog :visible.sync="dialogFormVisible" :title="title">
       <el-form ref="dataForm" label-position="right" label-width="20%" style='width: 80%;'>
-        <el-form-item label="图片名称">
+        <el-form-item label="图片名称" prop="name">
           <el-input placeholder="请输入图片名称" v-model="bannerName"></el-input>
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{bannerERR}}</span>
         </el-form-item>
         <el-form-item label="图片类型">
           <el-select clearable style="width: 150px" class="filter-item" placeholder="图片类型" v-model="statel">
@@ -53,18 +52,20 @@
               底部Banner
             </el-option>
           </el-select>
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{typeERR}}</span>
         </el-form-item>
         <el-form-item label="添加图片">
           <div class="upbtn">
             <label for="up">预览图片</label>
             <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
           </div>
-            <img :src="avatar" alt="" v-if="avatar">
+          <img :src="avatar" alt="" v-if="avatar">
+          <span style="position: absolute;top:20px;left:0px;color:red">{{imgERR}}</span>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="quxiao">取消</el-button>
-        <el-button type="primary" @click="trueover" :title="(homeData.indexOf('3') !== -1) ? '' : '暂无权限'">保存</el-button>
+        <el-button type="primary" @click="trueover">保存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -98,7 +99,10 @@ export default {
       imgType: {
         type: 'image/jpeg, image/png, image/jpg'
       },
-      bannershow: true
+      bannershow: true,
+      bannerERR: '',
+      typeERR: '',
+      imgERR: ''
     }
   },
   computed: {
@@ -178,6 +182,24 @@ export default {
       this.dialogFormVisible = false
     },
     trueover() {
+      if (!this.bannerName) {
+        this.bannerERR = '请输入名称'
+        return
+      } else {
+        this.bannerERR = ''
+      }
+      if (!this.statel) {
+        this.typeERR = '请选择类型'
+        return
+      } else {
+        this.typeERR = ''
+      }
+      if (!this.avatar) {
+        this.imgERR = '请上传图片'
+        return
+      } else {
+        this.imgERR = ''
+      }
       formData.set('title', this.bannerName)
       formData.set('type', this.statel)
       uploadIndexPicture(formData).then((res) => {

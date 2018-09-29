@@ -18,7 +18,7 @@
       <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
-      <el-button type="primary" icon="document" @click="downloadexcel" :disabled="!(orderData.indexOf('43') !== -1)" :title="(orderData.indexOf('43') !== -1) ? '' : '暂无权限'">导出 excel</el-button>
+      <el-button type="primary" icon="document" @click="downloadexcel" :disabled="!(parkData.indexOf('1') !== -1)" :title="(parkData.indexOf('1') !== -1) ? '' : '暂无权限'">导出 excel</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="billId" label="订单编号" align="center">
@@ -96,7 +96,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'orderData'
+      'parkData'
     ])
   },
   methods: {

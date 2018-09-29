@@ -3,31 +3,36 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="文字介绍" prop="desc">
         <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.contentFirst"></el-input>
+        <span style="position: absolute;bottom:-30px;left:0px;color:red">{{textone}}</span>
       </el-form-item>
       <el-form-item label="上传图片">
+        <span style="position: absolute;top:30px;left:0px;color:red">{{imgone}}</span>
         <div class="upbtn">
           <label for="up">预览图片</label>
           <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
         </div>
-        <img :src="oneavatar" alt="" v-if="oneavatar">
+          <img :src="oneavatar" alt="" v-if="oneavatar">
       </el-form-item>
-      <el-form-item label="文字介绍" prop="desc">
-        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.contentSecond"></el-input>
-      </el-form-item>
-      <el-form-item label="上传图片">
-        <div class="upbtn">
-          <label for="uptwo">预览图片</label>
-          <input @change="upavatartwoimg" type="file" id="uptwo" value="图片上传预览" />
+          <el-form-item label="文字介绍" prop="desc">
+            <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.contentSecond"></el-input>
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{texttwo}}</span>
+          </el-form-item>
+          <el-form-item label="上传图片">
+            <span style="position: absolute;top:30px;left:0px;color:red">{{imgtwo}}</span>
+            <div class="upbtn">
+              <label for="uptwo">预览图片</label>
+              <input @change="upavatartwoimg" type="file" id="uptwo" value="图片上传预览" />
         </div>
-        <img :src="twoavatar" alt="" v-if="twoavatar">
+              <img :src="twoavatar" alt="" v-if="twoavatar">
       </el-form-item>
-      <el-form-item label="文字介绍" prop="desc">
-        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.contentThird"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')" :disabled="!(homeData.indexOf('4') !== -1)" :title="(homeData.indexOf('4') !== -1) ? '' : '暂无权限'">保存</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
+              <el-form-item label="文字介绍" prop="desc">
+                <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 15}" v-model="ruleForm.contentThird"></el-input>
+                <span style="position: absolute;bottom:-30px;left:0px;color:red">{{textthree}}</span>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="submitForm" :disabled="!(homeData.indexOf('4') !== -1)" :title="(homeData.indexOf('4') !== -1) ? '' : '暂无权限'">保存</el-button>
+                <el-button @click="resetForm('ruleForm')">重置</el-button>
+              </el-form-item>
     </el-form>
   </div>
 
@@ -52,7 +57,12 @@ export default {
       twoavatar: '',
       imgType: {
         type: 'image/jpeg, image/png, image/jpg'
-      }
+      },
+      textone: '',
+      texttwo: '',
+      textthree: '',
+      imgone: '',
+      imgtwo: ''
     }
   },
   created() {
@@ -76,23 +86,41 @@ export default {
       })
     },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          formData.set('id', this.ruleForm.id)
-          formData.set('contentFirst', this.ruleForm.contentFirst)
-          formData.set('contentSecond', this.ruleForm.contentSecond)
-          formData.set('contentThird', this.ruleForm.contentThird)
-          editIntroduce(formData).then((res) => {
-            if (res.data.code === ERR_OK) {
-              this.$message({
-                type: 'success',
-                message: '修改成功'
-              })
-            }
+      if (!this.ruleForm.contentFirst) {
+        this.textone = '请输入文字介绍'
+        return
+      }
+      if (!this.ruleForm.contentSecond) {
+        this.texttwo = '请输入文字介绍'
+        return
+      }
+      if (!this.ruleForm.contentThird) {
+        this.textthree = '请输入文字介绍'
+        return
+      }
+      if (!this.ruleForm.contentFirst) {
+        this.imgone = '请上传图片'
+        return
+      }
+      if (!this.ruleForm.contentSecond) {
+        this.imgtwo = '请上传图片'
+        return
+      }
+      formData.set('id', this.ruleForm.id)
+      formData.set('contentFirst', this.ruleForm.contentFirst)
+      formData.set('contentSecond', this.ruleForm.contentSecond)
+      formData.set('contentThird', this.ruleForm.contentThird)
+      editIntroduce(formData).then((res) => {
+        if (res.data.code === ERR_OK) {
+          this.$message({
+            type: 'success',
+            message: '修改成功'
           })
-        } else {
-          console.log('error submit!!')
-          return false
+          this.textone = ''
+          this.texttwo = ''
+          this.textthree = ''
+          this.imgone = ''
+          this.imgtwo = ''
         }
       })
     },

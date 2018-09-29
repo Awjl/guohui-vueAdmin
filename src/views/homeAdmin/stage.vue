@@ -52,9 +52,11 @@
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" label-position="right" label-width="20%" style='width: 80%;'>
         <el-form-item label="图片名称">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{bannerERR}}</span>
           <el-input placeholder="请输入图片名称" v-model="dataTitle"></el-input>
         </el-form-item>
         <el-form-item label="添加图片">
+          <span style="position: absolute;top:30px;left:0px;color:red">{{imgERR}}</span>
           <div class="upbtn">
             <label for="up">预览图片</label>
             <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
@@ -64,7 +66,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="quxiao">取消</el-button>
-        <el-button type="primary" @click="trueover" :disabled="!(homeData.indexOf('19') !== -1) || !(homeData.indexOf('17') !== -1)" :title="(homeData.indexOf('19') !== -1) || (homeData.indexOf('17') !== -1) ? '' : '暂无权限'">保存</el-button>
+        <el-button type="primary" @click="trueover">保存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -105,7 +107,9 @@ export default {
       dataTitle: '',
       goodsId: '',
       picId: '',
-      dataArr: []
+      dataArr: [],
+      bannerERR: '',
+      imgERR: ''
     }
   },
   created() {
@@ -217,6 +221,14 @@ export default {
       this.dialogFormVisible = false
     },
     trueover() {
+      if (!this.dataTitle) {
+        this.bannerERR = '请输入标题'
+        return
+      }
+      if (!this.avatar) {
+        this.imgERR = '请上传图片'
+        return
+      }
       if (this.title === '修改大厅') {
         formData.set('name', this.dataTitle)
         formData.set('id', this.goodsId)
