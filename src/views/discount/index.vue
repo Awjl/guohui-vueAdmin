@@ -23,6 +23,7 @@
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handbox()" :disabled="!(discountData.indexOf('1') !== -1)" :title="(discountData.indexOf('1') !== -1) ? '' : '暂无权限'">添加优惠券</el-button>
+      <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="name" label="优惠券名称" align="center">
         </el-table-column>
@@ -50,16 +51,12 @@
         <el-table-column label="使用时间" align="center">
           <template slot-scope="scope">
             <span>{{new Date(scope.row.startTime).getFullYear()+ '-' + (((new Date(scope.row.startTime).getMonth() + 1)
-              < 10) ? '0'+ (new Date(scope.row.startTime).getMonth() + 1) : (new Date(scope.row.startTime).getMonth() + 1)) + '-' + ((new Date(scope.row.startTime).getDate() < 10) ? '0' + new Date(scope.row.startTime).getDate() : new Date(scope.row.startTime).getDate())}}</span> 至
-                <span>{{new Date(scope.row.endTime).getFullYear()+ '-' + (((new Date(scope.row.endTime).getMonth() + 1)
-                  < 10) ? '0'+ (new Date(scope.row.endTime).getMonth() + 1) : (new Date(scope.row.endTime).getMonth() + 1)) + '-' + ((new Date(scope.row.endTime).getDate() < 10) ? '0' + new Date(scope.row.endTime).getDate() : new Date(scope.row.endTime).getDate())}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="新手优惠券" align="center">
-          <template slot-scope="scope">
-            <span v-if="scope.row.isNewbee === 1">是</span>
-            <span v-else>否</span>
-          </template>
+              < 10) ? '0' + (new Date(scope.row.startTime).getMonth() + 1) : (new Date(scope.row.startTime).getMonth() + 1)) + '-' + ((new Date(scope.row.startTime).getDate() < 10) ? '0' + new Date(scope.row.startTime).getDate() : new Date(scope.row.startTime).getDate())}}</span> 至 <span>{{new Date(scope.row.endTime).getFullYear()+ '-' + (((new Date(scope.row.endTime).getMonth() + 1)
+                < 10) ? '0' + (new Date(scope.row.endTime).getMonth() + 1) : (new Date(scope.row.endTime).getMonth() + 1)) + '-' + ((new Date(scope.row.endTime).getDate() < 10) ? '0' + new Date(scope.row.endTime).getDate() : new Date(scope.row.endTime).getDate())}}</span> </template> </el-table-column> <el-table-column label="新手优惠券" align="center">
+                  <template slot-scope="scope">
+                    <span v-if="scope.row.isNewbee === 1">是</span>
+                    <span v-else>否</span>
+                  </template>
         </el-table-column>
         <el-table-column label="是否上架" align="center">
           <template slot-scope="scope">
@@ -74,7 +71,6 @@
         </el-table-column>
         <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
-            <!-- <el-button @click="handbox(scope.row.id)" type="primary" size="small">修改</el-button> -->
             <el-button @click="del(scope.row.id)" type="danger" size="small" :disabled="!(discountData.indexOf('4') !== -1)" :title="(discountData.indexOf('4') !== -1) ? '' : '暂无权限'">删除</el-button>
             <el-button @click="clicknum(scope.row.id)" type="info" size="small" :disabled="!(discountData.indexOf('5') !== -1)" :title="(discountData.indexOf('5') !== -1) ? '' : '暂无权限'">发放优惠券</el-button>
           </template>
@@ -88,9 +84,11 @@
     <el-dialog :visible.sync="dialogFormVisible" :title="title">
       <el-form ref="dataForm" label-position="center" label-width="100px" style='width: 90%; margin-left:50px;'>
         <el-form-item label="商品名称">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{nameERR}}</span>
           <el-input placeholder="请输入商品名称" v-model="item.name"></el-input>
         </el-form-item>
         <el-form-item label="标题">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{titleERR}}</span>
           <el-input placeholder="请输入标题" v-model="item.title"></el-input>
         </el-form-item>
         <el-row>
@@ -108,7 +106,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="是否新手">
-              <el-select clearable style="width: 150px" class="filter-item" placeholder="是否新手优惠" v-model="item.isNewbee">
+              <el-select style="width: 150px" class="filter-item" placeholder="是否新手优惠" v-model="item.isNewbee">
                 <el-option label="新手优惠券" :value="1">
                   新手优惠券
                 </el-option>
@@ -120,7 +118,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="优惠券类型">
-              <el-select clearable style="width: 150px" class="filter-item" placeholder="优惠券类型" v-model="item.type">
+              <el-select style="width: 150px" class="filter-item" placeholder="优惠券类型" v-model="item.type">
                 <el-option label="代金券" :value="1">
                   代金券
                 </el-option>
@@ -134,7 +132,7 @@
         <el-row v-if='item.type === 1'>
           <el-col :span="8">
             <el-form-item label="优惠类型">
-              <el-select clearable style="width: 150px" class="filter-item" placeholder="优惠类型" v-model="item.saleType">
+              <el-select style="width: 150px" class="filter-item" placeholder="优惠类型" v-model="item.saleType">
                 <el-option label="满减" :value="1">
                   满减
                 </el-option>
@@ -146,24 +144,24 @@
           </el-col>
           <el-col :span="8" v-if='item.saleType === 2'>
             <el-form-item label="无限制减">
-              <el-input placeholder="请输入减免金额" v-model="item.price" style="width: 150px"></el-input>
+              <el-input type="number" placeholder="请输入减免金额" v-model="item.price" style="width: 150px" min="0"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8" v-if='item.saleType === 1'>
             <el-form-item label="满">
-              <el-input placeholder="请输入满多少" v-model="item.limitPrice" style="width: 150px"></el-input>
+              <el-input type="number" placeholder="请输入满多少" v-model="item.limitPrice" style="width: 150px" min="0"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8" v-if='item.saleType === 1'>
             <el-form-item label="减">
-              <el-input placeholder="请输入减多少" v-model="item.price" style="width: 150px"></el-input>
+              <el-input type="number" placeholder="请输入减多少" v-model="item.price" style="width: 150px" min="0"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row v-if='item.type === 2'>
           <el-col :span="8">
             <el-form-item label="减免时间">
-              <el-select clearable style="width: 150px" class="filter-item" placeholder="减免时间" v-model="item.discountTime">
+              <el-select style="width: 150px" class="filter-item" placeholder="减免时间" v-model="item.discountTime">
                 <el-option label="减免一小时" :value="1">
                   减免一小时
                 </el-option>
@@ -180,6 +178,7 @@
         <el-row type="flex" class="row-bg" justify="space-between">
           <el-col :span="15">
             <el-form-item label="使用时间">
+              <span style="position: absolute;bottom:-30px;left:0px;color:red">{{dataERR}}</span>
               <el-date-picker v-model="dataTwoArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </el-form-item>
@@ -191,13 +190,15 @@
         <el-button type="primary" @click="trueover">保存</el-button>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="numfa" :title="title">
+    <el-dialog :visible.sync="numfa" title="发放优惠券">
       <el-form ref="dataForm" label-position="center" label-width="100px" style='width: 90%; margin-left:50px;'>
         <el-form-item label="接收人手机号">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{mobileERR}}</span>
           <el-input placeholder="请输入接收人手机号" v-model="userData.mobile"></el-input>
         </el-form-item>
         <el-form-item label="数量">
-          <el-input placeholder="请输入数量" v-model="userData.number"></el-input>
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{numberERR}}</span>
+          <el-input placeholder="请输入数量" v-model="userData.number" type="number" min="0"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -223,7 +224,8 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="增加库存">
-              <el-input v-model="codeList.total"></el-input>
+              <span style="position: absolute;bottom:-30px;left:0px;color:red">{{totalERR}}</span>
+              <el-input v-model="codeList.total" type='number'></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -272,16 +274,16 @@ export default {
       dataTwoArr: [],
       item: {
         endTime: '',
-        isNewbee: '',
+        isNewbee: 1,
         isUpper: 2,
-        limitPrice: '',
+        limitPrice: 0,
         name: '',
-        price: '',
-        saleType: '',
+        price: 0,
+        saleType: 2,
         startTime: '',
-        type: '',
+        type: 1,
         title: '',
-        discountTime: ''
+        discountTime: 1
       },
       userData: {
         id: '',
@@ -297,7 +299,13 @@ export default {
       codeList: {
         couponId: '',
         total: 0
-      }
+      },
+      dataERR: '',
+      titleERR: '',
+      nameERR: '',
+      totalERR: '',
+      mobileERR: '',
+      numberERR: ''
     }
   },
   created() {
@@ -384,9 +392,21 @@ export default {
     },
     upclick(id, type) {
       if (type === 1) {
-        this._isUpperCoupon(id, 2)
+        this.$confirm('下架后该优惠券会消失在用户列表中', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._isUpperCoupon(id, 2)
+        })
       } else {
-        this._isUpperCoupon(id, 1)
+        this.$confirm('上架后该优惠券内容不可更改', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._isUpperCoupon(id, 1)
+        })
       }
     },
     handleSizeChange(val) {
@@ -403,6 +423,26 @@ export default {
       this.code = false
     },
     trueoverTwo() {
+      this.mobileERR = ''
+      this.numberERR = ''
+      const phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
+      const numReg = /(^[0-9]*[1-9][0-9]*$)/
+      if (!this.userData.mobile) {
+        this.mobileERR = '请输入手机号'
+        return
+      }
+      if (!phoneReg.test(this.userData.mobile)) {
+        this.mobileERR = '请输入正确的手机格式'
+        return
+      }
+      if (!this.userData.number) {
+        this.numberERR = '请输入发放数量'
+        return
+      }
+      if (!numReg.test(this.userData.number)) {
+        this.numberERR = '请输入正整数'
+        return
+      }
       sendCoupon(this.userData).then((res) => {
         if (res.code === ERR_OK) {
           console.log(res.data)
@@ -419,8 +459,11 @@ export default {
       })
     },
     trueoverThere() {
-      console.log('测试')
-      console.log(this.codeList)
+      this.totalERR = ''
+      if (!this.codeList.total) {
+        this.totalERR = '请输入库存数'
+        return
+      }
       sendCouponQRCode(this.codeList).then((res) => {
         if (res.code === ERR_OK) {
           this.$message({
@@ -432,6 +475,21 @@ export default {
       })
     },
     trueover() {
+      this.dataERR = ''
+      this.titleERR = ''
+      this.nameERR = ''
+      if (!this.item.name) {
+        this.nameERR = '请输入名称'
+        return
+      }
+      if (!this.item.title) {
+        this.titleERR = '请输入标题'
+        return
+      }
+      if (this.dataTwoArr.length < 2) {
+        this.dataERR = '请选择初始时间和结束时间'
+        return
+      }
       if (this.title === '新增优惠券') {
         if (this.dataTwoArr !== [] && this.dataTwoArr !== null) {
           console.log(this.dataArr)
@@ -508,7 +566,7 @@ export default {
   width: 100%;
   min-height: 700px;
 }
-.el-dialog{
+.el-dialog {
   width: 900px;
 }
 </style>

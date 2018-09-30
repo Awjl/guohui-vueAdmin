@@ -56,15 +56,18 @@
     <el-dialog :visible.sync="dialogFormVisible" :title="title">
       <el-form ref="dataForm" label-position="right" label-width="20%" style='width:80%;'>
         <el-form-item label="商品名称">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{titleERR}}</span>
           <el-input placeholder="请输入商品名称" v-model="shopingTitle"></el-input>
         </el-form-item>
         <el-form-item label="选择大厅">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{shopingBarERR}}</span>
           <el-select clearable style="width: 150px" class="filter-item" v-model="shopingBar" placeholder="选择大厅">
             <el-option v-for="(item, index) in barList" :key="index" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="是否上架">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{upperERR}}</span>
           <el-select clearable style="width: 150px" class="filter-item" v-model="shopingisUpper" placeholder="选择是否上架">
             <el-option label="上架" :value="1">
               上架
@@ -75,9 +78,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="商品内容">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{summaryERR}}</span>
           <el-input placeholder="格式如：奶茶*2/拼盘*1/牛排*1" v-model="shoppingsummary"></el-input>
         </el-form-item>
         <el-form-item label="添加图片">
+          <span style="position: absolute;top:30px;left:0px;color:red">{{imgERR}}</span>
           <div class="upbtn">
             <label for="up">预览图片</label>
             <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
@@ -138,7 +143,12 @@ export default {
       shopingisUpper: '',
       shoppingsummary: '',
       goodID: '',
-      picId: ''
+      picId: '',
+      titleERR: '',
+      shopingBarERR: '',
+      upperERR: '',
+      summaryERR: '',
+      imgERR: ''
     }
   },
   created() {
@@ -256,17 +266,32 @@ export default {
       this.dialogFormVisible = false
     },
     trueover() {
-      // this.dialogFormVisible = false
-      // formData.set('title', this.bannerTitle)
-      // console.log(formData.get('file'))
-      // console.log(formData.get('title'))
-      // this._addBarGoods()
+      this.titleERR = ''
+      this.shopingBarERR = ''
+      this.upperERR = ''
+      this.summaryERR = ''
+      this.imgERR = ''
+      if (!this.shopingTitle) {
+        this.titleERR = '请输入标题'
+        return
+      }
+      if (!this.shopingBar) {
+        this.shopingBarERR = '请选择大厅'
+        return
+      }
+      if (!this.shopingisUpper) {
+        this.upperERR = '请选择状态'
+        return
+      }
+      if (!this.shoppingsummary) {
+        this.summaryERR = '请输入介绍'
+        return
+      }
+      if (!this.avatar) {
+        this.imgERR = '请上传图片'
+        return
+      }
       if (this.title === '新增商品') {
-        //   shopingTitle: '',
-        // shopingBar: '',
-        // shopingisUpper: '',
-        // shoppingsummary: ''
-
         this.formData.set('name', this.shopingTitle)
         this.formData.set('title', this.shopingTitle)
         this.formData.set('barId', this.shopingBar)

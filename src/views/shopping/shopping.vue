@@ -105,6 +105,7 @@
     <el-dialog :visible.sync="dialogTopHot" title="顶部热推">
       <el-form ref="dataForm" label-position="right" label-width="20%" style='width: 80%;'>
         <el-form-item label="一隅热推">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{OneTitle}}</span>
           <el-input placeholder="请输入图片名称" v-model="bannerOneTitle"></el-input>
         </el-form-item>
         <el-form-item label="添加图片">
@@ -121,6 +122,7 @@
       </el-form>
       <el-form ref="dataForm" label-position="right" label-width="20%" style='width: 80%;'>
         <el-form-item label="一食热推">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{TwoTitle}}</span>
           <el-input placeholder="请输入图片名称" v-model="bannerTwoTitle"></el-input>
         </el-form-item>
         <el-form-item label="添加图片">
@@ -182,7 +184,9 @@ export default {
       bannerTwoTitle: '',
       OneID: '',
       TwoID: '',
-      destroyCode: ''
+      destroyCode: '',
+      OneTitle: '',
+      TwoTitle: ''
     }
   },
   created() {
@@ -330,6 +334,8 @@ export default {
     },
     setTopHot() {
       this.dialogTopHot = true
+      this.OneTitle = ''
+      this.TwoTitle = ''
       getCornerMealListBanner().then((res) => {
         if (res.code === ERR_OK) {
           this.oneavatar = res.data[0].url
@@ -361,6 +367,10 @@ export default {
       this._setCornerMealBanner()
     },
     trueoneover() {
+      if (!this.bannerOneTitle) {
+        this.OneTitle = '请输入标题'
+        return
+      }
       formOneData.set('id', this.OneID)
       formOneData.set('title', this.bannerOneTitle)
       setCornerMealListBanner(formOneData).then((res) => {
@@ -374,7 +384,10 @@ export default {
       })
     },
     truetwoover() {
-      // id,title,file
+      if (!this.bannerTwoTitle) {
+        this.TwoTitle = '请输入标题'
+        return
+      }
       formTwoData.set('id', this.TwoID)
       formTwoData.set('title', this.bannerTwoTitle)
       setCornerMealListBanner(formTwoData).then((res) => {
