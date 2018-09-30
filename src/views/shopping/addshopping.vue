@@ -5,12 +5,13 @@
       <el-row>
         <el-col :span="24">
           <el-form-item label="名称">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{nameERR}}</span>
             <el-input placeholder="请输入商品名称" v-model="shoplist.name"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="产品类型">
-            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.type" placeholder="选择分类">
+            <el-select style="width: 150px" class="filter-item" v-model="shoplist.type" placeholder="选择分类">
               <el-option label="房券" :value="1">
                 房券
               </el-option>
@@ -22,7 +23,7 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="是否推荐">
-            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.isCommend" placeholder="选择分类">
+            <el-select style="width: 150px" class="filter-item" v-model="shoplist.isCommend" placeholder="选择分类">
               <el-option label="热推" :value="1">
                 热推
               </el-option>
@@ -34,7 +35,7 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="是否预约">
-            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.isBespeak" placeholder="选择分类">
+            <el-select style="width: 150px" class="filter-item" v-model="shoplist.isBespeak" placeholder="选择分类">
               <el-option label="需要预约" :value="1">
                 需要预约
               </el-option>
@@ -46,7 +47,7 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="是否上架">
-            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.isUpper" placeholder="选择分类">
+            <el-select style="width: 150px" class="filter-item" v-model="shoplist.isUpper" placeholder="选择分类">
               <el-option label="上架" :value="1">
                 上架
               </el-option>
@@ -58,42 +59,50 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="原价">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{oldPriceERR}}</span>
             <el-input placeholder="请输入价格" v-model="shoplist.oldPrice"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="折扣价">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{newPriceERR}}</span>
             <el-input placeholder="请输入折扣价" v-model="shoplist.newPrice"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="简介">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{summaryERR}}</span>
             <el-input placeholder="请输入简介" v-model="shoplist.summary"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="介绍">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{introduceERR}}</span>
             <el-input placeholder="请输入介绍" v-model="shoplist.introduce"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="有效期">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{dataERR}}</span>
             <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
             </el-date-picker>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="使用时间">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{useTimeERR}}</span>
             <el-input placeholder="格式如：周一至周五" v-model="shoplist.useTime"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="使用规则">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{useRuleERR}}</span>
             <el-input placeholder="格式如：周一至周五使用，早上到晚上，需要预约" v-model="shoplist.useRule"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="顶部图片">
+            <span style="position: absolute;top:20px;left:0px;color:red">{{TopImgERR}}</span>
             <div class="upbtn">
               <label for="upTop">多张上传</label>
               <input @change="upTopImg" type="file" id="upTop" value="图片上传预览" multiple/>
@@ -116,6 +125,7 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="详情图片">
+            <span style="position: absolute;top:20px;left:0px;color:red">{{BottomimgERR}}</span>
             <div class="upbtn">
               <label for="upBottom">多张上传</label>
               <input @change="upaBottomimg" type="file" id="upBottom" value="图片上传预览" multiple/>
@@ -138,11 +148,13 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="缩略图标题">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{titleERR}}</span>
             <el-input placeholder="请输入缩略图标题" v-model="shoplist.title"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="缩略图">
+            <span style="position: absolute;top:20px;left:0px;color:red">{{avatarimgERR}}</span>
             <div class="upbtn">
               <label for="up">预览图片</label>
               <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
@@ -172,13 +184,13 @@ export default {
       formData: new FormData(),
       shoplist: {
         name: '',
-        type: '',
+        type: 1,
         oldPrice: '',
         newPrice: '',
         summary: '',
         introduce: '',
-        isCommend: '',
-        isBespeak: '',
+        isCommend: 1,
+        isBespeak: 1,
         termOfValidity: '',
         useTime: '',
         useRule: '',
@@ -186,7 +198,7 @@ export default {
         bannerFiles: '',
         introduceFiles: '',
         title: '',
-        isUpper: ''
+        isUpper: 1
       },
       imgType: {
         type: 'image/jpeg, image/png, image/jpg'
@@ -199,7 +211,19 @@ export default {
       bottomListImg: [],
       dataArr: [],
       stateTime: '',
-      endTime: ''
+      endTime: '',
+      nameERR: '', // 验证
+      oldPriceERR: '',
+      newPriceERR: '',
+      summaryERR: '',
+      introduceERR: '',
+      dataERR: '',
+      useTimeERR: '',
+      useRuleERR: '',
+      TopImgERR: '',
+      BottomimgERR: '',
+      titleERR: '',
+      avatarimgERR: ''
     }
   },
   created() {
@@ -212,7 +236,6 @@ export default {
       console.log(this.formData.getAll('bannerFiles'))
       addGoods(this.formData).then((res) => {
         if (res.data.code === ERR_OK) {
-          console.log('-----------------------')
           this.$message({
             type: 'success',
             message: '保存成功'
@@ -357,6 +380,70 @@ export default {
       }
     },
     trueover() {
+      this.nameERR = ''
+      this.oldPriceERR = ''
+      this.newPriceERR = ''
+      this.summaryERR = ''
+      this.introduceERR = ''
+      this.dataERR = ''
+      this.useTimeERR = ''
+      this.useRuleERR = ''
+      this.TopImgERR = ''
+      this.BottomimgERR = ''
+      this.titleERR = ''
+      this.avatarimgERR = ''
+      if (!this.shoplist.name) {
+        this.nameERR = '请输入用户名'
+        return
+      }
+      if (!this.shoplist.oldPrice) {
+        this.oldPriceERR = '请输入原价'
+        return
+      }
+      if (!this.shoplist.newPrice) {
+        this.newPriceERR = '请输入折扣价'
+        return
+      }
+      if (this.shoplist.newPrice > this.shoplist.oldPrice) {
+        this.newPriceERR = '折扣价不能比原价大'
+        return
+      }
+      if (!this.shoplist.summary) {
+        this.summaryERR = '请输入简介'
+        return
+      }
+      if (!this.shoplist.introduce) {
+        this.introduceERR = '请输入介绍'
+        return
+      }
+      if (this.dataArr.length < 2) {
+        this.dataERR = '请选择有效期'
+        return
+      }
+      if (!this.shoplist.useTime) {
+        this.useTimeERR = '请输入使用时间'
+        return
+      }
+      if (!this.shoplist.useRule) {
+        this.useRuleERR = '请输入使用规则'
+        return
+      }
+      if (this.topImg.length < 1 && this.topDataList.length < 1) {
+        this.TopImgERR = '请上传顶部图片'
+        return
+      }
+      if (this.bottomImg.length < 1 && this.bottomDataList.length < 1) {
+        this.BottomimgERR = '请上传详情图片'
+        return
+      }
+      if (!this.shoplist.title) {
+        this.titleERR = '请输入缩略图标题'
+        return
+      }
+      if (!this.shoplist.showFile) {
+        this.avatarimgERR = '请上传缩略图'
+        return
+      }
       this.stateTime = `${new Date(this.dataArr[0]).getFullYear()}-${(new Date(this.dataArr[0]).getMonth() + 1 < 10 ? '0' + (new Date(this.dataArr[0]).getMonth() + 1) : new Date(this.dataArr[0]).getMonth() + 1)}-${new Date(this.dataArr[0]).getDate() < 10 ? '0' + new Date(this.dataArr[0]).getDate() : new Date(this.dataArr[0]).getDate()}`
       this.endTime = `${new Date(this.dataArr[1]).getFullYear()}-${(new Date(this.dataArr[1]).getMonth() + 1 < 10 ? '0' + (new Date(this.dataArr[1]).getMonth() + 1) : new Date(this.dataArr[1]).getMonth() + 1)}-${new Date(this.dataArr[1]).getDate() < 10 ? '0' + new Date(this.dataArr[1]).getDate() : new Date(this.dataArr[1]).getDate()}`
       this.formData.append('name', this.shoplist.name)

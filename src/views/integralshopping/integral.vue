@@ -5,27 +5,31 @@
       <el-row>
         <el-col :span="24">
           <el-form-item label="名称">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{nameERR}}</span>
             <el-input placeholder="请输入商品名称" v-model="shoplist.name"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="简介">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{summaryERR}}</span>
             <el-input placeholder="请输入简介" v-model="shoplist.summary"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="类型">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{kindERR}}</span>
             <el-input placeholder="格式如：黄色，绿色，白色，蓝色" v-model="shoplist.kind"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="参数">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{paramERR}}</span>
             <el-input placeholder="格式如：产地：中国/规格：12MM" v-model="shoplist.param"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="对应级别">
-            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.level" placeholder="选择对应级别">
+            <el-select style="width: 150px" class="filter-item" v-model="shoplist.level" placeholder="选择对应级别">
               <el-option label="全部" :value="3">
                 全部
               </el-option>
@@ -40,7 +44,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="是否上架">
-            <el-select clearable style="width: 150px" class="filter-item" v-model="shoplist.isUpper" placeholder="选择分类">
+            <el-select style="width: 150px" class="filter-item" v-model="shoplist.isUpper" placeholder="选择分类">
               <el-option label="上架" :value="1">
                 上架
               </el-option>
@@ -52,31 +56,37 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="库存">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{stockERR}}</span>
             <el-input placeholder="请输入库存" v-model="shoplist.stock"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="原积分">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{oldPointERR}}</span>
             <el-input placeholder="请输入价格" v-model="shoplist.oldPoint"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="v1积分">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{v1NewPointERR}}</span>
             <el-input placeholder="v1对应的积分" v-model="shoplist.v1NewPoint"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="v2积分">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{v2NewPointERR}}</span>
             <el-input placeholder=" v2对应的积分" v-model="shoplist.v2NewPoint"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="介绍">
+            <span style="position: absolute;bottom:-30px;left:0px;color:red">{{introduceERR}}</span>
             <el-input placeholder="请输入介绍" v-model="shoplist.introduce"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="顶部图片">
+            <span style="position: absolute;top:20px;left:0px;color:red">{{TopImgERR}}</span>
             <div class="upbtn">
               <label for="upTop">多张上传</label>
               <input @change="upTopImg" type="file" id="upTop" value="图片上传预览" multiple/>
@@ -99,6 +109,7 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="详情图片">
+            <span style="position: absolute;top:20px;left:0px;color:red">{{BottomimgERR}}</span>
             <div class="upbtn">
               <label for="upBottom">多张上传</label>
               <input @change="upaBottomimg" type="file" id="upBottom" value="图片上传预览" multiple/>
@@ -121,6 +132,7 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="缩略图">
+            <span style="position: absolute;top:20px;left:0px;color:red">{{avatarimgERR}}</span>
             <div class="upbtn">
               <label for="up">预览图片</label>
               <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
@@ -158,8 +170,8 @@ export default {
         param: '',
         introduce: '',
         stock: '',
-        isUpper: '',
-        level: '',
+        isUpper: 1,
+        level: 1,
         showFile: '',
         bannerFiles: '',
         introduceFiles: ''
@@ -172,7 +184,19 @@ export default {
       topDataList: [],
       bottomDataList: [],
       topListImg: [],
-      bottomListImg: []
+      bottomListImg: [],
+      nameERR: '', // 验证
+      summaryERR: '',
+      kindERR: '',
+      paramERR: '',
+      stockERR: '',
+      oldPointERR: '',
+      v1NewPointERR: '',
+      v2NewPointERR: '',
+      introduceERR: '',
+      TopImgERR: '',
+      BottomimgERR: '',
+      avatarimgERR: ''
     }
   },
   created() {
@@ -326,6 +350,74 @@ export default {
       }
     },
     trueover() {
+      this.nameERR = ''
+      this.summaryERR = ''
+      this.kindERR = ''
+      this.paramERR = ''
+      this.stockERR = ''
+      this.oldPointERR = ''
+      this.v1NewPointERR = ''
+      this.v2NewPointERR = ''
+      this.introduceERR = ''
+      this.TopImgERR = ''
+      this.BottomimgERR = ''
+      this.avatarimgERR = ''
+      if (!this.shoplist.name) {
+        this.nameERR = '请输入用户名'
+        return
+      }
+      if (!this.shoplist.summary) {
+        this.summaryERR = '请输入简介'
+        return
+      }
+      if (!this.shoplist.kind) {
+        this.kindERR = '请输入类型'
+        return
+      }
+      if (!this.shoplist.param) {
+        this.paramERR = '请输入参数'
+        return
+      }
+      if (!this.shoplist.stock) {
+        this.stockERR = '请输入库存'
+        return
+      }
+      if (!this.shoplist.oldPoint) {
+        this.oldPointERR = '请输入原积分'
+        return
+      }
+      if (!this.shoplist.v1NewPoint) {
+        this.v1NewPointERR = '请输入V1会员积分'
+        return
+      }
+      if (Number(this.shoplist.oldPoint) < Number(this.shoplist.v1NewPoint)) {
+        this.v1NewPointERR = '不能比原积分大'
+        return
+      }
+      if (!this.shoplist.v2NewPoint) {
+        this.v2NewPointERR = '请输入V2会员积分'
+        return
+      }
+      if (Number(this.shoplist.oldPoint) < Number(this.shoplist.v2NewPoint)) {
+        this.v2NewPointERR = '不能比原积分大'
+        return
+      }
+      if (!this.shoplist.introduce) {
+        this.introduceERR = '请输入介绍'
+        return
+      }
+      if (this.topImg.length < 1 && this.topDataList.length < 1) {
+        this.TopImgERR = '请上传顶部图片'
+        return
+      }
+      if (this.bottomImg.length < 1 && this.bottomDataList.length < 1) {
+        this.BottomimgERR = '请上传详情图片'
+        return
+      }
+      if (!this.shoplist.showFile) {
+        this.avatarimgERR = '请上传缩略图'
+        return
+      }
       this.formData.append('name', this.shoplist.name)
       this.formData.append('summary', this.shoplist.summary)
       this.formData.append('kind', this.shoplist.kind)

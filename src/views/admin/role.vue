@@ -41,6 +41,7 @@
     <el-dialog :visible.sync="dialogFormVisible" :title="title">
       <el-form ref="dataForm" label-position="right" label-width="15%" style='width:90%;'>
         <el-form-item label="权限名称">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{nameERR}}</span>
           <el-input placeholder="请输入权限名称" v-model="dataAll.name"></el-input>
         </el-form-item>
         <el-form-item label="备注">
@@ -154,7 +155,8 @@ export default {
         id: ''
       },
       checkAll: false,
-      isIndeterminate: true
+      isIndeterminate: true,
+      nameERR: ''
     }
   },
   computed: {
@@ -284,7 +286,7 @@ export default {
       })
     },
     addRoles(id) {
-      console.log(id)
+      this.nameERR = ''
       this.checkAll = false
       this.dialogFormVisible = true
       this.dataAll.name = ''
@@ -310,7 +312,11 @@ export default {
       this.dialogFormVisible = false
     },
     trueover() {
-      console.log('保存')
+      this.nameERR = ''
+      if (!this.dataAll.name) {
+        this.nameERR = '请输入权限名称'
+        return
+      }
       this.dataAll.homeData = this.homeData.join()
       this.dataAll.userData = this.userData.join()
       this.dataAll.shoppingData = this.shoppingData.join()

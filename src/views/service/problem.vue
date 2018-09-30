@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleClick()" :disabled="!(serverData.indexOf('3') !== -1)" :title="(serverData.indexOf('3') !== -1) ? '' : '暂无权限'">添加问题</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="hotphone()" :disabled="!(serverData.indexOf('4') !== -1)" :title="(serverData.indexOf('4') !== -1) ? '' : '暂无权限'">修改服务电话</el-button>
-      <span style="margin-left: 10px;" >服务热线：</span>
+      <span style="margin-left: 10px;">服务热线：</span>
       <span>{{phone}}</span>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
@@ -16,7 +16,7 @@
             <el-button @click="handleClick(scope.row.id)" type="primary" size="small" :disabled="!(serverData.indexOf('5') !== -1)" :title="(serverData.indexOf('5') !== -1) ? '' : '暂无权限'">修改</el-button>
             <el-button @click="Lower(scope.row.id, scope.row.isUpper)" type="warning" size="small" v-if="scope.row.isUpper == 1" :disabled="!(serverData.indexOf('6') !== -1)" :title="(serverData.indexOf('6') !== -1) ? '' : '暂无权限'">下架</el-button>
             <el-button @click="Lower(scope.row.id, scope.row.isUpper)" type="success" size="small" v-else :disabled="!(serverData.indexOf('6') !== -1)" :title="(serverData.indexOf('6') !== -1) ? '' : '暂无权限'">上架</el-button>
-            <el-button @click="del(scope.row.id)" type="danger" size="small":disabled="!(serverData.indexOf('7') !== -1)" :title="(serverData.indexOf('7') !== -1) ? '' : '暂无权限'">删除</el-button>
+            <el-button @click="del(scope.row.id)" type="danger" size="small" :disabled="!(serverData.indexOf('7') !== -1)" :title="(serverData.indexOf('7') !== -1) ? '' : '暂无权限'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -28,9 +28,11 @@
     <el-dialog :visible.sync="dialogFormVisible" :title="title">
       <el-form ref="dataForm" label-position="right" label-width="15%" style='width:90%; '>
         <el-form-item label="问题">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{questionERR}}</span>
           <el-input placeholder="请输入问题" v-model="problem.question"></el-input>
         </el-form-item>
         <el-form-item label="答案">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{answerERR}}</span>
           <el-input placeholder="请输入答案" v-model="problem.answer"></el-input>
         </el-form-item>
       </el-form>
@@ -66,7 +68,9 @@ export default {
         answer: null,
         question: null
       },
-      phone: ''
+      phone: '',
+      questionERR: '',
+      answerERR: ''
     }
   },
   created() {
@@ -137,13 +141,15 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(({ value }) => {
-        this.phone = value
-        this._updatePhone()
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
+        if (value) {
+          this.phone = value
+          this._updatePhone()
+        } else {
+          this.$message({
+            type: 'info',
+            message: '请输入热线'
+          })
+        }
       })
     },
     del(id) {
@@ -170,7 +176,8 @@ export default {
       })
     },
     handleClick(id) {
-      console.log(id)
+      this.questionERR = ''
+      this.answerERR = ''
       if (id) {
         this.title = '修改问题'
         getHotQuestionById(id).then((res) => {
@@ -201,6 +208,14 @@ export default {
       this.dialogFormVisible = false
     },
     trueover() {
+      if (!this.problem.question) {
+        this.questionERR = '请输入问题'
+        return
+      }
+      if (!this.problem.answer) {
+        this.answerERR = '请输入答案'
+        return
+      }
       if (this.problem.id) {
         this._editHotQuestionById(this.problem)
       } else {

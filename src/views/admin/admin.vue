@@ -13,19 +13,16 @@
         <el-table-column prop="date" label="创建时间" align="center">
           <template slot-scope="scope">
             <span>{{new Date(scope.row.date).getFullYear()+ '-' + (((new Date(scope.row.date).getMonth() + 1)
-              < 10) ? '0'+ (new Date(scope.row.date).getMonth() + 1) : (new Date(scope.row.date).getMonth() + 1)) + '-' + ((new Date(scope.row.date).getDate() < 10) ? '0' + new Date(scope.row.date).getDate() : new Date(scope.row.date).getDate())}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="lve" label="操作" align="center">
-          <template slot-scope="scope">
-            <p v-if="scope.row.id != 1">
-              <el-button @click="addAdminlist(scope.row.id)" type="primary" size="small" :disabled="!(adminData.indexOf('2') !== -1)" :title="(adminData.indexOf('2') !== -1) ? '' : '暂无权限'">修改</el-button>
-              <el-button @click="del(scope.row.id)" type="danger" size="small" :disabled="!(adminData.indexOf('3') !== -1)" :title="(adminData.indexOf('3') !== -1) ? '' : '暂无权限'">删除</el-button>
-            </p>
-            <p v-else>
-              不可操作
-            </p>
-          </template>
+              < 10) ? '0' + (new Date(scope.row.date).getMonth() + 1) : (new Date(scope.row.date).getMonth() + 1)) + '-' + ((new Date(scope.row.date).getDate() < 10) ? '0' + new Date(scope.row.date).getDate() : new Date(scope.row.date).getDate())}}</span> </template> </el-table-column> <el-table-column prop="lve" label="操作" align="center">
+                <template slot-scope="scope">
+                  <p v-if="scope.row.id != 1">
+                    <el-button @click="addAdminlist(scope.row.id)" type="primary" size="small" :disabled="!(adminData.indexOf('2') !== -1)" :title="(adminData.indexOf('2') !== -1) ? '' : '暂无权限'">修改</el-button>
+                    <el-button @click="del(scope.row.id)" type="danger" size="small" :disabled="!(adminData.indexOf('3') !== -1)" :title="(adminData.indexOf('3') !== -1) ? '' : '暂无权限'">删除</el-button>
+                  </p>
+                  <p v-else>
+                    不可操作
+                  </p>
+                </template>
         </el-table-column>
       </el-table>
     </div>
@@ -36,12 +33,15 @@
     <el-dialog :visible.sync="dialogFormVisible" :title="title">
       <el-form ref="dataForm" label-position="right" label-width="15%" style='width:90%; '>
         <el-form-item label="账号">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{nameERR}}</span>
           <el-input placeholder="请输入账号" v-model="user.name"></el-input>
         </el-form-item>
         <el-form-item label="初始密码" v-if="!user.id">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{passwordERR}}</span>
           <el-input placeholder="请输入密码" v-model="user.password"></el-input>
         </el-form-item>
         <el-form-item label="管理权限">
+          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{roleIdERR}}</span>
           <el-select clearable style="width: 150px" class="filter-item" v-model="user.roleId" placeholder="选择管理权限">
             <el-option v-for="(item, index) in barList" :key="index" :label="item.name" :value="item.id">
             </el-option>
@@ -87,7 +87,10 @@ export default {
         password: '',
         roleId: '',
         id: ''
-      }
+      },
+      nameERR: '',
+      passwordERR: '',
+      roleIdERR: ''
     }
   },
   computed: {
@@ -145,6 +148,9 @@ export default {
     },
     addAdminlist(id) {
       this.dialogFormVisible = true
+      this.nameERR = ''
+      this.passwordERR = ''
+      this.roleIdERR = ''
       if (id) {
         this.title = '修改管理员'
         this.user.id = id
@@ -165,7 +171,21 @@ export default {
       this.dialogFormVisible = false
     },
     trueover() {
-      console.log('保存')
+      this.nameERR = ''
+      this.passwordERR = ''
+      this.roleIdERR = ''
+      if (!this.user.name) {
+        this.nameERR = '请输入管理员账号'
+        return
+      }
+      if (!this.user.password) {
+        this.passwordERR = '请输入管理员密码'
+        return
+      }
+      if (!this.user.roleId) {
+        this.roleIdERR = '请选择管理员权限'
+        return
+      }
       if (this.title === '新增管理员') {
         addAdmin(this.user).then((res) => {
           if (res.code === ERR_OK) {
