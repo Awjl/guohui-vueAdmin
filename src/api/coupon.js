@@ -3,7 +3,7 @@ import axios from 'axios'
 
 // 商品列表
 export function getAllCoupon(data) {
-  const url = `${api}/sicc_back/coupon/getAllCoupon`
+  const url = `${api}/coupon/getAllCoupon`
   return axios.post(url, {
     endTime: data.endTime,
     isNewbee: data.isNewbee,
@@ -20,7 +20,7 @@ export function getAllCoupon(data) {
 }
 // 上架下架
 export function isUpperCoupon(couponId, isUpper) {
-  const url = `${api}/sicc_back/coupon/isUpperCoupon`
+  const url = `${api}/coupon/isUpperCoupon`
   return axios.get(url, {
     params: {
       couponId: couponId,
@@ -33,7 +33,7 @@ export function isUpperCoupon(couponId, isUpper) {
 
 // 保存接口
 export function addCoupon(data) {
-  const url = `${api}/sicc_back/coupon/addCoupon`
+  const url = `${api}/coupon/addCoupon`
   return axios.post(url, {
     endTime: data.endTime,
     isNewbee: data.isNewbee,
@@ -53,7 +53,7 @@ export function addCoupon(data) {
 
 // 删除
 export function deleteCouponById(couponId) {
-  const url = `${api}/sicc_back/coupon/deleteCouponById`
+  const url = `${api}/coupon/deleteCouponById`
   return axios.get(url, {
     params: {
       couponId: couponId
@@ -65,7 +65,7 @@ export function deleteCouponById(couponId) {
 
 // 根据ID查询
 export function getCouponById(couponId) {
-  const url = `${api}/sicc_back/coupon/getCouponById`
+  const url = `${api}/coupon/getCouponById`
   return axios.get(url, {
     params: {
       couponId: couponId
@@ -77,7 +77,7 @@ export function getCouponById(couponId) {
 
 // 根据ID修改
 export function editCouponById(data) {
-  const url = `${api}/sicc_back/coupon/editCouponById`
+  const url = `${api}/coupon/editCouponById`
   return axios.post(url, {
     id: data.id,
     endTime: data.endTime,
@@ -98,7 +98,7 @@ export function editCouponById(data) {
 
 // 发布优惠券
 export function sendCoupon(data) {
-  const url = `${api}/sicc_back/coupon/sendCoupon`
+  const url = `${api}/coupon/sendCoupon`
   return axios.post(url, {
     id: data.id,
     mobile: data.mobile,
@@ -110,7 +110,7 @@ export function sendCoupon(data) {
 
 // 核销优惠券
 export function useCoupon(couponCode) {
-  const url = `${api}/sicc_back/coupon/useCoupon`
+  const url = `${api}/coupon/useCoupon`
   return axios.get(url, {
     params: {
       couponCode: couponCode
@@ -121,7 +121,7 @@ export function useCoupon(couponCode) {
 }
 // 查找优惠券
 export function getQRCode(couponId) {
-  const url = `${api}/sicc_back/coupon/getQRCode`
+  const url = `${api}/coupon/getQRCode`
   return axios.get(url, {
     params: {
       couponId: couponId
@@ -133,7 +133,7 @@ export function getQRCode(couponId) {
 
 // 添加库存
 export function sendCouponQRCode(data) {
-  const url = `${api}/sicc_back/coupon/sendCouponQRCode`
+  const url = `${api}/coupon/sendCouponQRCode`
   return axios.get(url, {
     params: {
       couponId: data.couponId,

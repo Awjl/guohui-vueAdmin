@@ -98,11 +98,15 @@ export const constantRouterMap = [
     path: '/integralshopping',
     component: Layout,
     redirect: 'integralshopping',
+    meta: {
+      title: '积分商城管理',
+      icon: 'nested'
+    },
     children: [{
       path: 'integralshopping',
       component: () => import('@/views/integralshopping/index'),
       name: 'integralshopping',
-      meta: { title: '积分商城管理', icon: 'nested', noCache: true }
+      meta: { title: '商品管理', noCache: true }
     },
     {
       path: 'addintegralshopping/:id',
@@ -110,6 +114,12 @@ export const constantRouterMap = [
       name: 'addintegralshopping',
       meta: { title: '积分商品管理' },
       hidden: true
+    },
+    {
+      path: 'integralRule',
+      component: () => import('@/views/integralshopping/integralRule'),
+      name: 'integralRule',
+      meta: { title: '规则管理' }
     }]
   },
   {
@@ -219,4 +229,3 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
-

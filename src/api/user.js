@@ -2,7 +2,7 @@ import { api } from './config'
 import axios from 'axios'
 
 export function getAllUser(data) {
-  const url = `${api}/sicc_back/user/getAllUser`
+  const url = `${api}/user/getAllUser`
   return axios.post(url, {
     endTime: data.endTime,
     level: data.level,
@@ -21,7 +21,7 @@ export function getAllUser(data) {
 // 会议预定管理
 
 export function getAllBook(data) {
-  const url = `${api}/sicc_back/book/getAllBook`
+  const url = `${api}/book/getAllBook`
   return axios.post(url, {
     endTime: data.endTime,
     mobile: data.mobile,
@@ -37,7 +37,7 @@ export function getAllBook(data) {
 
 // 联系接口
 export function isConnected(id) {
-  const url = `${api}/sicc_back/book/isConnected`
+  const url = `${api}/book/isConnected`
   return axios.get(url, {
     params: {
       id: id
@@ -49,7 +49,7 @@ export function isConnected(id) {
 
 // 添加反馈
 export function addFeedback(data) {
-  const url = `${api}/sicc_back/book/addFeedback`
+  const url = `${api}/book/addFeedback`
   return axios.post(url, {
     feedBack: data.feedBack,
     id: data.id
@@ -60,7 +60,7 @@ export function addFeedback(data) {
 
 // 问题查询
 export function getAllHotQuestion(data) {
-  const url = `${api}/sicc_back/service/getAllHotQuestion`
+  const url = `${api}/service/getAllHotQuestion`
   return axios.get(url, {
     params: {
       pageNum: data.pageNum,
@@ -73,7 +73,7 @@ export function getAllHotQuestion(data) {
 
 // 上架下架问题
 export function isUpperHotQuestion(questionId, isUpper) {
-  const url = `${api}/sicc_back/service/isUpperHotQuestion`
+  const url = `${api}/service/isUpperHotQuestion`
   return axios.get(url, {
     params: {
       questionId: questionId,
@@ -85,7 +85,7 @@ export function isUpperHotQuestion(questionId, isUpper) {
 }
 // 新增
 export function addHotQuestion(data) {
-  const url = `${api}/sicc_back/service/addHotQuestion`
+  const url = `${api}/service/addHotQuestion`
   return axios.post(url, {
     answer: data.answer,
     question: data.question
@@ -95,7 +95,7 @@ export function addHotQuestion(data) {
 }
 //  修改
 export function getHotQuestionById(questionId) {
-  const url = `${api}/sicc_back/service/getHotQuestionById`
+  const url = `${api}/service/getHotQuestionById`
   return axios.get(url, {
     params: {
       questionId: questionId
@@ -107,7 +107,7 @@ export function getHotQuestionById(questionId) {
 
 //  修改问题
 export function editHotQuestionById(data) {
-  const url = `${api}/sicc_back/service/editHotQuestionById`
+  const url = `${api}/service/editHotQuestionById`
   return axios.post(url, {
     answer: data.answer,
     question: data.question,
@@ -119,7 +119,7 @@ export function editHotQuestionById(data) {
 
 // 删除问题
 export function deleteHotQuestionById(questionId) {
-  const url = `${api}/sicc_back/service/deleteHotQuestionById`
+  const url = `${api}/service/deleteHotQuestionById`
   return axios.get(url, {
     params: {
       questionId: questionId
@@ -137,7 +137,7 @@ export function getPhone() {
 }
 // 修改
 export function updatePhone(phone) {
-  const url = `${api}/sicc_back/service/updatePhone`
+  const url = `${api}/service/updatePhone`
   return axios.get(url, {
     params: {
       phone: phone
@@ -149,7 +149,7 @@ export function updatePhone(phone) {
 
 // 查询全部管理员
 export function getAdmins(data) {
-  const url = `${api}/sicc_back/admin/getAdmins`
+  const url = `${api}/admin/getAdmins`
   return axios.post(url, {
     endTime: data.endTime,
     name: data.name,
@@ -164,7 +164,7 @@ export function getAdmins(data) {
 
 // 查询全部角色
 export function getRoles(num, size) {
-  const url = `${api}/sicc_back/role/getRoles`
+  const url = `${api}/role/getRoles`
   return axios.get(url, {
     params: {
       pageNum: num,
@@ -177,7 +177,7 @@ export function getRoles(num, size) {
 
 // 新增管理员
 export function addAdmin(data) {
-  const url = `${api}/sicc_back/admin/addAdmin`
+  const url = `${api}/admin/addAdmin`
   return axios.post(url, {
     name: data.name,
     password: data.password,
@@ -189,7 +189,7 @@ export function addAdmin(data) {
 
 // 查询管理员
 export function getAdminById(adminId) {
-  const url = `${api}/sicc_back/admin/getAdminById`
+  const url = `${api}/admin/getAdminById`
   return axios.get(url, {
     params: {
       adminId: adminId
@@ -200,7 +200,7 @@ export function getAdminById(adminId) {
 }
 // 修改管理员
 export function editAdmin(data) {
-  const url = `${api}/sicc_back/admin/editAdmin`
+  const url = `${api}/admin/editAdmin`
   return axios.post(url, {
     id: data.id,
     name: data.name,
@@ -211,7 +211,7 @@ export function editAdmin(data) {
 }
 // 删除管理员
 export function deleteAdminById(adminId) {
-  const url = `${api}/sicc_back/admin/deleteAdminById`
+  const url = `${api}/admin/deleteAdminById`
   return axios.get(url, {
     params: {
       adminId: adminId
@@ -223,7 +223,7 @@ export function deleteAdminById(adminId) {
 
 // 导出用户
 export function exportUserExcel(data) {
-  const url = `${api}/sicc_back/user/exportUserExcel`
+  const url = `${api}/user/exportUserExcel`
   return axios.post(url, {
     userId: data.userId,
     nickname: data.nickname,
@@ -241,7 +241,7 @@ export function exportUserExcel(data) {
 
 // 删除/user/deleteExcel
 export function deleteExcel(path) {
-  const url = `${api}/sicc_back/user/deleteExcel`
+  const url = `${api}/user/deleteExcel`
   return axios.get(url, {
     params: {
       path: path
@@ -253,7 +253,7 @@ export function deleteExcel(path) {
 
 // 新增角色/role/addRole
 export function addRole(data) {
-  const url = `${api}/sicc_back/role/addRole`
+  const url = `${api}/role/addRole`
   return axios.post(url, {
     name: data.name,
     homeData: data.homeData,
@@ -274,7 +274,7 @@ export function addRole(data) {
 
 // 查询角色信息
 export function getRoleById(roleId) {
-  const url = `${api}/sicc_back/role/getRoleById`
+  const url = `${api}/role/getRoleById`
   return axios.get(url, {
     params: {
       roleId: roleId
@@ -285,7 +285,7 @@ export function getRoleById(roleId) {
 }
 // 删除角色信息
 export function deleteRole(roleId) {
-  const url = `${api}/sicc_back/role/deleteRole`
+  const url = `${api}/role/deleteRole`
   return axios.get(url, {
     params: {
       roleId: roleId
@@ -296,7 +296,7 @@ export function deleteRole(roleId) {
 }
 // 修改角色信息
 export function editRole(data) {
-  const url = `${api}/sicc_back/role/editRole`
+  const url = `${api}/role/editRole`
   return axios.post(url, {
     name: data.name,
     homeData: data.homeData,
@@ -317,7 +317,7 @@ export function editRole(data) {
 }
 // 查询停车列表
 export function getParkInfo(data) {
-  const url = `${api}/sicc_back/park/getParkInfo`
+  const url = `${api}/park/getParkInfo`
   return axios.post(url, {
     vplNumber: data.vplNumber,
     billId: data.billId,
@@ -333,7 +333,7 @@ export function getParkInfo(data) {
 }
 // 生成exle
 export function exportParkInfoExcel(data) {
-  const url = `${api}/sicc_back/park/exportParkInfoExcel`
+  const url = `${api}/park/exportParkInfoExcel`
   return axios.post(url, {
     vplNumber: data.vplNumber,
     billId: data.billId,
@@ -348,3 +348,27 @@ export function exportParkInfoExcel(data) {
   })
 }
 
+// 查看全部系统日志
+export function gerAllLog(data) {
+  const url = `${api}/log/getAllLog`
+  return axios.post(url, {
+    adminName: data.adminName,
+    startTime: data.startTime,
+    endTime: data.endTime,
+    pageNum: data.pageNum,
+    pageSize: data.pageSize
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 删除系统日至
+export function deleteLog(date) {
+  const url = `${api}/log/deleteLog`
+  return axios.get(url, {
+    params: {
+      date: date
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

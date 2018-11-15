@@ -3,7 +3,7 @@ import axios from 'axios'
 
 // 商品列表
 export function getAllGoods(data) {
-  const url = `${api}/sicc_back/goods/getAllGoods`
+  const url = `${api}/goods/getAllGoods`
   return axios.post(url, {
     endTime: data.endTime,
     isCommend: data.isCommend,
@@ -19,7 +19,7 @@ export function getAllGoods(data) {
 }
 // 上架或者下架商品
 export function isUpperGoods(isUpper, goodsId) {
-  const url = `${api}/sicc_back/goods/isUpperGoods`
+  const url = `${api}/goods/isUpperGoods`
   return axios.get(url, {
     params: {
       isUpper: isUpper,
@@ -31,7 +31,7 @@ export function isUpperGoods(isUpper, goodsId) {
 }
 // 是否为热推
 export function setHotGoods(isCommend, goodsId) {
-  const url = `${api}/sicc_back/goods/setHotGoods`
+  const url = `${api}/goods/setHotGoods`
   return axios.get(url, {
     params: {
       isCommend: isCommend,
@@ -44,7 +44,7 @@ export function setHotGoods(isCommend, goodsId) {
 
 // 删除商品
 export function deleteGoods(goodsId) {
-  const url = `${api}/sicc_back/goods/deleteGoods`
+  const url = `${api}/goods/deleteGoods`
   return axios.get(url, {
     params: {
       goodsId: goodsId
@@ -56,7 +56,7 @@ export function deleteGoods(goodsId) {
 
 // 积分商品列表
 export function getAllPointGoods(data) {
-  const url = `${api}/sicc_back/pointGoods/getAllPointGoods`
+  const url = `${api}/pointGoods/getAllPointGoods`
   return axios.post(url, {
     endTime: data.endTime,
     id: data.id,
@@ -73,7 +73,7 @@ export function getAllPointGoods(data) {
 }
 // 上架下架积分商品
 export function isUpperPointGoods(isUpper, goodsId) {
-  const url = `${api}/sicc_back/pointGoods/isUpperPointGoods`
+  const url = `${api}/pointGoods/isUpperPointGoods`
   return axios.get(url, {
     params: {
       isUpper: isUpper,
@@ -86,7 +86,7 @@ export function isUpperPointGoods(isUpper, goodsId) {
 
 // 查询所有订单
 export function getAllGoodsOrders(data) {
-  const url = `${api}/sicc_back/order/getAllGoodsOrders`
+  const url = `${api}/order/getAllGoodsOrders`
   return axios.post(url, {
     code: data.code,
     endTime: data.endTime,
@@ -104,7 +104,7 @@ export function getAllGoodsOrders(data) {
 
 // 查询所有积分订单
 export function getAllPointGoodsOrders(data) {
-  const url = `${api}/sicc_back/order/getAllPointGoodsOrders`
+  const url = `${api}/order/getAllPointGoodsOrders`
   return axios.post(url, {
     code: data.code,
     courierNumber: data.courierNumber,
@@ -122,7 +122,7 @@ export function getAllPointGoodsOrders(data) {
 
 // 填写快递单号
 export function insertCourierNumber(courierNumber, orderId) {
-  const url = `${api}/sicc_back/order/insertCourierNumber`
+  const url = `${api}/order/insertCourierNumber`
   return axios.get(url, {
     params: {
       courierNumber: courierNumber,
@@ -133,10 +133,10 @@ export function insertCourierNumber(courierNumber, orderId) {
   })
 }
 
-// 新增一隅一食图片/sicc_back/index/setCornerMealBanner
+// 新增一隅一食图片/index/setCornerMealBanner
 export function setCornerMealBanner(data) {
   return axios({
-    url: `${api}/sicc_back/index/setCornerMealBanner`,
+    url: `${api}/index/setCornerMealBanner`,
     method: 'post',
     data: data,
     headers: {
@@ -147,7 +147,7 @@ export function setCornerMealBanner(data) {
 
 // 获取吧
 export function getAllBars(data) {
-  const url = `${api}/sicc_back/bar/getAllBars`
+  const url = `${api}/bar/getAllBars`
   return axios.post(url, {
     endTime: data.endTime,
     isUpper: data.isUpper,
@@ -161,7 +161,7 @@ export function getAllBars(data) {
 }
 // 上架下架吧
 export function isUpperBar(barId, isUpper) {
-  const url = `${api}/sicc_back/bar/isUpperBar`
+  const url = `${api}/bar/isUpperBar`
   return axios.get(url, {
     params: {
       barId: barId,
@@ -174,7 +174,7 @@ export function isUpperBar(barId, isUpper) {
 
 // 根据ID查询吧
 export function getBarById(barId) {
-  const url = `${api}/sicc_back/bar/getBarById`
+  const url = `${api}/bar/getBarById`
   return axios.get(url, {
     params: {
       barId: barId
@@ -187,7 +187,7 @@ export function getBarById(barId) {
 // 新增吧
 export function addBar(data) {
   return axios({
-    url: `${api}/sicc_back/bar/addBar`,
+    url: `${api}/bar/addBar`,
     method: 'post',
     data: data,
     headers: {
@@ -199,7 +199,7 @@ export function addBar(data) {
 // 修改吧
 export function editBar(data) {
   return axios({
-    url: `${api}/sicc_back/bar/editBar`,
+    url: `${api}/bar/editBar`,
     method: 'post',
     data: data,
     headers: {
@@ -210,7 +210,7 @@ export function editBar(data) {
 
 // 删除吧
 export function deleteBar(barId) {
-  const url = `${api}/sicc_back/bar/deleteBar`
+  const url = `${api}/bar/deleteBar`
   return axios.get(url, {
     params: {
       barId: barId
@@ -222,7 +222,7 @@ export function deleteBar(barId) {
 
 // 获取所有吧商品
 export function getAllBarsGoods(data) {
-  const url = `${api}/sicc_back/barGoods/getAllBarsGoods`
+  const url = `${api}/barGoods/getAllBarsGoods`
   return axios.post(url, {
     endTime: data.endTime,
     isUpper: data.isUpper,
@@ -238,7 +238,7 @@ export function getAllBarsGoods(data) {
 
 // 吧商品上架下架
 export function isUpperBarGoods(barGoodsId, isUpper) {
-  const url = `${api}/sicc_back/barGoods/isUpperBarGoods`
+  const url = `${api}/barGoods/isUpperBarGoods`
   return axios.get(url, {
     params: {
       barGoodsId: barGoodsId,
@@ -252,7 +252,7 @@ export function isUpperBarGoods(barGoodsId, isUpper) {
 // 新增吧商品
 export function addBarGoods(data) {
   return axios({
-    url: `${api}/sicc_back/barGoods/addBarGoods`,
+    url: `${api}/barGoods/addBarGoods`,
     method: 'post',
     data: data,
     headers: {
@@ -264,7 +264,7 @@ export function addBarGoods(data) {
 // 修改吧商品
 export function editBarGoods(data) {
   return axios({
-    url: `${api}/sicc_back/barGoods/editBarGoods`,
+    url: `${api}/barGoods/editBarGoods`,
     method: 'post',
     data: data,
     headers: {
@@ -275,7 +275,7 @@ export function editBarGoods(data) {
 
 // 根据ID 查询商品
 export function getBarGoodsById(barGoodsId) {
-  const url = `${api}/sicc_back/barGoods/getBarGoodsById`
+  const url = `${api}/barGoods/getBarGoodsById`
   return axios.get(url, {
     params: {
       barGoodsId: barGoodsId
@@ -286,9 +286,9 @@ export function getBarGoodsById(barGoodsId) {
 }
 
 // 删除吧商品
-// /sicc_back/barGoods/deleteBarGoods
+// /barGoods/deleteBarGoods
 export function deleteBarGoods(barGoodsId) {
-  const url = `${api}/sicc_back/barGoods/deleteBarGoods`
+  const url = `${api}/barGoods/deleteBarGoods`
   return axios.get(url, {
     params: {
       barGoodsId: barGoodsId
@@ -300,7 +300,7 @@ export function deleteBarGoods(barGoodsId) {
 
 // 查询顶部热推
 export function getCornerMealListBanner() {
-  const url = `${api}/sicc_back/index/getCornerMealListBanner`
+  const url = `${api}/index/getCornerMealListBanner`
   return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -309,7 +309,7 @@ export function getCornerMealListBanner() {
 // 修改
 export function setCornerMealListBanner(data) {
   return axios({
-    url: `${api}/sicc_back/index/setCornerMealListBanner`,
+    url: `${api}/index/setCornerMealListBanner`,
     method: 'post',
     data: data,
     headers: {
@@ -321,7 +321,7 @@ export function setCornerMealListBanner(data) {
 // 新增商品
 export function addGoods(data) {
   return axios({
-    url: `${api}/sicc_back/goods/addGoods`,
+    url: `${api}/goods/addGoods`,
     method: 'post',
     data: data,
     headers: {
@@ -332,7 +332,7 @@ export function addGoods(data) {
 
 // 删除接口
 export function deleteGood(goodsId) {
-  const url = `${api}/sicc_back/goods/deleteGoods`
+  const url = `${api}/goods/deleteGoods`
   return axios.get(url, {
     params: {
       goodsId: goodsId
@@ -344,7 +344,7 @@ export function deleteGood(goodsId) {
 
 // 查询接口
 export function getGoodsById(goodsId) {
-  const url = `${api}/sicc_back/goods/getGoodsById`
+  const url = `${api}/goods/getGoodsById`
   return axios.get(url, {
     params: {
       goodsId: goodsId
@@ -356,7 +356,7 @@ export function getGoodsById(goodsId) {
 
 // 删除图片接口
 export function deleteGoodPic(picId) {
-  const url = `${api}/sicc_back/goods/deleteGoodsPic`
+  const url = `${api}/goods/deleteGoodsPic`
   return axios.get(url, {
     params: {
       picId: picId
@@ -369,7 +369,7 @@ export function deleteGoodPic(picId) {
 // 修改商品
 export function editGoods(data) {
   return axios({
-    url: `${api}/sicc_back/goods/editGoods`,
+    url: `${api}/goods/editGoods`,
     method: 'post',
     data: data,
     headers: {
@@ -381,7 +381,7 @@ export function editGoods(data) {
 // 添加积分商品
 export function addPointGoods(data) {
   return axios({
-    url: `${api}/sicc_back/pointGoods/addPointGoods`,
+    url: `${api}/pointGoods/addPointGoods`,
     method: 'post',
     data: data,
     headers: {
@@ -391,7 +391,7 @@ export function addPointGoods(data) {
 }
 // 删除积分商城
 export function deletePointGoods(pointGoodsId) {
-  const url = `${api}/sicc_back/pointGoods/deletePointGoods`
+  const url = `${api}/pointGoods/deletePointGoods`
   return axios.get(url, {
     params: {
       pointGoodsId: pointGoodsId
@@ -402,7 +402,7 @@ export function deletePointGoods(pointGoodsId) {
 }
 // 查询积分商品
 export function getPointGoodsById(pointGoodsId) {
-  const url = `${api}/sicc_back/pointGoods/getPointGoodsById`
+  const url = `${api}/pointGoods/getPointGoodsById`
   return axios.get(url, {
     params: {
       pointGoodsId: pointGoodsId
@@ -414,7 +414,7 @@ export function getPointGoodsById(pointGoodsId) {
 // 修改积分商品
 export function editPointGoods(data) {
   return axios({
-    url: `${api}/sicc_back/pointGoods/editPointGoods`,
+    url: `${api}/pointGoods/editPointGoods`,
     method: 'post',
     data: data,
     headers: {
@@ -425,7 +425,7 @@ export function editPointGoods(data) {
 
 // 导出商品订单
 export function exportGoodsOrderExcel(data) {
-  const url = `${api}/sicc_back/order/exportGoodsOrderExcel`
+  const url = `${api}/order/exportGoodsOrderExcel`
   return axios.post(url, {
     userId: data.userId,
     nickname: data.nickname,
@@ -443,7 +443,7 @@ export function exportGoodsOrderExcel(data) {
 
 // 导出积分商品订单
 export function exportPointGoodsOrderExcel(data) {
-  const url = `${api}/sicc_back/order/exportPointGoodsOrderExcel`
+  const url = `${api}/order/exportPointGoodsOrderExcel`
   return axios.post(url, {
     userId: data.userId,
     nickname: data.nickname,
@@ -454,6 +454,55 @@ export function exportPointGoodsOrderExcel(data) {
     endTime: data.endTime,
     pageNum: data.pageNum,
     pageSize: data.pageSize
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 积分规则
+export function getAllPointRule(data) {
+  const url = `${api}/rule/getAllPointRule`
+  return axios.get(url, {
+    params: {
+      pageNum: data.pageNum,
+      pageSize: data.pageSize
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 上架下架
+export function isUpperPointRule(isUpper, id) {
+  const url = `${api}/rule/isUpperPointRule`
+  return axios.get(url, {
+    params: {
+      isUpper: isUpper,
+      id: id
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 查询某一个
+export function getPointRuleById(id) {
+  const url = `${api}/rule/getPointRuleById`
+  return axios.get(url, {
+    params: {
+      id: id
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 修改规则
+export function editPointRule(data) {
+  const url = `${api}/rule/editPointRule`
+  return axios.post(url, {
+    id: data.id,
+    title: data.title,
+    number: data.number,
+    isUpper: data.isUpper
   }).then((res) => {
     return Promise.resolve(res.data)
   })

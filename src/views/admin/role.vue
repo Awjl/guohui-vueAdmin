@@ -112,7 +112,7 @@ export default {
       userData: [],
       shoppingList: [{ key: 1, name: '新增大厅商品' }, { key: 2, name: '修改大厅商品' }, { key: 3, name: '上下架大厅商品' }, { key: 4, name: '删除大厅商品' }, { key: 5, name: '新增餐券商品' }, { key: 6, name: '修改顶部热推' }, { key: 7, name: '核销代金券' }, { key: 8, name: '推荐至首页' }, { key: 9, name: '设置热推商品' }, { key: 10, name: '修改商品' }, { key: 11, name: '上下架商品' }, { key: 12, name: '删除商品' }],
       shoppingData: [],
-      integralList: [{ key: 1, name: '新增积分商品' }, { key: 2, name: '修改积分商品' }, { key: 3, name: '上下架积分商品' }, { key: 4, name: '删除' }],
+      integralList: [{ key: 1, name: '新增积分商品' }, { key: 2, name: '修改积分商品' }, { key: 3, name: '上下架积分商品' }, { key: 4, name: '删除' }, { key: 5, name: '修改积分规则' }, { key: 6, name: '上下架积分规则' }],
       integralData: [],
       orderList: [{ key: 1, name: '导出商品订单' }, { key: 2, name: '导出积分商品订单' }, { key: 3, name: '发货' }],
       orderData: [],

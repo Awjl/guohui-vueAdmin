@@ -2,7 +2,7 @@ import { api } from './config'
 import axios from 'axios'
 // 顶部banner
 export function getAllTopBanner(pn, pg) {
-  const url = `${api}/sicc_back/index/getAllTopBanner`
+  const url = `${api}/index/getAllTopBanner`
   return axios.get(url, {
     params: {
       pageNum: pn,
@@ -14,7 +14,7 @@ export function getAllTopBanner(pn, pg) {
 }
 // 底部banner
 export function getAllBottomBanner(pn, pg) {
-  const url = `${api}/sicc_back/index/getAllBottomBanner`
+  const url = `${api}/index/getAllBottomBanner`
   return axios.get(url, {
     params: {
       pageNum: pn,
@@ -28,7 +28,7 @@ export function getAllBottomBanner(pn, pg) {
 // 添加banner
 export function uploadIndexPicture(data) {
   return axios({
-    url: `${api}/sicc_back/index/uploadIndexPicture`,
+    url: `${api}/index/uploadIndexPicture`,
     method: 'post',
     data: data,
     headers: {
@@ -39,7 +39,7 @@ export function uploadIndexPicture(data) {
 
 // 删除
 export function deleteBanner(bannerId) {
-  const url = `${api}/sicc_back/index/deleteBanner`
+  const url = `${api}/index/deleteBanner`
   return axios.get(url, {
     params: {
       bannerId: bannerId
@@ -50,7 +50,7 @@ export function deleteBanner(bannerId) {
 }
 // 上架下架banner
 export function isUpperBanner(isUpper, bannerId) {
-  const url = `${api}/sicc_back/index/isUpperBanner`
+  const url = `${api}/index/isUpperBanner`
   return axios.get(url, {
     params: {
       isUpper: isUpper,
@@ -63,7 +63,7 @@ export function isUpperBanner(isUpper, bannerId) {
 
 // 获取详情
 export function getIntroduces() {
-  const url = `${api}/sicc_back/index/getIntroduces`
+  const url = `${api}/index/getIntroduces`
   return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -72,7 +72,7 @@ export function getIntroduces() {
 // 提交文章
 export function editIntroduce(data) {
   return axios({
-    url: `${api}/sicc_back/index/editIntroduce`,
+    url: `${api}/index/editIntroduce`,
     method: 'post',
     data: data,
     headers: {
@@ -83,7 +83,7 @@ export function editIntroduce(data) {
 
 // 获取一隅一食列表
 export function getCornerMealBanner(data) {
-  const url = `${api}/sicc_back/index/getCornerMealBanner`
+  const url = `${api}/index/getCornerMealBanner`
   return axios.post(url, {
     title: data.title,
     type: data.type,
@@ -98,7 +98,7 @@ export function getCornerMealBanner(data) {
 
 // 查询一隅一食
 export function getCornerMealBannerById(id) {
-  const url = `${api}/sicc_back/index/getCornerMealBannerById`
+  const url = `${api}/index/getCornerMealBannerById`
   return axios.get(url, {
     params: {
       bannerId: id
@@ -111,7 +111,7 @@ export function getCornerMealBannerById(id) {
 // 保存一隅一食
 export function editCornerMealBannerById(data) {
   return axios({
-    url: `${api}/sicc_back/index/editCornerMealBannerById`,
+    url: `${api}/index/editCornerMealBannerById`,
     method: 'post',
     data: data,
     headers: {
