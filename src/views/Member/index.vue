@@ -43,11 +43,14 @@
         <el-table-column label="注册时间" align="center">
           <template slot-scope="scope">
             <span>{{new Date(scope.row.createDate).getFullYear()+ '-' + (((new Date(scope.row.createDate).getMonth() + 1)
-              < 10) ? '0' + (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) + '-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}</span> </template> </el-table-column> <el-table-column label="操作" align="center">
-                <template slot-scope="scope">
-                  <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
-                </template>
-        </el-table-column>
+              < 10) ? '0' + (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) + '-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}</span> 
+          </template> 
+        </el-table-column> 
+        <!-- <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
+          </template>
+        </el-table-column> -->
       </el-table>
     </div>
     <div class="pagination-container">
@@ -113,7 +116,7 @@ export default {
           console.log('成功')
           this.xslsUrl = res.data
           // console.log(`http://www.shanghaiconventioncenter.com:8081${res.data}`)
-          window.location.href = `http://47.96.165.248:8080${res.data}`
+          window.location.href = `http://www.shiccs.net${res.data}`
           // window.open(`http://47.96.165.248:8080/${res.data}`)
         }
       })

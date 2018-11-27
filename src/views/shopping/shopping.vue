@@ -51,9 +51,9 @@
         </el-table-column>
         <el-table-column prop="name" label="商品名称" align="center">
         </el-table-column>
-        <el-table-column prop="newPrice" label="折扣价" align="center">
+        <el-table-column prop="newPrice" label="折扣价(单位：分)" align="center">
         </el-table-column>
-        <el-table-column prop="oldPrice" label="原价" align="center">
+        <el-table-column prop="oldPrice" label="原价(单位：分)" align="center">
         </el-table-column>
         <el-table-column prop="isCommend" label="推荐至首页" align="center">
           <template slot-scope="scope">

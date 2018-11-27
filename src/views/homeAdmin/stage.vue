@@ -185,6 +185,10 @@ export default {
         })
       } else {
         this.title = '添加大厅'
+        this.dataTitle = ''
+        this.avatar = ''
+        this.goodsId = ''
+        this.picId = ''
       }
     },
     delClick(id) {
@@ -234,6 +238,7 @@ export default {
         formData.set('id', this.goodsId)
         formData.set('picId', this.picId)
         console.log(this.goodsId, this.picId)
+        console.log(formData.getAll('file'))
         editBar(formData).then((res) => {
           if (res.data.code === ERR_OK) {
             this.dialogFormVisible = false

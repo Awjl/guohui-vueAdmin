@@ -130,7 +130,7 @@ export function deleteHotQuestionById(questionId) {
 }
 // 获取热线
 export function getPhone() {
-  const url = `${api}/sicc/service/getPhone`
+  const url = `${api}/service/getPhone`
   return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -177,11 +177,13 @@ export function getRoles(num, size) {
 
 // 新增管理员
 export function addAdmin(data) {
+  console.log(data)
   const url = `${api}/admin/addAdmin`
   return axios.post(url, {
+    id: data.id,
     name: data.name,
-    password: data.password,
-    roleId: data.roleId
+    roleId: data.roleId,
+    nickname: data.nickname
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -203,8 +205,8 @@ export function editAdmin(data) {
   const url = `${api}/admin/editAdmin`
   return axios.post(url, {
     id: data.id,
-    name: data.name,
-    roleId: data.roleId
+    roleId: data.roleId,
+    nickname: data.nickname
   }).then((res) => {
     return Promise.resolve(res.data)
   })

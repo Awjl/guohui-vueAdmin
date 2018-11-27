@@ -1,21 +1,46 @@
 <template>
-  <div class="app-container" style='width: 80%'>
-    <el-button @click="quxiaoover" style="float:right">关闭</el-button>
-    <el-form ref="dataForm" label-position="center" label-width="100px" style='width: 1000px; margin-left:50px;'>
+  <div
+    class="app-container"
+    style='width: 80%'
+  >
+    <el-button
+      @click="quxiaoover"
+      style="float:right"
+    >关闭</el-button>
+    <el-form
+      ref="dataForm"
+      label-position="center"
+      label-width="100px"
+      style='width: 1000px; margin-left:50px;'
+    >
       <el-row>
         <el-col :span="24">
           <el-form-item label="名称">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{nameERR}}</span>
-            <el-input placeholder="请输入商品名称" v-model="shoplist.name"></el-input>
+            <el-input
+              placeholder="请输入商品名称"
+              v-model="shoplist.name"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="产品类型">
-            <el-select style="width: 150px" class="filter-item" v-model="shoplist.type" placeholder="选择分类">
-              <el-option label="房券" :value="1">
+            <el-select
+              style="width: 150px"
+              class="filter-item"
+              v-model="shoplist.type"
+              placeholder="选择分类"
+            >
+              <el-option
+                label="房券"
+                :value="1"
+              >
                 房券
               </el-option>
-              <el-option label="餐券" :value="2">
+              <el-option
+                label="餐券"
+                :value="2"
+              >
                 餐券
               </el-option>
             </el-select>
@@ -23,11 +48,22 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="是否推荐">
-            <el-select style="width: 150px" class="filter-item" v-model="shoplist.isCommend" placeholder="选择分类">
-              <el-option label="热推" :value="1">
+            <el-select
+              style="width: 150px"
+              class="filter-item"
+              v-model="shoplist.isCommend"
+              placeholder="选择分类"
+            >
+              <el-option
+                label="热推"
+                :value="1"
+              >
                 热推
               </el-option>
-              <el-option label="非热推" :value="2">
+              <el-option
+                label="非热推"
+                :value="2"
+              >
                 非热推
               </el-option>
             </el-select>
@@ -35,11 +71,22 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="是否预约">
-            <el-select style="width: 150px" class="filter-item" v-model="shoplist.isBespeak" placeholder="选择分类">
-              <el-option label="需要预约" :value="1">
+            <el-select
+              style="width: 150px"
+              class="filter-item"
+              v-model="shoplist.isBespeak"
+              placeholder="选择分类"
+            >
+              <el-option
+                label="需要预约"
+                :value="1"
+              >
                 需要预约
               </el-option>
-              <el-option label="不需要预约" :value="2">
+              <el-option
+                label="不需要预约"
+                :value="2"
+              >
                 不需要预约
               </el-option>
             </el-select>
@@ -47,11 +94,22 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="是否上架">
-            <el-select style="width: 150px" class="filter-item" v-model="shoplist.isUpper" placeholder="选择分类">
-              <el-option label="上架" :value="1">
+            <el-select
+              style="width: 150px"
+              class="filter-item"
+              v-model="shoplist.isUpper"
+              placeholder="选择分类"
+            >
+              <el-option
+                label="上架"
+                :value="1"
+              >
                 上架
               </el-option>
-              <el-option label="不上架" :value="2">
+              <el-option
+                label="不上架"
+                :value="2"
+              >
                 不上架
               </el-option>
             </el-select>
@@ -60,44 +118,72 @@
         <el-col :span="12">
           <el-form-item label="原价">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{oldPriceERR}}</span>
-            <el-input placeholder="请输入价格" v-model="shoplist.oldPrice"></el-input>
+            <el-input
+              placeholder="请输入价格"
+              v-model="shoplist.oldPrice"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="折扣价">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{newPriceERR}}</span>
-            <el-input placeholder="请输入折扣价" v-model="shoplist.newPrice"></el-input>
+            <el-input
+              placeholder="请输入折扣价"
+              v-model="shoplist.newPrice"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="简介">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{summaryERR}}</span>
-            <el-input placeholder="请输入简介" v-model="shoplist.summary"></el-input>
+            <el-input
+              placeholder="请输入简介"
+              v-model="shoplist.summary"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="介绍">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{introduceERR}}</span>
-            <el-input placeholder="请输入介绍" v-model="shoplist.introduce"></el-input>
+            <el-input
+              type="textarea" 
+              :autosize="{ minRows: 6, maxRows: 15}"
+              placeholder="请输入介绍"
+              v-model="shoplist.introduce"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="有效期">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{dataERR}}</span>
-            <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
+            <el-date-picker
+              v-model="dataArr"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="yyyy-MM-dd"
+              format="yyyy-MM-dd"
+            >
             </el-date-picker>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="使用时间">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{useTimeERR}}</span>
-            <el-input placeholder="格式如：周一至周五" v-model="shoplist.useTime"></el-input>
+            <el-input
+              placeholder="格式如：周一至周五（默认：周末、法定节假日通用）"
+              v-model="shoplist.useTime"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="使用规则">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{useRuleERR}}</span>
-            <el-input placeholder="格式如：周一至周五使用，早上到晚上，需要预约" v-model="shoplist.useRule"></el-input>
+            <el-input
+              placeholder="格式如：周一至周五使用，早上到晚上，需要预约"
+              v-model="shoplist.useRule"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
@@ -105,19 +191,49 @@
             <span style="position: absolute;top:20px;left:0px;color:red">{{TopImgERR}}</span>
             <div class="upbtn">
               <label for="upTop">多张上传</label>
-              <input @change="upTopImg" type="file" id="upTop" value="图片上传预览" multiple/>
+              <input
+                @change="upTopImg"
+                type="file"
+                id="upTop"
+                value="图片上传预览"
+                multiple
+              />
             </div>
             <el-row :gutter="20">
               <div>
-                <el-col :span="8" v-if="topImg" v-for="(item, index) in topImg" :key="index" class="delbox">
-                  <img :src="item" alt="">
-                  <div class="btndel" @click="dellocalhostimg(index)">删除</div>
+                <el-col
+                  :span="8"
+                  v-if="topImg"
+                  v-for="(item, index) in topImg"
+                  :key="index"
+                  class="delbox"
+                >
+                  <img
+                    :src="item"
+                    alt=""
+                  >
+                  <div
+                    class="btndel"
+                    @click="dellocalhostimg(index)"
+                  >删除</div>
                 </el-col>
               </div>
               <div>
-                <el-col :span="8" v-if="topDataList" v-for="(item, index) in topDataList" :key="index" class="delbox">
-                  <img :src="item.url" alt="">
-                  <div class="btndel" @click="delUpimg(item.id)">删除</div>
+                <el-col
+                  :span="8"
+                  v-if="topDataList"
+                  v-for="(item, index) in topDataList"
+                  :key="index"
+                  class="delbox"
+                >
+                  <img
+                    :src="item.url"
+                    alt=""
+                  >
+                  <div
+                    class="btndel"
+                    @click="delUpimg(item.id)"
+                  >删除</div>
                 </el-col>
               </div>
             </el-row>
@@ -128,19 +244,49 @@
             <span style="position: absolute;top:20px;left:0px;color:red">{{BottomimgERR}}</span>
             <div class="upbtn">
               <label for="upBottom">多张上传</label>
-              <input @change="upaBottomimg" type="file" id="upBottom" value="图片上传预览" multiple/>
+              <input
+                @change="upaBottomimg"
+                type="file"
+                id="upBottom"
+                value="图片上传预览"
+                multiple
+              />
             </div>
             <el-row :gutter="20">
               <div>
-                <el-col :span="8" v-if="bottomImg" v-for="(item, index) in bottomImg" :key="index" class="delbox">
-                  <img :src="item" alt="">
-                  <div class="btndel" @click="delbottomlocalhostimg(index)">删除</div>
+                <el-col
+                  :span="8"
+                  v-if="bottomImg"
+                  v-for="(item, index) in bottomImg"
+                  :key="index"
+                  class="delbox"
+                >
+                  <img
+                    :src="item"
+                    alt=""
+                  >
+                  <div
+                    class="btndel"
+                    @click="delbottomlocalhostimg(index)"
+                  >删除</div>
                 </el-col>
               </div>
               <div>
-                <el-col :span="8" v-if="bottomDataList" v-for="(item, index) in bottomDataList" :key="index" class="delbox">
-                  <img :src="item.url" alt="">
-                  <div class="btndel" @click="delUpimg(item.id)">删除</div>
+                <el-col
+                  :span="8"
+                  v-if="bottomDataList"
+                  v-for="(item, index) in bottomDataList"
+                  :key="index"
+                  class="delbox"
+                >
+                  <img
+                    :src="item.url"
+                    alt=""
+                  >
+                  <div
+                    class="btndel"
+                    @click="delUpimg(item.id)"
+                  >删除</div>
                 </el-col>
               </div>
             </el-row>
@@ -149,7 +295,10 @@
         <el-col :span="24">
           <el-form-item label="缩略图标题">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{titleERR}}</span>
-            <el-input placeholder="请输入缩略图标题" v-model="shoplist.title"></el-input>
+            <el-input
+              placeholder="请输入缩略图标题"
+              v-model="shoplist.title"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
@@ -157,20 +306,37 @@
             <span style="position: absolute;top:20px;left:0px;color:red">{{avatarimgERR}}</span>
             <div class="upbtn">
               <label for="up">预览图片</label>
-              <input @change="upavatarimg" type="file" id="up" value="图片上传预览" />
+              <input
+                @change="upavatarimg"
+                type="file"
+                id="up"
+                value="图片上传预览"
+              />
             </div>
             <el-row :gutter="20">
-              <el-col :span="8" v-if="shoplist.showFile">
-                <img :src="shoplist.showFile" alt="">
+              <el-col
+                :span="8"
+                v-if="shoplist.showFile"
+              >
+                <img
+                  :src="shoplist.showFile"
+                  alt=""
+                >
               </el-col>
             </el-row>
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="quxiaoover">取消</el-button>
-      <el-button type="primary" @click="trueover">保存</el-button>
+      <el-button
+        type="primary"
+        @click="trueover"
+      >保存</el-button>
     </div>
   </div>
 </template>
@@ -404,9 +570,12 @@ export default {
         this.newPriceERR = '请输入折扣价'
         return
       }
-      if (this.shoplist.newPrice > this.shoplist.oldPrice) {
+      if (Number(this.shoplist.newPrice) > (this.shoplist.oldPrice)) {
+        console.log(Number(this.shoplist.newPrice), Number(this.shoplist.oldPrice))
         this.newPriceERR = '折扣价不能比原价大'
         return
+      } else {
+        this.newPriceERR = ''
       }
       if (!this.shoplist.summary) {
         this.summaryERR = '请输入简介'

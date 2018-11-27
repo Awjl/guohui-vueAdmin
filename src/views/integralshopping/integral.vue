@@ -366,10 +366,10 @@ export default {
         this.nameERR = '请输入用户名'
         return
       }
-      if (!this.shoplist.summary) {
-        this.summaryERR = '请输入简介'
-        return
-      }
+      // if (!this.shoplist.summary) {
+      //   this.summaryERR = '请输入简介'
+      //   return
+      // }
       if (!this.shoplist.kind) {
         this.kindERR = '请输入类型'
         return
@@ -402,10 +402,10 @@ export default {
         this.v2NewPointERR = '不能比原积分大'
         return
       }
-      if (!this.shoplist.introduce) {
-        this.introduceERR = '请输入介绍'
-        return
-      }
+      // if (!this.shoplist.introduce) {
+      //   this.introduceERR = '请输入介绍'
+      //   return
+      // }
       if (this.topImg.length < 1 && this.topDataList.length < 1) {
         this.TopImgERR = '请上传顶部图片'
         return

@@ -31,7 +31,7 @@
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="submitForm" :disabled="!(homeData.indexOf('4') !== -1)" :title="(homeData.indexOf('4') !== -1) ? '' : '暂无权限'">保存</el-button>
-                <el-button @click="resetForm('ruleForm')">重置</el-button>
+                <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
               </el-form-item>
     </el-form>
   </div>

@@ -35,6 +35,10 @@
         <el-table-column prop="total" label="实付金额" align="center">
         </el-table-column>
         <el-table-column prop="price" label="优惠金额" align="center">
+          <template slot-scope="scope">
+            <span v-if="!scope.row.price">无优惠</span>
+            <span v-else>{{scope.row.price}}</span>
+          </template>
         </el-table-column>
         <el-table-column prop="nickname" label="姓名" align="center">
         </el-table-column>
@@ -46,11 +50,11 @@
             <span v-else>已付款</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="300" align="center">
+        <!-- <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </div>
     <div class="pagination-container">
@@ -118,7 +122,7 @@ export default {
           console.log('成功')
           this.xslsUrl = res.data
           // console.log(`http://www.shanghaiconventioncenter.com:8081${res.data}`)
-          window.location.href = `http://47.96.165.248:8080${res.data}`
+          window.location.href = `http://www.shiccs.net${res.data}`
           // window.open(`http://47.96.165.248:8080/${res.data}`)
         }
       })

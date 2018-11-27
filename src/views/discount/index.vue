@@ -36,9 +36,7 @@
               <span v-else>无限制</span>
             </p>
             <p v-else>
-              <span v-if="scope.row.discountTime === 1">减免一个小时</span>
-              <span v-else-if="scope.row.discountTime === 2">减免两个小时</span>
-              <span v-else>全免</span>
+              <span>{{scope.row.discountTime}}</span>
             </p>
           </template>
         </el-table-column>
@@ -66,7 +64,7 @@
         </el-table-column>
         <el-table-column label="二维码" align="center">
           <template slot-scope="scope">
-            <el-button size="small" @click='upSee(scope.row.id)' :disabled="!(discountData.indexOf('3') !== -1)" :title="(discountData.indexOf('3') !== -1) ? '' : '暂无权限'">查看二维码</el-button>
+            <el-button size="small" @click='upSee(scope.row.id)' :disabled="!(discountData.indexOf('3') !== -1) ||  scope.row.isUpper === 2" :title="(discountData.indexOf('3') !== -1) ? '' : '暂无权限'">查看二维码</el-button>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="300" align="center">
@@ -161,17 +159,7 @@
         <el-row v-if='item.type === 2'>
           <el-col :span="8">
             <el-form-item label="减免时间">
-              <el-select style="width: 150px" class="filter-item" placeholder="减免时间" v-model="item.discountTime">
-                <el-option label="减免一小时" :value="1">
-                  减免一小时
-                </el-option>
-                <el-option label="减免两小时" :value="2">
-                  减免两小时
-                </el-option>
-                <el-option label="全免" :value="3">
-                  全免
-                </el-option>
-              </el-select>
+              <el-input type="number" placeholder="单位（分钟）" v-model="item.discountTime" style="width: 150px" min="0"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -283,7 +271,7 @@ export default {
         startTime: '',
         type: 1,
         title: '',
-        discountTime: 1
+        discountTime: ''
       },
       userData: {
         id: '',
@@ -526,6 +514,20 @@ export default {
     },
     handbox(id) {
       this.dialogFormVisible = true
+      this.item = {
+        endTime: '',
+        isNewbee: 1,
+        isUpper: 2,
+        limitPrice: 0,
+        name: '',
+        price: 0,
+        saleType: 2,
+        startTime: '',
+        type: 1,
+        title: '',
+        discountTime: ''
+      }
+      this.dataTwoArr = []
       if (id) {
         this.title = '修改优惠券'
         this.item.id = id
