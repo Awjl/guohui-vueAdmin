@@ -32,7 +32,7 @@
           </el-table-column>
           <el-table-column prop="state" label="是否上架" align="center">
             <template slot-scope="scope">
-              <el-button@click="isUpper(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1" :disabled="!(homeData.indexOf('6') !== -1)" :title="(homeData.indexOf('6') !== -1) ? '' : '暂无权限'">下架</el-button>
+              <el-button @click="isUpper(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1" :disabled="!(homeData.indexOf('6') !== -1)" :title="(homeData.indexOf('6') !== -1) ? '' : '暂无权限'">下架</el-button>
                 <el-button @click="isUpper(scope.row.isUpper, scope.row.id)" type="success" size="small" v-else :disabled="!(homeData.indexOf('6') !== -1)" :title="(homeData.indexOf('6') !== -1) ? '' : '暂无权限'">上架</el-button>
             </template>
           </el-table-column>

@@ -116,19 +116,19 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="原价">
+          <el-form-item label="原价(分)">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{oldPriceERR}}</span>
             <el-input
-              placeholder="请输入价格"
+              placeholder="请输入价格(单位：分)"
               v-model="shoplist.oldPrice"
             ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="折扣价">
+          <el-form-item label="折扣价(分)">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{newPriceERR}}</span>
             <el-input
-              placeholder="请输入折扣价"
+              placeholder="请输入折扣价(单位：分)"
               v-model="shoplist.newPrice"
             ></el-input>
           </el-form-item>
@@ -146,7 +146,7 @@
           <el-form-item label="介绍">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{introduceERR}}</span>
             <el-input
-              type="textarea" 
+              type="textarea"
               :autosize="{ minRows: 6, maxRows: 15}"
               placeholder="请输入介绍"
               v-model="shoplist.introduce"
@@ -181,7 +181,7 @@
           <el-form-item label="使用规则">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{useRuleERR}}</span>
             <el-input
-              placeholder="格式如：周一至周五使用，早上到晚上，需要预约"
+              placeholder="格式如：周一至周五使用/早上到晚上/需要预约"
               v-model="shoplist.useRule"
             ></el-input>
           </el-form-item>
@@ -191,49 +191,19 @@
             <span style="position: absolute;top:20px;left:0px;color:red">{{TopImgERR}}</span>
             <div class="upbtn">
               <label for="upTop">多张上传</label>
-              <input
-                @change="upTopImg"
-                type="file"
-                id="upTop"
-                value="图片上传预览"
-                multiple
-              />
+              <input @change="upTopImg" type="file" id="upTop" value="图片上传预览" multiple/>
             </div>
             <el-row :gutter="20">
               <div>
-                <el-col
-                  :span="8"
-                  v-if="topImg"
-                  v-for="(item, index) in topImg"
-                  :key="index"
-                  class="delbox"
-                >
-                  <img
-                    :src="item"
-                    alt=""
-                  >
-                  <div
-                    class="btndel"
-                    @click="dellocalhostimg(index)"
-                  >删除</div>
+                <el-col :span="8" v-if="topImg" v-for="(item, index) in topImg" :key="index" class="delbox">
+                  <img :src="item" alt="">
+                  <div class="btndel" @click="dellocalhostimg(index)">删除</div>
                 </el-col>
               </div>
               <div>
-                <el-col
-                  :span="8"
-                  v-if="topDataList"
-                  v-for="(item, index) in topDataList"
-                  :key="index"
-                  class="delbox"
-                >
-                  <img
-                    :src="item.url"
-                    alt=""
-                  >
-                  <div
-                    class="btndel"
-                    @click="delUpimg(item.id)"
-                  >删除</div>
+                <el-col :span="8" v-if="topDataList" v-for="(item, index) in topDataList" :key="index" class="delbox">
+                  <img :src="item.url" alt="">
+                  <div class="btndel" @click="delUpimg(item.id)" >删除</div>
                 </el-col>
               </div>
             </el-row>
@@ -244,49 +214,19 @@
             <span style="position: absolute;top:20px;left:0px;color:red">{{BottomimgERR}}</span>
             <div class="upbtn">
               <label for="upBottom">多张上传</label>
-              <input
-                @change="upaBottomimg"
-                type="file"
-                id="upBottom"
-                value="图片上传预览"
-                multiple
-              />
+              <input @change="upaBottomimg" type="file" id="upBottom" value="图片上传预览" multiple/>
             </div>
             <el-row :gutter="20">
               <div>
-                <el-col
-                  :span="8"
-                  v-if="bottomImg"
-                  v-for="(item, index) in bottomImg"
-                  :key="index"
-                  class="delbox"
-                >
-                  <img
-                    :src="item"
-                    alt=""
-                  >
-                  <div
-                    class="btndel"
-                    @click="delbottomlocalhostimg(index)"
-                  >删除</div>
+                <el-col :span="8"  v-if="bottomImg" v-for="(item, index) in bottomImg" :key="index" class="delbox" >
+                  <img :src="item" alt="" >
+                  <div class="btndel" @click="delbottomlocalhostimg(index)">删除</div>
                 </el-col>
               </div>
               <div>
-                <el-col
-                  :span="8"
-                  v-if="bottomDataList"
-                  v-for="(item, index) in bottomDataList"
-                  :key="index"
-                  class="delbox"
-                >
-                  <img
-                    :src="item.url"
-                    alt=""
-                  >
-                  <div
-                    class="btndel"
-                    @click="delUpimg(item.id)"
-                  >删除</div>
+                <el-col :span="8" v-if="bottomDataList" v-for="(item, index) in bottomDataList" :key="index" class="delbox">
+                  <img :src="item.url" alt="" >
+                  <div class="btndel"  @click="delUpimg(item.id)">删除</div>
                 </el-col>
               </div>
             </el-row>
@@ -469,7 +409,7 @@ export default {
       this.topListImg.splice(item, 1)
     },
     delbottomlocalhostimg(item) {
-      this.topImg.splice(item, 1)
+      this.bottomImg.splice(item, 1)
       this.bottomListImg.splice(item, 1)
     },
     upavatarimg(e) {

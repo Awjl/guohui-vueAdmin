@@ -118,7 +118,7 @@ export default {
           console.log(res.data)
           console.log('成功')
           this.xslsUrl = res.data
-          window.location.href = `http://47.96.165.248:8080${res.data}`
+          window.location.href = `http://www.shiccs.net${res.data}`
         }
       })
     },

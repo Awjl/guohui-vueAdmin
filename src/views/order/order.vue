@@ -27,17 +27,20 @@
         </el-table-column>
         <el-table-column prop="num" label="数量" align="center">
         </el-table-column>
-        <el-table-column label="总价" align="center">
+        <el-table-column label="总价(单位：元)" align="center">
           <template slot-scope="scope">
-            {{Number(scope.row.total)+Number(scope.row.price)}}
+            {{((Number(scope.row.total)+Number(scope.row.price))/ 100).toFixed(2)}}
           </template>
         </el-table-column>
-        <el-table-column prop="total" label="实付金额" align="center">
+        <el-table-column prop="total" label="实付金额(单位：元)" align="center">
+          <template slot-scope="scope">
+            {{(scope.row.total/ 100).toFixed(2)}}
+          </template>
         </el-table-column>
-        <el-table-column prop="price" label="优惠金额" align="center">
+        <el-table-column prop="price" label="优惠金额(单位：元)" align="center">
           <template slot-scope="scope">
             <span v-if="!scope.row.price">无优惠</span>
-            <span v-else>{{scope.row.price}}</span>
+            <span v-else>{{(scope.row.price/ 100).toFixed(2)}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="nickname" label="姓名" align="center">
@@ -142,11 +145,11 @@ export default {
     },
     handleSizeChange(val) {
       this.listQuery.limit = val
-      this.getList()
+      this._getAllGoodsOrders()
     },
     handleCurrentChange(val) {
       this.listQuery.page = val
-      this.getList()
+      this._getAllGoodsOrders()
     },
     suchbox() {
       this.listQuery.limit = 10

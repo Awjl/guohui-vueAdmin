@@ -3,6 +3,8 @@
     <div class="filter-container">
       <el-input style="width: 200px;" class="filter-item" placeholder="请输入姓名" v-model="data.name">
       </el-input>
+       <el-input style="width: 200px;" class="filter-item" placeholder="请输入邮箱" v-model="data.email">
+      </el-input>
       <el-input style="width: 200px;" class="filter-item" placeholder="请输入手机号" v-model="data.mobile">
       </el-input>
       <el-select clearable style="width: 150px" class="filter-item" placeholder="状态" v-model="data.isConnected">
@@ -27,6 +29,8 @@
         </el-table-column>
         <el-table-column prop="mobile" label="电话"  align="center">
         </el-table-column>
+        <el-table-column prop="email" label="邮箱"  align="center">
+        </el-table-column>
         <el-table-column prop="topic" label="会议主题"  align="center">
         </el-table-column>
         <el-table-column prop="num" label="人数"  align="center">
@@ -37,7 +41,7 @@
         </el-table-column>
         <el-table-column prop="feedback" label="反馈"  align="center">
         </el-table-column>
-        <el-table-column label="操作"  align="center">
+        <el-table-column label="操作"  align="center" width="300">
           <template slot-scope="scope">
             <el-button type="warning" size="small"  @click="handleClick(scope.row.id)" :disabled="!(serverData.indexOf('1') !== -1)" :title="(serverData.indexOf('1') !== -1) ? '' : '暂无权限'">添加反馈</el-button>
             <el-button @click="contact(scope.row.id)" type="primary" size="small" v-if="scope.row.isConnected === 1" :disabled="!(serverData.indexOf('2') !== -1)" :title="(serverData.indexOf('2') !== -1) ? '' : '暂无权限'">未联系</el-button>
@@ -87,7 +91,8 @@ export default {
         pageSize: null,
         startTime: null,
         name: null,
-        isConnected: null
+        isConnected: null,
+        email: null
       },
       item: {
         id: '',

@@ -47,7 +47,7 @@
             <p>V2会员积分价格：{{scope.row.v2NewPoint}}</p>
           </template>
         </el-table-column>
-        <el-table-column prop="oldPoint" label="原积分" align="center">
+        <el-table-column prop="oldPoint" label="商品价格（单位：元）" align="center">
         </el-table-column>
         <el-table-column prop="address" label="对应级别" align="center">
           <template slot-scope="scope">

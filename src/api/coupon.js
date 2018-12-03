@@ -134,11 +134,9 @@ export function getQRCode(couponId) {
 // 添加库存
 export function sendCouponQRCode(data) {
   const url = `${api}/coupon/sendCouponQRCode`
-  return axios.get(url, {
-    params: {
-      couponId: data.couponId,
-      total: data.total
-    }
+  return axios.post(url, {
+    couponId: data.couponId,
+    total: data.total
   }).then((res) => {
     return Promise.resolve(res.data)
   })

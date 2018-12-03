@@ -162,11 +162,9 @@ export function getAllBars(data) {
 // 上架下架吧
 export function isUpperBar(barId, isUpper) {
   const url = `${api}/bar/isUpperBar`
-  return axios.get(url, {
-    params: {
-      barId: barId,
-      isUpper: isUpper
-    }
+  return axios.post(url, {
+    id: barId,
+    isUpper: isUpper
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -210,12 +208,8 @@ export function editBar(data) {
 
 // 删除吧
 export function deleteBar(barId) {
-  const url = `${api}/bar/deleteBar`
-  return axios.get(url, {
-    params: {
-      barId: barId
-    }
-  }).then((res) => {
+  const url = `${api}/bar/deleteBar/${barId}`
+  return axios.post(url).then((res) => {
     return Promise.resolve(res.data)
   })
 }

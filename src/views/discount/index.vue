@@ -142,17 +142,17 @@
           </el-col>
           <el-col :span="8" v-if='item.saleType === 2'>
             <el-form-item label="无限制减">
-              <el-input type="number" placeholder="请输入减免金额" v-model="item.price" style="width: 150px" min="0"></el-input>
+              <el-input type="number" placeholder="单位：分" v-model="item.price" style="width: 150px" min="0"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8" v-if='item.saleType === 1'>
             <el-form-item label="满">
-              <el-input type="number" placeholder="请输入满多少" v-model="item.limitPrice" style="width: 150px" min="0"></el-input>
+              <el-input type="number" placeholder="单位：分" v-model="item.limitPrice" style="width: 150px" min="0"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8" v-if='item.saleType === 1'>
             <el-form-item label="减">
-              <el-input type="number" placeholder="请输入减多少" v-model="item.price" style="width: 150px" min="0"></el-input>
+              <el-input type="number" placeholder="单位：分" v-model="item.price" style="width: 150px" min="0"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -212,8 +212,8 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="增加库存">
-              <span style="position: absolute;bottom:-30px;left:0px;color:red">{{totalERR}}</span>
-              <el-input v-model="codeList.total" type='number'></el-input>
+              <span style="position: absolute;bottom:-30px;left:0px;color:red" >{{totalERR}}</span>
+              <el-input v-model="codeList.total" type='number' min="0"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -229,7 +229,7 @@
   </div>
 </template>
 <script>
-import { getAllCoupon, isUpperCoupon, addCoupon, deleteCouponById, getCouponById, editCouponById, sendCoupon, getQRCode, sendCouponQRCode } from '@/api/coupon'
+import { getAllCoupon, isUpperCoupon, addCoupon, deleteCouponById, editCouponById, sendCoupon, getQRCode, sendCouponQRCode } from '@/api/coupon'
 import { ERR_OK } from '@/api/config'
 import { mapGetters } from 'vuex'
 
@@ -264,9 +264,9 @@ export default {
         endTime: '',
         isNewbee: 1,
         isUpper: 2,
-        limitPrice: 0,
+        limitPrice: '',
         name: '',
-        price: 0,
+        price: '',
         saleType: 2,
         startTime: '',
         type: 1,
@@ -338,20 +338,23 @@ export default {
     },
     clicknum(id) {
       this.numfa = true
+      this.userData = {
+        id: '',
+        mobile: '',
+        number: ''
+      }
       this.userData.id = id
     },
     upSee(id) {
-      console.log('查看二维码')
-      console.log(id)
       this.code = true
       this.codeList.couponId = id
       this.codeList.total = 0
+      this.totalERR = ''
       getQRCode(id).then((res) => {
         if (res.code === ERR_OK) {
           console.log('查看二维码==========================')
           console.log(res.data)
           this.codeData = res.data
-          console.log(this.codeData)
         }
       })
     },
@@ -447,17 +450,13 @@ export default {
       })
     },
     trueoverThere() {
-      this.totalERR = ''
       if (!this.codeList.total) {
         this.totalERR = '请输入库存数'
         return
       }
       sendCouponQRCode(this.codeList).then((res) => {
         if (res.code === ERR_OK) {
-          this.$message({
-            message: '新增成功',
-            type: 'success'
-          })
+          console.log(res.code)
           this.code = false
         }
       })
@@ -520,7 +519,7 @@ export default {
         isUpper: 2,
         limitPrice: 0,
         name: '',
-        price: 0,
+        price: '',
         saleType: 2,
         startTime: '',
         type: 1,
@@ -528,21 +527,21 @@ export default {
         discountTime: ''
       }
       this.dataTwoArr = []
-      if (id) {
-        this.title = '修改优惠券'
-        this.item.id = id
-        this.dataTwoArr = []
-        getCouponById(id).then((res) => {
-          if (res.code === ERR_OK) {
-            this.item = res.data
-            console.log(res.data)
-            this.dataTwoArr.push(res.data.startTime)
-            this.dataTwoArr.push(res.data.endTime)
-          }
-        })
-      } else {
-        this.title = '新增优惠券'
-      }
+      // if (id) {
+      //   this.title = '修改优惠券'
+      //   this.item.id = id
+      //   this.dataTwoArr = []
+      //   getCouponById(id).then((res) => {
+      //     if (res.code === ERR_OK) {
+      //       this.item = res.data
+      //       console.log(res.data)
+      //       this.dataTwoArr.push(res.data.startTime)
+      //       this.dataTwoArr.push(res.data.endTime)
+      //     }
+      //   })
+      // } else {
+      this.title = '新增优惠券'
+      // }
     },
     suchbox() {
       this.listQuery.limit = 10

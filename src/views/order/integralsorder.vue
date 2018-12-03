@@ -59,10 +59,10 @@
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
-    <el-dialog :visible.sync="dialogFormVisible" title="填写订单号">
+    <el-dialog :visible.sync="dialogFormVisible" title="填写快递单号">
       <el-form ref="dataForm" label-position="left" label-width="100px" style='width: 700px; margin-left:50px;'>
-        <el-form-item label="订单号">
-           <el-input placeholder="请输入订单号" v-model="item.orderid"></el-input>
+        <el-form-item label="快递单号">
+           <el-input placeholder="请输入快递单号" v-model="item.orderid"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

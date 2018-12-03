@@ -18,7 +18,7 @@
         <el-col :span="24">
           <el-form-item label="类型">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{kindERR}}</span>
-            <el-input placeholder="格式如：黄色，绿色，白色，蓝色" v-model="shoplist.kind"></el-input>
+            <el-input placeholder="格式如：黄色/绿色/白色/蓝色" v-model="shoplist.kind"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
@@ -61,9 +61,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="原积分">
+          <el-form-item label="商品价格">
             <span style="position: absolute;bottom:-30px;left:0px;color:red">{{oldPointERR}}</span>
-            <el-input placeholder="请输入价格" v-model="shoplist.oldPoint"></el-input>
+            <el-input placeholder="请输入价格（单位：元）" v-model="shoplist.oldPoint"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -270,7 +270,7 @@ export default {
       this.topListImg.splice(item, 1)
     },
     delbottomlocalhostimg(item) {
-      this.topImg.splice(item, 1)
+      this.bottomImg.splice(item, 1)
       this.bottomListImg.splice(item, 1)
     },
     upavatarimg(e) {

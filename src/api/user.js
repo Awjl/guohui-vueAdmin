@@ -29,7 +29,8 @@ export function getAllBook(data) {
     pageSize: data.pageSize,
     startTime: data.startTime,
     name: data.name,
-    isConnected: data.isConnected
+    isConnected: data.isConnected,
+    email: data.email
   }).then((res) => {
     return Promise.resolve(res.data)
   })
