@@ -47,9 +47,10 @@
         </el-table-column>
         <el-table-column prop="mobile" label="电话" align="center">
         </el-table-column>
-        <el-table-column prop="state" label="是否付款" align="center">
+        <el-table-column prop="state" label="订单状态" align="center">
           <template slot-scope="scope">
             <span v-if="scope.row.state === 1">未付款</span>
+            <span v-else-if="scope.row.state === 5">已取消</span>
             <span v-else>已付款</span>
           </template>
         </el-table-column>

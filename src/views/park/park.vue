@@ -48,6 +48,11 @@
             {{scope.row.due/100}}
           </template>
         </el-table-column>
+        <el-table-column prop="unpaid" label="优惠金额" align="center">
+          <template slot-scope="scope">
+            {{scope.row.discount/100}}
+          </template>
+        </el-table-column>
         <el-table-column label="是否支付" align="center">
           <template slot-scope="scope">
             <span v-if='scope.row.billState === 1'>已支付</span>

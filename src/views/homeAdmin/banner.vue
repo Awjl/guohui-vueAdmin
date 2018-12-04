@@ -2,8 +2,8 @@
   <div class="banner">
     <div class="banneradd">
       <el-button type="primary" @click="handleUpdate()" icon="el-icon-plus" :disabled="!(homeData.indexOf('1') !== -1)" :title="(homeData.indexOf('3') !== -1) ? '' : '暂无权限'">新增Banner</el-button>
-      <el-button type="primary" @click="topBanner">首页顶部Banner</el-button>
-      <el-button type="primary" @click="bottomBanner">首页大厅Banner</el-button>
+      <!-- <el-button type="primary" @click="topBanner">首页顶部Banner</el-button>
+      <el-button type="primary" @click="bottomBanner">首页大厅Banner</el-button> -->
     </div>
     <div class="bannerlist-box">
       <div class="filter-container">
@@ -48,9 +48,9 @@
             <el-option label="顶部Banner" :value="1">
               顶部Banner
             </el-option>
-            <el-option label="底部Banner" :value="2">
+            <!-- <el-option label="底部Banner" :value="2">
               底部Banner
-            </el-option>
+            </el-option> -->
           </el-select>
           <span style="position: absolute;bottom:-30px;left:0px;color:red">{{typeERR}}</span>
         </el-form-item>

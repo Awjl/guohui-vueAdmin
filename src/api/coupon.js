@@ -45,7 +45,8 @@ export function addCoupon(data) {
     startTime: data.startTime,
     type: data.type,
     title: data.title,
-    discountTime: data.discountTime
+    discountTime: data.discountTime,
+    total: data.total
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -137,6 +138,18 @@ export function sendCouponQRCode(data) {
   return axios.post(url, {
     couponId: data.couponId,
     total: data.total
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 一键发货
+export function sendCoupon2All(couponId) {
+  const url = `${api}/coupon/sendCoupon2All`
+  return axios.get(url, {
+    params: {
+      couponId: couponId
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })

@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input style="width: 200px;" class="filter-item" placeholder="请输入名称" v-model="data.name">
       </el-input>
-      <el-select clearable style="width: 100px" class="filter-item" v-model="data.type" placeholder="类型">
+      <el-select style="width: 100px" class="filter-item" v-model="data.type" placeholder="类型">
         <el-option label="代金券" :value="1">
           代金券
         </el-option>
@@ -11,12 +11,12 @@
           停车券
         </el-option>
       </el-select>
-      <el-select clearable style="width: 150px" class="filter-item" v-model="data.isNewbee" placeholder="新手优惠券">
+      <el-select style="width: 150px" class="filter-item" v-model="data.isNewbee" placeholder="新手优惠券">
         <el-option label="新手优惠券" :value="1">
           新手优惠券
         </el-option>
-        <el-option label="非新手优惠券" :value="2">
-          非新手优惠券
+        <el-option label="通用优惠券" :value="2">
+          通用优惠券
         </el-option>
       </el-select>
       <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
@@ -62,6 +62,11 @@
             <el-button type="success" size="small" v-else @click='upclick(scope.row.id, scope.row.isUpper)' :disabled="!(discountData.indexOf('2') !== -1)" :title="(discountData.indexOf('2') !== -1) ? '' : '暂无权限'">上架</el-button>
           </template>
         </el-table-column>
+        <el-table-column label="发放" align="center">
+          <template slot-scope="scope">
+            <el-button type="success" size="small" v-if="" @click='_sendCoupon2All(scope.row.id)' :disabled="!(scope.row.isNewbee === 1) || !(scope.row.isUpper === 1)" :title="scope.row.isNewbee !== 1 ? '' : '暂无权限'">一键发放</el-button>
+          </template>
+        </el-table-column>
         <el-table-column label="二维码" align="center">
           <template slot-scope="scope">
             <el-button size="small" @click='upSee(scope.row.id)' :disabled="!(discountData.indexOf('3') !== -1) ||  scope.row.isUpper === 2" :title="(discountData.indexOf('3') !== -1) ? '' : '暂无权限'">查看二维码</el-button>
@@ -70,7 +75,7 @@
         <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
             <el-button @click="del(scope.row.id)" type="danger" size="small" :disabled="!(discountData.indexOf('4') !== -1)" :title="(discountData.indexOf('4') !== -1) ? '' : '暂无权限'">删除</el-button>
-            <el-button @click="clicknum(scope.row.id)" type="info" size="small" :disabled="!(discountData.indexOf('5') !== -1)" :title="(discountData.indexOf('5') !== -1) ? '' : '暂无权限'">发放优惠券</el-button>
+            <el-button @click="clicknum(scope.row.id)" type="primary" size="small" :disabled="!(discountData.indexOf('5') !== -1)  ||  scope.row.isUpper === 2 " :title="(discountData.indexOf('5') !== -1) ? '' : '暂无权限'">发放优惠券</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -91,15 +96,8 @@
         </el-form-item>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="是否上架">
-              <el-select clearable style="width: 150px" class="filter-item" placeholder="选择是否上架" v-model="item.isUpper" disabled>
-                <el-option label="上架" :value="1">
-                  上架
-                </el-option>
-                <el-option label="下架" :value="2">
-                  下架
-                </el-option>
-              </el-select>
+            <el-form-item label="库存">
+              <el-input type="number" placeholder="请输入库存" v-model="item.total" style="width: 150px" min="0"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -108,8 +106,8 @@
                 <el-option label="新手优惠券" :value="1">
                   新手优惠券
                 </el-option>
-                <el-option label="非新手优惠券" :value="2">
-                  非新手优惠券
+                <el-option label="通用优惠券" :value="2">
+                  通用优惠券
                 </el-option>
               </el-select>
             </el-form-item>
@@ -218,7 +216,9 @@
           </el-col>
         </el-row>
         <el-form-item label="优惠券二维码">
-          <img :src="codeData.codeUrl" alt="" width="200px;">
+          <div style="width:200px;">
+            <img :src="codeData.codeUrl" alt="" style="width:100%;">
+          </div>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -229,7 +229,7 @@
   </div>
 </template>
 <script>
-import { getAllCoupon, isUpperCoupon, addCoupon, deleteCouponById, editCouponById, sendCoupon, getQRCode, sendCouponQRCode } from '@/api/coupon'
+import { getAllCoupon, isUpperCoupon, addCoupon, deleteCouponById, editCouponById, sendCoupon, getQRCode, sendCouponQRCode, sendCoupon2All } from '@/api/coupon'
 import { ERR_OK } from '@/api/config'
 import { mapGetters } from 'vuex'
 
@@ -271,7 +271,8 @@ export default {
         startTime: '',
         type: 1,
         title: '',
-        discountTime: ''
+        discountTime: '',
+        total: ''
       },
       userData: {
         id: '',
@@ -305,6 +306,16 @@ export default {
     ])
   },
   methods: {
+    _sendCoupon2All(id) {
+      sendCoupon2All(id).then((res) => {
+        if (res.code === ERR_OK) {
+          this.$message({
+            type: 'success',
+            message: '发放成功'
+          })
+        }
+      })
+    },
     _getAllCoupon() {
       this.data.pageNum = this.listQuery.page
       this.data.pageSize = this.listQuery.limit
@@ -478,6 +489,9 @@ export default {
         return
       }
       if (this.title === '新增优惠券') {
+        if (this.item.saleType === 2) {
+          this.item.limitPrice = this.item.price
+        }
         if (this.dataTwoArr !== [] && this.dataTwoArr !== null) {
           console.log(this.dataArr)
           this.item.startTime = this.dataTwoArr[0]
