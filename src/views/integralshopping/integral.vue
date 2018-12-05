@@ -85,7 +85,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="顶部图片">
+          <el-form-item label="顶部图片(750*500)">
             <span style="position: absolute;top:20px;left:0px;color:red">{{TopImgERR}}</span>
             <div class="upbtn">
               <label for="upTop">多张上传</label>
@@ -131,7 +131,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="缩略图">
+          <el-form-item label="缩略图(335*300)">
             <span style="position: absolute;top:20px;left:0px;color:red">{{avatarimgERR}}</span>
             <div class="upbtn">
               <label for="up">预览图片</label>

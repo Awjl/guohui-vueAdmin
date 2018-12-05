@@ -158,6 +158,17 @@ export const constantRouterMap = [
   {
     path: '',
     component: Layout,
+    redirect: 'WriteOff',
+    children: [{
+      path: 'WriteOff',
+      component: () => import('@/views/WriteOff/WriteOff'),
+      name: 'WriteOff',
+      meta: { title: '代金券管理', icon: 'money', noCache: true }
+    }]
+  },
+  {
+    path: '',
+    component: Layout,
     redirect: 'park',
     children: [{
       path: 'park',

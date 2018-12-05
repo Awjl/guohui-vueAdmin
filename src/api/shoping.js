@@ -501,3 +501,10 @@ export function editPointRule(data) {
     return Promise.resolve(res.data)
   })
 }
+// 代金券管理
+export function getAllVouchers(data) {
+  const url = `${api}/voucher/getVouchers`
+  return axios.post(url, data).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
