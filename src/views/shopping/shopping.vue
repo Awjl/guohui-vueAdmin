@@ -51,7 +51,7 @@
         </el-table-column>
         <el-table-column prop="name" label="商品名称" align="center">
           <template slot-scope="scope">
-            <span>{{scope.row.name}}</span> <button>复制链接</button>
+            <span>{{scope.row.name}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="newPrice" label="折扣价(单位：元)" align="center">

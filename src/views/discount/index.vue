@@ -64,7 +64,7 @@
         </el-table-column>
         <el-table-column label="发放" align="center">
           <template slot-scope="scope">
-            <el-button type="success" size="small" v-if="" @click='_sendCoupon2All(scope.row.id)' :disabled="!(scope.row.isNewbee === 1) || !(scope.row.isUpper === 1)" :title="scope.row.isNewbee !== 1 ? '' : '暂无权限'">一键发放</el-button>
+            <el-button type="success" size="small" v-if="" @click='_sendCoupon2All(scope.row.id)' :disabled="scope.row.isUpper == 2 && scope.row.isNewbee != 1">一键发放</el-button>
           </template>
         </el-table-column>
         <el-table-column label="二维码" align="center">
@@ -182,10 +182,6 @@
           <span style="position: absolute;bottom:-30px;left:0px;color:red">{{mobileERR}}</span>
           <el-input placeholder="请输入接收人手机号" v-model="userData.mobile"></el-input>
         </el-form-item>
-        <el-form-item label="数量">
-          <span style="position: absolute;bottom:-30px;left:0px;color:red">{{numberERR}}</span>
-          <el-input placeholder="请输入数量" v-model="userData.number" type="number" min="0"></el-input>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="quxiao">取消</el-button>
@@ -276,8 +272,7 @@ export default {
       },
       userData: {
         id: '',
-        mobile: '',
-        number: ''
+        mobile: ''
       },
       codeData: {
         name: '',
@@ -348,11 +343,9 @@ export default {
       })
     },
     clicknum(id) {
-      this.numfa = true
       this.userData = {
         id: '',
-        mobile: '',
-        number: ''
+        mobile: ''
       }
       this.userData.id = id
     },
