@@ -17,9 +17,6 @@
         <el-option label="已转赠" :value="3">
           已转赠
         </el-option>
-        <!-- <el-option label="已收到" :value="4">
-          已收到
-        </el-option> -->
         <el-option label="已过期" :value="5">
           已过期
         </el-option>
@@ -27,6 +24,10 @@
       <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
+      <div class="he20"></div>
+      <el-input style="width: 200px;" class="filter-item" placeholder="请输入代金券ID" v-model="destroyCode">
+      </el-input>
+       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="destroy" >核销代金券</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="orderCode" label="订单号" align="center">
@@ -86,6 +87,7 @@
 <script>
 import { getAllVouchers } from '@/api/shoping'
 // import { deleteExcel } from '@/api/user'
+import { useCoupon } from '@/api/coupon'
 import { ERR_OK } from '@/api/config'
 
 export default {
@@ -111,7 +113,8 @@ export default {
         startTime: null,
         state: null
       },
-      xslsUrl: ''
+      xslsUrl: '',
+      destroyCode: ''
     }
   },
   created() {
@@ -127,6 +130,53 @@ export default {
           this.total = res.data.total
           this.tableData = res.data.list
         }
+      })
+    },
+    destroy() {
+      if (!this.destroyCode) {
+        this.$message({
+          message: '券码号不能为空',
+          type: 'warning'
+        })
+        return
+      }
+      this.$confirm('是否核销该优惠券?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        useCoupon(this.destroyCode).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log(res.data)
+            if (res.data.code === 500501) {
+              this.$message({
+                message: '券码不存在',
+                type: 'warning'
+              })
+            } else if (res.data.code === 500502) {
+              this.$message({
+                message: '券码已核销',
+                type: 'warning'
+              })
+            } else if (res.data.code === 500503) {
+              this.$message({
+                message: '券码已过期',
+                type: 'warning'
+              })
+            } else {
+              this.$message({
+                message: '核销成功',
+                type: 'success'
+              })
+              this.destroyCode = ''
+            }
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消核销'
+        })
       })
     },
     // _exportUserExcel() {

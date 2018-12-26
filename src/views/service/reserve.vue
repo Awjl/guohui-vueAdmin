@@ -44,7 +44,7 @@
         <el-table-column label="操作"  align="center" width="300">
           <template slot-scope="scope">
             <el-button type="warning" size="small"  @click="handleClick(scope.row.id)" :disabled="!(serverData.indexOf('1') !== -1)" :title="(serverData.indexOf('1') !== -1) ? '' : '暂无权限'">添加反馈</el-button>
-            <el-button @click="contact(scope.row.id)" type="primary" size="small" v-if="scope.row.isConnected === 1" :disabled="!(serverData.indexOf('2') !== -1)" :title="(serverData.indexOf('2') !== -1) ? '' : '暂无权限'">未联系</el-button>
+            <el-button @click="contact(scope.row.id)" type="primary" size="small" v-if="scope.row.isConnected === 1" :disabled="!(serverData.indexOf('2') !== -1)" :title="(serverData.indexOf('2') !== -1) ? '' : '暂无权限'">去联系</el-button>
             <el-button type="success" size="small" v-else :disabled="true">已联系</el-button>
           </template>
         </el-table-column>

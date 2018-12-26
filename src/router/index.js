@@ -77,13 +77,13 @@ export const constantRouterMap = [
       path: 'footshopping',
       component: () => import('@/views/shopping/footshopping'),
       name: 'footshopping',
-      meta: { title: '食品列表' }
+      meta: { title: '吧台商品列表' }
     },
     {
       path: 'shopping',
       component: () => import('@/views/shopping/shopping'),
       name: 'shopping',
-      meta: { title: '商品列表' }
+      meta: { title: '代金券列表' }
     },
     {
       path: 'addshopping/:id',
@@ -106,7 +106,7 @@ export const constantRouterMap = [
       path: 'integralshopping',
       component: () => import('@/views/integralshopping/index'),
       name: 'integralshopping',
-      meta: { title: '商品管理', noCache: true }
+      meta: { title: '积分商品列表', noCache: true }
     },
     {
       path: 'addintegralshopping/:id',
@@ -119,7 +119,7 @@ export const constantRouterMap = [
       path: 'integralRule',
       component: () => import('@/views/integralshopping/integralRule'),
       name: 'integralRule',
-      meta: { title: '规则管理' }
+      meta: { title: '积分规则管理' }
     }]
   },
   {
@@ -135,13 +135,19 @@ export const constantRouterMap = [
       path: 'shopingorder',
       component: () => import('@/views/order/order'),
       name: 'shopingorder',
-      meta: { title: '商城订单管理' }
+      meta: { title: '代金券订单列表' }
+    },
+    {
+      path: 'WriteOff',
+      component: () => import('@/views/WriteOff/WriteOff'),
+      name: 'WriteOff',
+      meta: { title: '代金券核销列表' }
     },
     {
       path: 'integralsorder',
       component: () => import('@/views/order/integralsorder'),
       name: 'integralsorder',
-      meta: { title: '积分订单管理' }
+      meta: { title: '积分订单列表' }
     }]
   },
   {
@@ -153,17 +159,6 @@ export const constantRouterMap = [
       component: () => import('@/views/discount/index'),
       name: 'discount',
       meta: { title: '优惠券管理', icon: 'money', noCache: true }
-    }]
-  },
-  {
-    path: '',
-    component: Layout,
-    redirect: 'WriteOff',
-    children: [{
-      path: 'WriteOff',
-      component: () => import('@/views/WriteOff/WriteOff'),
-      name: 'WriteOff',
-      meta: { title: '代金券管理', icon: 'money', noCache: true }
     }]
   },
   {

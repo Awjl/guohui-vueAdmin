@@ -19,7 +19,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="isUpper" label="是否上架" align="center">
+          <el-table-column prop="isUpper" label="上下架操作" align="center">
             <template slot-scope="scope">
               <el-button type="warning" size="small" v-if="scope.row.isUpper === 1" @click="isUpper(scope.row.isUpper, scope.row.id)" :disabled="!(homeData.indexOf('2') !== -1)" :title="(homeData.indexOf('2') !== -1) ? '' : '暂无权限'">下架</el-button>
               <el-button type="primary" size="small" v-else @click="isUpper(scope.row.isUpper, scope.row.id)" :disabled="!(homeData.indexOf('2') !== -1)" :title="(homeData.indexOf('2') !== -1) ? '' : '暂无权限'">上架</el-button>

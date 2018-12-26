@@ -4,8 +4,8 @@
       <el-input style="width: 200px;" class="filter-item" placeholder="请输入名称" v-model="data.name">
       </el-input>
       <el-select style="width: 100px" class="filter-item" v-model="data.type" placeholder="类型">
-        <el-option label="代金券" :value="1">
-          代金券
+        <el-option label="优惠券" :value="1">
+          优惠券
         </el-option>
         <el-option label="停车券" :value="2">
           停车券
@@ -36,14 +36,24 @@
               <span v-else>无限制</span>
             </p>
             <p v-else>
-              <span>{{scope.row.discountTime}}</span>
+              <span>减免时间</span>
             </p>
           </template>
         </el-table-column>
         <el-table-column label="类型" align="center">
           <template slot-scope="scope">
-            <span v-if="scope.row.type === 1">代金券</span>
+            <span v-if="scope.row.type === 1">优惠券</span>
             <span v-else>停车券</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="减免" align="center">
+          <template slot-scope="scope">
+            <span v-if="scope.row.type === 1">
+                {{scope.row.price/100}}元
+            </span>
+            <span v-else>
+              {{scope.row.discountTime}}分钟
+            </span>
           </template>
         </el-table-column>
         <el-table-column label="使用时间" align="center">
@@ -56,7 +66,7 @@
                     <span v-else>否</span>
                   </template>
         </el-table-column>
-        <el-table-column label="是否上架" align="center">
+        <el-table-column label="上下架操作" align="center">
           <template slot-scope="scope">
             <el-button type="warning" size="small" v-if="scope.row.isUpper === 1" @click='upclick(scope.row.id, scope.row.isUpper)' :disabled="!(discountData.indexOf('2') !== -1)" :title="(discountData.indexOf('2') !== -1) ? '' : '暂无权限'">下架</el-button>
             <el-button type="success" size="small" v-else @click='upclick(scope.row.id, scope.row.isUpper)' :disabled="!(discountData.indexOf('2') !== -1)" :title="(discountData.indexOf('2') !== -1) ? '' : '暂无权限'">上架</el-button>
@@ -64,7 +74,8 @@
         </el-table-column>
         <el-table-column label="发放" align="center">
           <template slot-scope="scope">
-            <el-button type="success" size="small" v-if="" @click='_sendCoupon2All(scope.row.id)' :disabled="scope.row.isUpper == 2 && scope.row.isNewbee != 1">一键发放</el-button>
+            <el-button type="success" size="small"  v-if="scope.row.isNewbee === 1" :disabled="true">一键发放</el-button>
+            <el-button type="success" size="small" @click='_sendCoupon2All(scope.row.id)' :disabled="scope.row.isUpper == 2" v-else>一键发放</el-button>
           </template>
         </el-table-column>
         <el-table-column label="二维码" align="center">
@@ -115,8 +126,8 @@
           <el-col :span="8">
             <el-form-item label="优惠券类型">
               <el-select style="width: 150px" class="filter-item" placeholder="优惠券类型" v-model="item.type">
-                <el-option label="代金券" :value="1">
-                  代金券
+                <el-option label="优惠券" :value="1">
+                  优惠券
                 </el-option>
                 <el-option label="停车券" :value="2">
                   停车券
@@ -165,7 +176,7 @@
           <el-col :span="15">
             <el-form-item label="使用时间">
               <span style="position: absolute;bottom:-30px;left:0px;color:red">{{dataERR}}</span>
-              <el-date-picker v-model="dataTwoArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
+              <el-date-picker v-model="dataTwoArr" :picker-options="pickerOptions" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </el-form-item>
           </el-col>
@@ -232,6 +243,11 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now() - 8.64e7
+        }
+      },
       title: '新增优惠券',
       loading: true,
       dialogFormVisible: false,

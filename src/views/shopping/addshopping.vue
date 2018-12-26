@@ -93,7 +93,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="是否上架">
+          <el-form-item label="上下架操作">
             <el-select
               style="width: 150px"
               class="filter-item"

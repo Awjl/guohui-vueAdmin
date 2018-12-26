@@ -16,7 +16,7 @@
       <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
       </el-date-picker>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加</el-button>
+      <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit">添加</el-button> -->
       <el-button type="primary" icon="document" @click="downloadexcel"  :disabled="!(userData.indexOf('1') !== -1)" :title="(userData.indexOf('1') !== -1) ? '' : '暂无权限'">导出 excel</el-button>
       <div class="he20"></div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
@@ -46,11 +46,11 @@
               < 10) ? '0' + (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) + '-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}</span> 
           </template> 
         </el-table-column> 
-        <!-- <el-table-column label="操作" align="center">
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
+            <el-button @click="UpVip(scope.row.id)" type="success" size="small" :disabled="scope.row.level === 2">升级会员</el-button>
           </template>
-        </el-table-column> -->
+        </el-table-column>
       </el-table>
     </div>
     <div class="pagination-container">
@@ -60,7 +60,7 @@
   </div>
 </template>
 <script>
-import { getAllUser, exportUserExcel, deleteExcel } from '@/api/user'
+import { getAllUser, exportUserExcel, deleteExcel, upgradeLevel } from '@/api/user'
 import { ERR_OK } from '@/api/config'
 import { mapGetters } from 'vuex'
 
@@ -124,6 +124,28 @@ export default {
     _deleteExcel() {
       deleteExcel(this.xslsUrl).then((res) => {
         console.log('删除')
+      })
+    },
+    UpVip(id) {
+      this.$confirm('是否升级改会员?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        upgradeLevel(id).then((res) => {
+          if (res.code === ERR_OK) {
+            this.$message({
+              message: '升级成功',
+              type: 'success'
+            })
+            this._getAllUser()
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消升级'
+        })
       })
     },
     downloadexcel() {

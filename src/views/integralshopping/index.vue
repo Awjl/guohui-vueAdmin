@@ -4,10 +4,10 @@
       <el-input style="width: 150px;" class="filter-item" placeholder="请输入商品名称" v-model="data.name">
       </el-input>
       <el-select clearable style="width: 150px" class="filter-item" v-model="data.level" placeholder="会员级别">
-        <el-option label="V1会员商品" :value="1">
+        <el-option label="V1专属商品" :value="1">
           V1会员商品
         </el-option>
-        <el-option label="V2会员商品" :value="2">
+        <el-option label="V2专属商品" :value="2">
           V2会员商品
         </el-option>
         <el-option label="通用商品" :value="3">
@@ -52,7 +52,7 @@
         <el-table-column prop="address" label="对应级别" align="center">
           <template slot-scope="scope">
             <p v-if='scope.row.level === 1'>V1会员</p>
-            <p v-if='scope.row.level === 2'>V1会员</p>
+            <p v-if='scope.row.level === 2'>V2会员</p>
             <p v-if='scope.row.level === 3'>全部会员</p>
           </template>
         </el-table-column>

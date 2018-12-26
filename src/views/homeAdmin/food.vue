@@ -35,12 +35,12 @@
               <span v-if="scope.row.type === 4">餐券</span>
             </template>
           </el-table-column>
-          <el-table-column prop="state" label="是否上架在首页" align="center">
+          <!-- <el-table-column prop="state" label="是否上架在首页" align="center">
             <template slot-scope="scope">
               <el-button@click="isUpper(scope.row.isUpper, scope.row.id)" type="warning" size="small" v-if="scope.row.isUpper == 1"  :disabled="!(homeData.indexOf('9') !== -1)" :title="(homeData.indexOf('9') !== -1) ? '' : '暂无权限'">下架</el-button>
                 <el-button @click="isUpper(scope.row.isUpper, scope.row.id)" type="success" size="small" v-else  :disabled="!(homeData.indexOf('9') !== -1)" :title="(homeData.indexOf('9') !== -1) ? '' : '暂无权限'">上架</el-button>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <el-button @click="handleUpdate(scope.row.id)" type="primary" size="small"  :disabled="!(homeData.indexOf('10') !== -1)" :title="(homeData.indexOf('10') !== -1) ? '' : '暂无权限'">修改</el-button>

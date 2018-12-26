@@ -27,7 +27,8 @@
         </el-table-column>
         <el-table-column prop="createDate" label="购买日期" align="center">
           <template slot-scope="scope">
-            <span>{{new Date(scope.row.createDate).getFullYear()+ '-' + (((new Date(scope.row.createDate).getMonth() + 1) < 10) ? '0'+ (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) +'-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}</span>
+            <div>{{new Date(scope.row.createDate).getFullYear()+ '-' + (((new Date(scope.row.createDate).getMonth() + 1) < 10) ? '0'+ (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) +'-' + (new Date(scope.row.createDate).getDate() < 10 ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate()) }}</div>
+            <div>{{(new Date(scope.row.createDate).getHours() < 10 ? '0' + new Date(scope.row.createDate).getHours() : new Date(scope.row.createDate).getHours())+':'+(new Date(scope.row.createDate).getMinutes() < 10 ? '0' + new Date(scope.row.createDate).getMinutes() : new Date(scope.row.createDate).getMinutes())}}</div>
           </template>
         </el-table-column>
         <el-table-column prop="addressee" label="姓名" align="center">
@@ -177,6 +178,7 @@ export default {
     },
     handleClick(id) {
       this.item.id = id
+      this.item.orderid = ''
       this.dialogFormVisible = true
     },
     quxiao() {

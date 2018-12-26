@@ -27,18 +27,18 @@
           下架产品
         </el-option>
       </el-select>
-      <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
-      </el-date-picker>
+      <!-- <el-date-picker v-model="dataArr" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" format="yyyy-MM-dd">
+      </el-date-picker> -->
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="suchbox">搜索</el-button>
       <router-link :to="'/shoppingAdmin/addshopping/null'">
         <el-button type="primary" icon="el-icon-edit" :disabled="!(shoppingData.indexOf('5') !== -1)" :title="(shoppingData.indexOf('5') !== -1) ? '' : '暂无权限'">添加商品</el-button>
       </router-link>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="setTopHot" :disabled="!(shoppingData.indexOf('6') !== -1)" :title="(shoppingData.indexOf('6') !== -1) ? '' : '暂无权限'">查看顶部热推</el-button>
       <div class="he20"></div>
-      <el-input style="width: 200px;" class="filter-item" placeholder="请输入优惠券编码" v-model="destroyCode">
-      </el-input>
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="destroy" :disabled="!(shoppingData.indexOf('7') !== -1)" :title="(shoppingData.indexOf('7') !== -1) ? '' : '暂无权限'">核销代金券</el-button>
-      <div class="he20"></div>
+      <!-- <el-input style="width: 200px;" class="filter-item" placeholder="请输入优惠券编码" v-model="destroyCode">
+      </el-input> -->
+      <!-- <el-button class="filter-item" type="primary" icon="el-icon-search" @click="destroy" :disabled="!(shoppingData.indexOf('7') !== -1)" :title="(shoppingData.indexOf('7') !== -1) ? '' : '暂无权限'">核销代金券</el-button>
+      <div class="he20"></div> -->
       <el-table :data="tableData" border style="width: 100%" v-loading="loading">
         <el-table-column prop="goodsId" label="商品ID" align="center">
         </el-table-column>
@@ -151,7 +151,7 @@
 </template>
 <script>
 import { getAllGoods, isUpperGoods, setHotGoods, deleteGood, setCornerMealBanner, getCornerMealListBanner, setCornerMealListBanner } from '@/api/shoping'
-import { useCoupon } from '@/api/coupon'
+// import { useCoupon } from '@/api/coupon'
 import { ERR_OK } from '@/api/config'
 import { mapGetters } from 'vuex'
 
@@ -294,53 +294,53 @@ export default {
         })
       })
     },
-    destroy() {
-      if (!this.destroyCode) {
-        this.$message({
-          message: '券码号不能为空',
-          type: 'warning'
-        })
-        return
-      }
-      this.$confirm('是否核销该优惠券?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        useCoupon(this.destroyCode).then((res) => {
-          if (res.code === ERR_OK) {
-            console.log(res.data)
-            if (res.data.code === 500501) {
-              this.$message({
-                message: '券码不存在',
-                type: 'warning'
-              })
-            } else if (res.data.code === 500502) {
-              this.$message({
-                message: '券码已核销',
-                type: 'warning'
-              })
-            } else if (res.data.code === 500503) {
-              this.$message({
-                message: '券码已过期',
-                type: 'warning'
-              })
-            } else {
-              this.$message({
-                message: '核销成功',
-                type: 'success'
-              })
-              this.destroyCode = ''
-            }
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消核销'
-        })
-      })
-    },
+    // destroy() {
+    //   if (!this.destroyCode) {
+    //     this.$message({
+    //       message: '券码号不能为空',
+    //       type: 'warning'
+    //     })
+    //     return
+    //   }
+    //   this.$confirm('是否核销该优惠券?', '提示', {
+    //     confirmButtonText: '确定',
+    //     cancelButtonText: '取消',
+    //     type: 'warning'
+    //   }).then(() => {
+    //     useCoupon(this.destroyCode).then((res) => {
+    //       if (res.code === ERR_OK) {
+    //         console.log(res.data)
+    //         if (res.data.code === 500501) {
+    //           this.$message({
+    //             message: '券码不存在',
+    //             type: 'warning'
+    //           })
+    //         } else if (res.data.code === 500502) {
+    //           this.$message({
+    //             message: '券码已核销',
+    //             type: 'warning'
+    //           })
+    //         } else if (res.data.code === 500503) {
+    //           this.$message({
+    //             message: '券码已过期',
+    //             type: 'warning'
+    //           })
+    //         } else {
+    //           this.$message({
+    //             message: '核销成功',
+    //             type: 'success'
+    //           })
+    //           this.destroyCode = ''
+    //         }
+    //       }
+    //     })
+    //   }).catch(() => {
+    //     this.$message({
+    //       type: 'info',
+    //       message: '已取消核销'
+    //     })
+    //   })
+    // },
     setTopHot() {
       this.dialogTopHot = true
       this.OneTitle = ''

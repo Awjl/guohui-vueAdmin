@@ -375,3 +375,15 @@ export function deleteLog(date) {
     return Promise.resolve(res.data)
   })
 }
+// 会员升级
+// /user/upgradeLevel
+export function upgradeLevel(id) {
+  const url = `${api}/user/upgradeLevel`
+  return axios.get(url, {
+    params: {
+      id: id
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

@@ -27,6 +27,11 @@
         </el-table-column>
         <el-table-column prop="num" label="数量" align="center">
         </el-table-column>
+         <el-table-column label="购买日期" align="center">
+          <template slot-scope="scope">
+           {{new Date(scope.row.createDate).getFullYear()+ '-' + (((new Date(scope.row.createDate).getMonth() + 1) < 10) ? '0'+ (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) +'-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}
+          </template>
+        </el-table-column>
         <el-table-column label="总价(单位：元)" align="center">
           <template slot-scope="scope">
             {{((Number(scope.row.total)+Number(scope.row.price))/ 100).toFixed(2)}}

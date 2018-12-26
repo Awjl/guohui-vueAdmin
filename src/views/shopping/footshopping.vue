@@ -32,6 +32,12 @@
         </el-table-column>
         <el-table-column prop="name" label="商品名称" align="center">
         </el-table-column>
+        <el-table-column prop="summary" label="上架时间" align="center">
+          <template slot-scope="scope">
+            {{new Date(scope.row.createDate).getFullYear()+ '-' + (((new Date(scope.row.createDate).getMonth() + 1)
+              < 10) ? '0' + (new Date(scope.row.createDate).getMonth() + 1) : (new Date(scope.row.createDate).getMonth() + 1)) + '-' + ((new Date(scope.row.createDate).getDate() < 10) ? '0' + new Date(scope.row.createDate).getDate() : new Date(scope.row.createDate).getDate())}}
+          </template>
+        </el-table-column>
         <el-table-column prop="barName" label="所属吧" align="center">
         </el-table-column>
         <el-table-column prop="summary" label="商品简介" align="center">

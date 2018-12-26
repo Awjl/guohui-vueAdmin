@@ -43,7 +43,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="是否上架">
+          <el-form-item label="上下架操作">
             <el-select style="width: 150px" class="filter-item" v-model="shoplist.isUpper" placeholder="选择分类">
               <el-option label="上架" :value="1">
                 上架
