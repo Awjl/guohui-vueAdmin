@@ -29,7 +29,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">今日收入</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="item.total" :duration="3200" style="float:right"></count-to>
+          <count-to class="card-panel-num" :startVal="0" :endVal="item.total" :duration="3200" style="float:right" :decimals="2"></count-to>
         </div>
       </div>
     </el-col>
@@ -73,7 +73,6 @@ export default {
     _getIndexInfo() {
       getIndexInfo().then((res) => {
         if (res.code === ERR_OK) {
-          console.log('12222222222222222222222')
           this.item = res.data
         }
       })
