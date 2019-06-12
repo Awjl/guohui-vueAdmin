@@ -70,8 +70,10 @@ const user = {
       console.log(userInfo)
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
+          if (response.code != 0) {
+            return
+          }
           const data = response.data
-          console.log(data)
           setToken(data.token)
 
           setAdminData(data.adminData)
