@@ -183,6 +183,7 @@ export function addAdmin(data) {
   return axios.post(url, {
     id: data.id,
     name: data.name,
+    password: data.password,
     roleId: data.roleId,
     nickname: data.nickname
   }).then((res) => {

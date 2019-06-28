@@ -81,7 +81,10 @@ export default {
               this.$router.push({ path: '/' })
             })
             .catch(err => {
-              console.log(err);
+              this.$message({
+                type: "error",
+                message: "账号或密码错误"
+              });
               this.loading = false;
             });
         } else {

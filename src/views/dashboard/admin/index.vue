@@ -17,17 +17,16 @@
           <bar-chart></bar-chart>
         </div>
       </el-col>
-    </el-row> -->
-
+    </el-row>-->
   </div>
 </template>
 
 
 <script>
-import PanelGroup from './components/PanelGroup'
-import RaddarChart from './components/RaddarChart'
-import PieChart from './components/PieChart'
-import BarChart from './components/BarChart'
+import PanelGroup from "./components/PanelGroup";
+import RaddarChart from "./components/RaddarChart";
+import PieChart from "./components/PieChart";
+import BarChart from "./components/BarChart";
 
 const lineChartData = {
   newVisitis: {
@@ -46,10 +45,10 @@ const lineChartData = {
     expectedData: [130, 140, 141, 142, 145, 150, 160],
     actualData: [120, 82, 91, 154, 162, 140, 130]
   }
-}
+};
 
 export default {
-  name: 'dashboard-admin',
+  name: "dashboard-admin",
   components: {
     PanelGroup,
     RaddarChart,
@@ -59,14 +58,22 @@ export default {
   data() {
     return {
       lineChartData: lineChartData.newVisitis
-    }
+    };
   },
   methods: {
     handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
+      if (type === "newVisitis") {
+        this.$router.push({ path: '/Member' })
+      } else if (type === "messages") {
+        this.$router.push({ path: '/service' })
+      } else if (type === "purchases") {
+        this.$router.push({ path: '/order/shopingorder' })
+      } else if (type === "shoppings") {
+        this.$router.push({ path: '/shoppingAdmin/shopping' })
+      }
     }
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
