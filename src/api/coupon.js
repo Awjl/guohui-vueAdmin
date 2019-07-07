@@ -4,19 +4,25 @@ import axios from 'axios'
 // 商品列表
 export function getAllCoupon(data) {
   const url = `${api}/coupon/getAllCoupon`
-  return axios.post(url, {
-    endTime: data.endTime,
-    isNewbee: data.isNewbee,
-    isUpper: data.isUpper,
-    name: data.name,
-    pageNum: data.pageNum,
-    pageSize: data.pageSize,
-    startTime: data.startTime,
-    type: data.type,
-    saleType: data.saleType
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  return axios.post(url,
+    {
+      endTime: data.endTime,
+      isNewbee: data.isNewbee,
+      isUpper: data.isUpper,
+      name: data.name,
+      pageNum: data.pageNum,
+      pageSize: data.pageSize,
+      startTime: data.startTime,
+      type: data.type,
+      saleType: data.saleType
+    },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 // 上架下架
 export function isUpperCoupon(couponId, isUpper) {
@@ -25,6 +31,9 @@ export function isUpperCoupon(couponId, isUpper) {
     params: {
       couponId: couponId,
       isUpper: isUpper
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -47,9 +56,14 @@ export function addCoupon(data) {
     title: data.title,
     discountTime: data.discountTime,
     total: data.total
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 删除
@@ -58,6 +72,9 @@ export function deleteCouponById(couponId) {
   return axios.get(url, {
     params: {
       couponId: couponId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -70,6 +87,9 @@ export function getCouponById(couponId) {
   return axios.get(url, {
     params: {
       couponId: couponId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -79,34 +99,46 @@ export function getCouponById(couponId) {
 // 根据ID修改
 export function editCouponById(data) {
   const url = `${api}/coupon/editCouponById`
-  return axios.post(url, {
-    id: data.id,
-    endTime: data.endTime,
-    isNewbee: data.isNewbee,
-    isUpper: data.isUpper,
-    limitPrice: data.limitPrice,
-    name: data.name,
-    price: data.price,
-    saleType: data.saleType,
-    startTime: data.startTime,
-    type: data.type,
-    title: data.title,
-    discountTime: data.discountTime
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  return axios.post(url,
+    {
+      id: data.id,
+      endTime: data.endTime,
+      isNewbee: data.isNewbee,
+      isUpper: data.isUpper,
+      limitPrice: data.limitPrice,
+      name: data.name,
+      price: data.price,
+      saleType: data.saleType,
+      startTime: data.startTime,
+      type: data.type,
+      title: data.title,
+      discountTime: data.discountTime
+    },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 发布优惠券
 export function sendCoupon(data) {
   const url = `${api}/coupon/sendCoupon`
-  return axios.post(url, {
-    id: data.id,
-    mobile: data.mobile,
-    number: data.number
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  return axios.post(url,
+    {
+      id: data.id,
+      mobile: data.mobile,
+      number: data.number
+    },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 核销优惠券
@@ -115,6 +147,9 @@ export function useCoupon(couponCode) {
   return axios.get(url, {
     params: {
       couponCode: couponCode
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -126,6 +161,9 @@ export function getQRCode(couponId) {
   return axios.get(url, {
     params: {
       couponId: couponId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -135,12 +173,18 @@ export function getQRCode(couponId) {
 // 添加库存
 export function sendCouponQRCode(data) {
   const url = `${api}/coupon/sendCouponQRCode`
-  return axios.post(url, {
-    couponId: data.couponId,
-    total: data.total
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  return axios.post(url,
+    {
+      couponId: data.couponId,
+      total: data.total
+    },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 一键发货
@@ -149,6 +193,9 @@ export function sendCoupon2All(couponId) {
   return axios.get(url, {
     params: {
       couponId: couponId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)

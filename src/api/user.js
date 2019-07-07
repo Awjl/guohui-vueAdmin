@@ -13,6 +13,11 @@ export function getAllUser(data) {
     startTime: data.startTime,
     userId: data.userId,
     nickname: data.nickname
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -31,6 +36,11 @@ export function getAllBook(data) {
     name: data.name,
     isConnected: data.isConnected,
     email: data.email
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -42,6 +52,9 @@ export function isConnected(id) {
   return axios.get(url, {
     params: {
       id: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -54,6 +67,11 @@ export function addFeedback(data) {
   return axios.post(url, {
     feedBack: data.feedBack,
     id: data.id
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -66,6 +84,9 @@ export function getAllHotQuestion(data) {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -79,6 +100,9 @@ export function isUpperHotQuestion(questionId, isUpper) {
     params: {
       questionId: questionId,
       isUpper: isUpper
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -90,6 +114,11 @@ export function addHotQuestion(data) {
   return axios.post(url, {
     answer: data.answer,
     question: data.question
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -100,6 +129,9 @@ export function getHotQuestionById(questionId) {
   return axios.get(url, {
     params: {
       questionId: questionId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -113,6 +145,11 @@ export function editHotQuestionById(data) {
     answer: data.answer,
     question: data.question,
     id: data.id
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -124,6 +161,9 @@ export function deleteHotQuestionById(questionId) {
   return axios.get(url, {
     params: {
       questionId: questionId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -132,7 +172,11 @@ export function deleteHotQuestionById(questionId) {
 // 获取热线
 export function getPhone() {
   const url = `${api}/service/getPhone`
-  return axios.get(url).then((res) => {
+  return axios.get(url, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
@@ -142,6 +186,9 @@ export function updatePhone(phone) {
   return axios.get(url, {
     params: {
       phone: phone
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -158,6 +205,11 @@ export function getAdmins(data) {
     startTime: data.startTime,
     pageNum: data.pageNum,
     pageSize: data.pageSize
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -170,6 +222,9 @@ export function getRoles(num, size) {
     params: {
       pageNum: num,
       pageSize: size
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -186,6 +241,11 @@ export function addAdmin(data) {
     password: data.password,
     roleId: data.roleId,
     nickname: data.nickname
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -197,6 +257,9 @@ export function getAdminById(adminId) {
   return axios.get(url, {
     params: {
       adminId: adminId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -209,6 +272,11 @@ export function editAdmin(data) {
     id: data.id,
     roleId: data.roleId,
     nickname: data.nickname
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -219,6 +287,9 @@ export function deleteAdminById(adminId) {
   return axios.get(url, {
     params: {
       adminId: adminId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -238,6 +309,11 @@ export function exportUserExcel(data) {
     endTime: data.endTime,
     pageNum: data.pageNum,
     pageSize: data.pageSize
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -249,6 +325,9 @@ export function deleteExcel(path) {
   return axios.get(url, {
     params: {
       path: path
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -271,6 +350,11 @@ export function addRole(data) {
     systemData: data.systemData,
     parkData: data.parkData,
     note: data.note
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -282,6 +366,9 @@ export function getRoleById(roleId) {
   return axios.get(url, {
     params: {
       roleId: roleId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -293,6 +380,9 @@ export function deleteRole(roleId) {
   return axios.get(url, {
     params: {
       roleId: roleId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -315,6 +405,11 @@ export function editRole(data) {
     parkData: data.parkData,
     note: data.note,
     id: data.id
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -331,6 +426,11 @@ export function getParkInfo(data) {
     endTime: data.endTime,
     pageNum: data.pageNum,
     pageSize: data.pageSize
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -347,6 +447,11 @@ export function exportParkInfoExcel(data) {
     endTime: data.endTime,
     pageNum: data.pageNum,
     pageSize: data.pageSize
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -361,6 +466,11 @@ export function gerAllLog(data) {
     endTime: data.endTime,
     pageNum: data.pageNum,
     pageSize: data.pageSize
+  },
+  {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -371,6 +481,9 @@ export function deleteLog(date) {
   return axios.get(url, {
     params: {
       date: date
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -383,6 +496,9 @@ export function upgradeLevel(id) {
   return axios.get(url, {
     params: {
       id: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)

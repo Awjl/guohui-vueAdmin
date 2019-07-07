@@ -67,12 +67,13 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      console.log(userInfo)
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
           if (response.code != 0) {
             return
           }
+          window.sessionStorage.setItem('sessionToken', response.data.sessionToken)
+          // return
           const data = response.data
           setToken(data.token)
 
@@ -88,7 +89,6 @@ const user = {
           setUserData(data.userData)
 
           commit('SET_TOKEN', data.token)
-
           commit('SET_adminData', data.adminData)
           commit('SET_discountData', data.discountData)
           commit('SET_homeData', data.homeData)

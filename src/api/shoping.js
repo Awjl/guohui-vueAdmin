@@ -4,18 +4,24 @@ import axios from 'axios'
 // 商品列表
 export function getAllGoods(data) {
   const url = `${api}/goods/getAllGoods`
-  return axios.post(url, {
-    endTime: data.endTime,
-    isCommend: data.isCommend,
-    isUpper: data.isUpper,
-    name: data.name,
-    pageNum: data.pageNum,
-    pageSize: data.pageSize,
-    startTime: data.startTime,
-    type: data.type
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  return axios.post(url,
+    {
+      endTime: data.endTime,
+      isCommend: data.isCommend,
+      isUpper: data.isUpper,
+      name: data.name,
+      pageNum: data.pageNum,
+      pageSize: data.pageSize,
+      startTime: data.startTime,
+      type: data.type
+    },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 // 上架或者下架商品
 export function isUpperGoods(isUpper, goodsId) {
@@ -24,6 +30,9 @@ export function isUpperGoods(isUpper, goodsId) {
     params: {
       isUpper: isUpper,
       goodsId: goodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -36,6 +45,9 @@ export function setHotGoods(isCommend, goodsId) {
     params: {
       isCommend: isCommend,
       goodsId: goodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -48,6 +60,9 @@ export function deleteGoods(goodsId) {
   return axios.get(url, {
     params: {
       goodsId: goodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -67,9 +82,14 @@ export function getAllPointGoods(data) {
     pageSize: data.pageSize,
     startTime: data.startTime,
     type: data.type
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 // 上架下架积分商品
 export function isUpperPointGoods(isUpper, goodsId) {
@@ -78,6 +98,9 @@ export function isUpperPointGoods(isUpper, goodsId) {
     params: {
       isUpper: isUpper,
       pointGoodsId: goodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -97,9 +120,14 @@ export function getAllGoodsOrders(data) {
     pageSize: data.pageSize,
     startTime: data.startTime,
     state: data.state
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 查询所有积分订单
@@ -115,9 +143,14 @@ export function getAllPointGoodsOrders(data) {
     pageSize: data.pageSize,
     startTime: data.startTime,
     state: data.state
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 填写快递单号
@@ -127,6 +160,9 @@ export function insertCourierNumber(courierNumber, orderId) {
     params: {
       courierNumber: courierNumber,
       orderId: orderId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -140,7 +176,8 @@ export function setCornerMealBanner(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -155,9 +192,14 @@ export function getAllBars(data) {
     pageNum: data.pageNum,
     pageSize: data.pageSize,
     startTime: data.startTime
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 // 上架下架吧
 export function isUpperBar(barId, isUpper) {
@@ -165,9 +207,14 @@ export function isUpperBar(barId, isUpper) {
   return axios.post(url, {
     id: barId,
     isUpper: isUpper
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 根据ID查询吧
@@ -176,6 +223,9 @@ export function getBarById(barId) {
   return axios.get(url, {
     params: {
       barId: barId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -189,7 +239,8 @@ export function addBar(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -201,7 +252,8 @@ export function editBar(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -209,9 +261,14 @@ export function editBar(data) {
 // 删除吧
 export function deleteBar(barId) {
   const url = `${api}/bar/deleteBar/${barId}`
-  return axios.post(url).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  return axios.post(url,
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 获取所有吧商品
@@ -225,9 +282,14 @@ export function getAllBarsGoods(data) {
     pageSize: data.pageSize,
     startTime: data.startTime,
     barId: data.barId
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 吧商品上架下架
@@ -237,6 +299,9 @@ export function isUpperBarGoods(barGoodsId, isUpper) {
     params: {
       barGoodsId: barGoodsId,
       isUpper: isUpper
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -250,7 +315,8 @@ export function addBarGoods(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -262,7 +328,8 @@ export function editBarGoods(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -273,6 +340,9 @@ export function getBarGoodsById(barGoodsId) {
   return axios.get(url, {
     params: {
       barGoodsId: barGoodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -286,6 +356,9 @@ export function deleteBarGoods(barGoodsId) {
   return axios.get(url, {
     params: {
       barGoodsId: barGoodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -295,7 +368,11 @@ export function deleteBarGoods(barGoodsId) {
 // 查询顶部热推
 export function getCornerMealListBanner() {
   const url = `${api}/index/getCornerMealListBanner`
-  return axios.get(url).then((res) => {
+  return axios.get(url,{
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
@@ -307,7 +384,8 @@ export function setCornerMealListBanner(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -319,7 +397,8 @@ export function addGoods(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -330,6 +409,9 @@ export function deleteGood(goodsId) {
   return axios.get(url, {
     params: {
       goodsId: goodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -342,6 +424,9 @@ export function getGoodsById(goodsId) {
   return axios.get(url, {
     params: {
       goodsId: goodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -354,6 +439,9 @@ export function deleteGoodPic(picId) {
   return axios.get(url, {
     params: {
       picId: picId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -367,7 +455,8 @@ export function editGoods(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -379,7 +468,8 @@ export function addPointGoods(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -389,6 +479,9 @@ export function deletePointGoods(pointGoodsId) {
   return axios.get(url, {
     params: {
       pointGoodsId: pointGoodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -400,6 +493,9 @@ export function getPointGoodsById(pointGoodsId) {
   return axios.get(url, {
     params: {
       pointGoodsId: pointGoodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -412,7 +508,8 @@ export function editPointGoods(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -430,9 +527,14 @@ export function exportGoodsOrderExcel(data) {
     endTime: data.endTime,
     pageNum: data.pageNum,
     pageSize: data.pageSize
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 导出积分商品订单
@@ -448,9 +550,14 @@ export function exportPointGoodsOrderExcel(data) {
     endTime: data.endTime,
     pageNum: data.pageNum,
     pageSize: data.pageSize
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 积分规则
@@ -460,6 +567,9 @@ export function getAllPointRule(data) {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -473,6 +583,9 @@ export function isUpperPointRule(isUpper, id) {
     params: {
       isUpper: isUpper,
       id: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -484,6 +597,9 @@ export function getPointRuleById(id) {
   return axios.get(url, {
     params: {
       id: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -497,14 +613,24 @@ export function editPointRule(data) {
     title: data.title,
     number: data.number,
     isUpper: data.isUpper
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 // 代金券管理
 export function getAllVouchers(data) {
   const url = `${api}/voucher/getVouchers`
-  return axios.post(url, data).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  return axios.post(url, data,
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }

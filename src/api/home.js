@@ -7,6 +7,9 @@ export function getAllTopBanner(pn, pg) {
     params: {
       pageNum: pn,
       pageSize: pg
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -19,6 +22,9 @@ export function getAllBottomBanner(pn, pg) {
     params: {
       pageNum: pn,
       pageSize: pg
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -32,7 +38,8 @@ export function uploadIndexPicture(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -43,6 +50,9 @@ export function deleteBanner(bannerId) {
   return axios.get(url, {
     params: {
       bannerId: bannerId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -55,6 +65,9 @@ export function isUpperBanner(isUpper, bannerId) {
     params: {
       isUpper: isUpper,
       bannerId: bannerId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -64,7 +77,11 @@ export function isUpperBanner(isUpper, bannerId) {
 // 获取详情
 export function getIntroduces() {
   const url = `${api}/index/getIntroduces`
-  return axios.get(url).then((res) => {
+  return axios.get(url,{
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
@@ -76,7 +93,8 @@ export function editIntroduce(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
@@ -84,16 +102,22 @@ export function editIntroduce(data) {
 // 获取一隅一食列表
 export function getCornerMealBanner(data) {
   const url = `${api}/index/getCornerMealBanner`
-  return axios.post(url, {
-    title: data.title,
-    type: data.type,
-    endTime: data.endTime,
-    pageNum: data.pageNum,
-    pageSize: data.pageSize,
-    startTime: data.startTime
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  return axios.post(url,
+    {
+      title: data.title,
+      type: data.type,
+      endTime: data.endTime,
+      pageNum: data.pageNum,
+      pageSize: data.pageSize,
+      startTime: data.startTime
+    },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 查询一隅一食
@@ -102,6 +126,9 @@ export function getCornerMealBannerById(id) {
   return axios.get(url, {
     params: {
       bannerId: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -115,7 +142,8 @@ export function editCornerMealBannerById(data) {
     method: 'post',
     data: data,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   })
 }
