@@ -91,20 +91,22 @@ export default {
   },
   methods: {
     _changePassword(password) {
+      console.log(password);
+      return;
       let data = {
-        id: window.sessionStorage.getItem('userId'),
-        password: password,
-      }
-      changePassword(data).then((res) => {
+        id: window.sessionStorage.getItem("userId"),
+        password: password
+      };
+      changePassword(data).then(res => {
         if (res.code === ERR_OK) {
-           this.$message({
+          this.$message({
             type: "success",
             message: "密码修改成功"
           });
           this.centerDialogVisible = false;
-          this.logout()
+          this.logout();
         }
-      })
+      });
     },
     toggleSideBar() {
       this.$store.dispatch("ToggleSideBar");
