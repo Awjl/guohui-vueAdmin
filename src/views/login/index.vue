@@ -77,7 +77,6 @@ export default {
             .dispatch("Login", this.loginForm)
             .then(res => {
               this.loading = false;
-              console.log(res);
               this.$router.push({ path: '/' })
             })
             .catch(err => {

@@ -283,7 +283,6 @@ export default {
   },
   methods: {
     _addGoods() {
-      console.log(this.formData.getAll("bannerFiles"));
       addGoods(this.formData).then(res => {
         if (res.data.code === ERR_OK) {
           this.$message({

@@ -72,8 +72,9 @@ const user = {
           if (response.code != 0) {
             return
           }
+          console.log(response)
           window.sessionStorage.setItem('sessionToken', response.data.sessionToken)
-          // return
+          window.sessionStorage.setItem('userId', response.data.id)
           const data = response.data
           setToken(data.token)
 
